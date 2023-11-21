@@ -6,39 +6,39 @@ import {
 	NavbarBrand,
 	NavbarItem,
 	NavbarMenuItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
-import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
+} from '@nextui-org/navbar';
+import { Button } from '@nextui-org/button';
+import { Kbd } from '@nextui-org/kbd';
+import { Link } from '@nextui-org/link';
+import { Input } from '@nextui-org/input';
 
-import { link as linkStyles } from "@nextui-org/theme";
+import { link as linkStyles } from '@nextui-org/theme';
 
-import { siteConfig } from "@/config/site";
-import NextLink from "next/link";
-import clsx from "clsx";
+import { siteConfig } from '@/config/site';
+import NextLink from 'next/link';
+import clsx from 'clsx';
 
-import { ThemeSwitch } from "@/components/theme-switch";
+import { ThemeSwitch } from '@/components/theme-switch';
 import {
 	TwitterIcon,
 	GithubIcon,
 	DiscordIcon,
 	HeartFilledIcon,
 	SearchIcon,
-} from "@/components/icons";
+} from '@/components/icons';
 
-import { Logo } from "@/components/icons";
+import { Logo } from '@/components/icons';
 
 export const Navbar = () => {
 	const searchInput = (
 		<Input
 			aria-label="Search"
 			classNames={{
-				inputWrapper: "bg-default-100",
-				input: "text-sm",
+				inputWrapper: 'bg-default-100',
+				input: 'text-sm',
 			}}
 			endContent={
-				<Kbd className="hidden lg:inline-block" keys={["command"]}>
+				<Kbd className="hidden lg:inline-block" keys={['command']}>
 					K
 				</Kbd>
 			}
@@ -65,8 +65,8 @@ export const Navbar = () => {
 						<NavbarItem key={item.href}>
 							<NextLink
 								className={clsx(
-									linkStyles({ color: "foreground" }),
-									"data-[active=true]:text-primary data-[active=true]:font-medium"
+									linkStyles({ color: 'foreground' }),
+									'data-[active=true]:text-primary data-[active=true]:font-medium'
 								)}
 								color="foreground"
 								href={item.href}
@@ -97,7 +97,7 @@ export const Navbar = () => {
 				<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
 				<NavbarItem className="hidden md:flex">
 					<Button
-            isExternal
+						isExternal
 						as={Link}
 						className="text-sm font-normal text-default-600 bg-default-100"
 						href={siteConfig.links.sponsor}
@@ -125,10 +125,10 @@ export const Navbar = () => {
 							<Link
 								color={
 									index === 2
-										? "primary"
+										? 'primary'
 										: index === siteConfig.navMenuItems.length - 1
-										? "danger"
-										: "foreground"
+											? 'danger'
+											: 'foreground'
 								}
 								href="#"
 								size="lg"
