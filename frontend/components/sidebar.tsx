@@ -79,7 +79,7 @@ export default function Sidebar() {
                         src="/Avatar.svg"
                         alt="logo"
                     />
-                    <p className="sidebar_logo-name">The Brave Coders</p>
+                    <p className="sidebar_logo-name">Meryem Kose</p>
                 </div>
                 <ul className="sidebar_list">
                     {sidebarItems.map(({name, href, icon: Icon}) => {
