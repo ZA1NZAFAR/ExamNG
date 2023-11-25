@@ -1,3 +1,101 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+    --color-bg: #b70c0c;
+    --color-border: #7a8d15;
+    --color-sidebar-item: #0b40b9;
+}
+
+.sidebar_wrapper {
+    position: relative;
+}
+
+.sidebar {
+    width: 17rem;
+    height: 100%;
+    background-color: var(--color-bg);
+    padding: 1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    overflow: hidden;
+    border-radius: 8%;
+}
+
+.sidebar_top {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar_logo {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    border-radius: 1rem;
+}
+
+.sidebar_logo-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.sidebar_list {
+    list-style: none;
+}
+
+.sidebar_link {
+    font-size: 1rem;
+    text-decoration: none;
+    color: #000;
+    padding: 0.8rem 1rem;
+    display: flex;
+    background-color: #0b40b9;
+    margin-bottom: 1rem;
+    border-radius: 0.8rem;
+}
+
+.sidebar_link--active {
+    color: #fff;
+    background-color: #10b981;
+}
+
+.sidebar_icon {
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+.sidebar_name {
+    margin-left: 0.5rem;
+}
+
+[data-collapse="true"] {
+    width: 5.3rem;
+}
+
+[data-collapse="true"] .sidebar_name,
+[data-collapse="true"] .sidebar_logo-name {
+    display: none;
+}
+
+.btn {
+    position: absolute;
+    right: 0;
+    top: 4.7rem;
+    background-color: var(--color-bg);
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform: translateX(50%);
+    font-size: 1.1rem;
+}
