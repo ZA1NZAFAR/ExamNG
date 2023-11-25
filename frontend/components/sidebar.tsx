@@ -1,8 +1,6 @@
-"use client"
 import Image from "next/image";
-import React, {ReactNode} from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import {useContext, useState, useEffect} from "react";
 
 interface SidebarItem {
     name: string;
@@ -14,21 +12,21 @@ const sidebarItems: SidebarItem[] = [
     {
         name: "Home",
         href: "/exams",
-        icon: <Image src="/exams.svg" alt="Exams" width={24} height={24}/>
+        icon: <Image src="/exams.svg" alt="Exams" width={24} height={24} />,
     },
     {
         name: "Calendar",
         href: "/calendar",
-        icon: <Image src="/Sheets.svg" alt="Sheets" width={24} height={24}/>,
+        icon: <Image src="/Sheets.svg" alt="Sheets" width={24} height={24} />,
     },
     {
         name: "Support",
         href: "/support",
-        icon: <Image src="/Notification.svg" alt="Notifications" width={24} height={24}/>
-    }
+        icon: <Image src="/Notification.svg" alt="Notifications" width={24} height={24} />,
+    },
 ];
 
-export default function Sidebar() : JSX.Element {
+export default function Sidebar(): JSX.Element {
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
     useEffect(() => {
@@ -42,24 +40,51 @@ export default function Sidebar() : JSX.Element {
         localStorage.setItem("sidebarCollapsed", newState.toString());
     };
 
+    const handleHover = (index: number) => {
+        const tooltip = document.getElementById(`tooltip-${index}`) as HTMLElement | null;
+        if (tooltip) {
+            tooltip.style.display = "block";
+            const sidebarItems = document.querySelectorAll(".sidebar_item") as NodeListOf<HTMLElement>;
+            for (let i = index +1; i < sidebarItems.length; i++) {
+                sidebarItems[i].style.transform = "translateY(60%)";
+            }
+        }
+    };
+
+    const handleLeave = (index: number) => {
+        const tooltip = document.getElementById(`tooltip-${index}`) as HTMLElement | null;
+        if (tooltip) {
+            tooltip.style.display = "none";
+            const sidebarItems = document.querySelectorAll(".sidebar_item") as NodeListOf<HTMLElement>;
+            for (let i = index +1; i < sidebarItems.length; i++) {
+                sidebarItems[i].style.transform = "translateY(0)";
+            }
+        }
+    };
+
+
     return (
         <div className="sidebar_wrapper">
             <button className="btn" onClick={toggleSidebarCollapseHandler}>
-                {isCollapsed ? <Image
-                    width={80}
-                    height={80}
-                    className="sidebar_logo"
-                    src="/ArrowRight.svg"
-                    alt="logo"
-                /> : <Image
-                    width={80}
-                    height={80}
-                    className="sidebar_logo"
-                    src="/ArrowLeft.svg"
-                    alt="logo"
-                />}
+                {isCollapsed ? (
+                    <Image
+                        width={80}
+                        height={80}
+                        className="sidebar_logo"
+                        src="/ArrowRight.svg"
+                        alt="logo"
+                    />
+                ) : (
+                    <Image
+                        width={80}
+                        height={80}
+                        className="sidebar_logo"
+                        src="/ArrowLeft.svg"
+                        alt="logo"
+                    />
+                )}
             </button>
-            <aside className="sidebar" data-collapse={isCollapsed}>
+            <aside className={`sidebar ${isCollapsed ? '' : 'active'}`} data-collapse={isCollapsed}>
                 <div className="sidebar_top">
                     <Image
                         width={80}
@@ -71,19 +96,16 @@ export default function Sidebar() : JSX.Element {
                     <p className="sidebar_logo-name">Meryem Kose</p>
                 </div>
                 <ul className="sidebar_list">
-                    {sidebarItems.map(({ name, href, icon }) => {
+                    {sidebarItems.map(({ name, href, icon }, index) => {
                         return (
                             <li className="sidebar_item" key={name}>
-                                <Link href={href} className="sidebar_link">
-                    <span className="sidebar_icon">
-                        {typeof icon === 'string' ? (
-                            <img src={icon} alt={name} />
-                        ) : (
-                            <span>{icon}</span>
-                        )}
-                    </span>
+                                <div className="sidebar_link" onMouseEnter={() => handleHover(index)} onMouseLeave={() => handleLeave(index)}>
+                                    <div className="sidebar_icon-wrapper">
+                                        <span className="sidebar_icon">{icon}</span>
+                                    </div>
                                     <span className="sidebar_name">{name}</span>
-                                </Link>
+                                </div>
+                                <div className="tooltip" id={`tooltip-${index}`}>Tooltip content</div>
                             </li>
                         );
                     })}
@@ -91,4 +113,4 @@ export default function Sidebar() : JSX.Element {
             </aside>
         </div>
     );
-};
+}
