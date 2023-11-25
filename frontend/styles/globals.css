@@ -17,8 +17,9 @@ body {
 .sidebar_item {
     transition: transform 0.3s ease-in-out;
 }
-.shifted {
-    transform: translateY(30px);
+.tooltip.show {
+    display: block;
+    z-index: 999;
 }
 .tooltip {
     position: absolute;
@@ -36,7 +37,9 @@ body {
 .sidebar_link:hover + .tooltip {
     display: block;
 }
-
+.sidebar_item:hover .tooltip {
+    display: block;
+}
 .sidebar {
     width: 17rem;
     height: 90vh;

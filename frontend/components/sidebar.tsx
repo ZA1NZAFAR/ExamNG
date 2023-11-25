@@ -1,6 +1,6 @@
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import React, {useEffect, useState} from "react";
 
 interface SidebarItem {
     name: string;
@@ -28,10 +28,14 @@ const sidebarItems: SidebarItem[] = [
 
 export default function Sidebar(): JSX.Element {
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+    const [tooltipIndex, setTooltipIndex] = useState<number | null>(0);
 
+    // Récupérer l'état stocké dans le localStorage au chargement de la page
     useEffect(() => {
-        const storedCollapsedState = localStorage.getItem("sidebarCollapsed");
-        setIsCollapsed(storedCollapsedState === "true");
+        const collapsedState = localStorage.getItem("sidebarCollapsed");
+        if (collapsedState) {
+            setIsCollapsed(collapsedState === "true");
+        }
     }, []);
 
     const toggleSidebarCollapseHandler = () => {
@@ -41,27 +45,25 @@ export default function Sidebar(): JSX.Element {
     };
 
     const handleHover = (index: number) => {
-        const tooltip = document.getElementById(`tooltip-${index}`) as HTMLElement | null;
-        if (tooltip) {
-            tooltip.style.display = "block";
-            const sidebarItems = document.querySelectorAll(".sidebar_item") as NodeListOf<HTMLElement>;
-            for (let i = index +1; i < sidebarItems.length; i++) {
-                sidebarItems[i].style.transform = "translateY(60%)";
+        setTooltipIndex(index);
+        const sidebarItems = document.querySelectorAll(".sidebar_item") as NodeListOf<HTMLElement>;
+        sidebarItems.forEach((item, i) => {
+            if (i === index) {
+                item.classList.add("hovered");
+            } else if (i > index) {
+                item.style.transform = `translateY(60%)`;
             }
-        }
+        });
     };
 
-    const handleLeave = (index: number) => {
-        const tooltip = document.getElementById(`tooltip-${index}`) as HTMLElement | null;
-        if (tooltip) {
-            tooltip.style.display = "none";
-            const sidebarItems = document.querySelectorAll(".sidebar_item") as NodeListOf<HTMLElement>;
-            for (let i = index +1; i < sidebarItems.length; i++) {
-                sidebarItems[i].style.transform = "translateY(0)";
-            }
-        }
+    const handleLeave = () => {
+        setTooltipIndex(null);
+        const sidebarItems = document.querySelectorAll(".sidebar_item") as NodeListOf<HTMLElement>;
+        sidebarItems.forEach((item) => {
+            item.style.transform = "translateY(0)";
+            item.classList.remove("hovered");
+        });
     };
-
 
     return (
         <div className="sidebar_wrapper">
@@ -84,7 +86,7 @@ export default function Sidebar(): JSX.Element {
                     />
                 )}
             </button>
-            <aside className={`sidebar ${isCollapsed ? '' : 'active'}`} data-collapse={isCollapsed}>
+            <aside className={`sidebar ${isCollapsed ? "" : "active"}`} data-collapse={isCollapsed}>
                 <div className="sidebar_top">
                     <Image
                         width={80}
@@ -95,20 +97,40 @@ export default function Sidebar(): JSX.Element {
                     />
                     <p className="sidebar_logo-name">Meryem Kose</p>
                 </div>
-                <ul className="sidebar_list">
-                    {sidebarItems.map(({ name, href, icon }, index) => {
-                        return (
-                            <li className="sidebar_item" key={name}>
-                                <div className="sidebar_link" onMouseEnter={() => handleHover(index)} onMouseLeave={() => handleLeave(index)}>
+                <ul className="sidebar_list" onMouseLeave={handleLeave}>
+                    {sidebarItems.map(({ name, icon, href }, index) => (
+                        <li
+                            className="sidebar_item"
+                            key={name}
+                            onMouseEnter={() => handleHover(index)}
+                            onMouseLeave={handleLeave}
+                        >
+                            <Link href={href}>
+                                <div className="sidebar_link">
                                     <div className="sidebar_icon-wrapper">
                                         <span className="sidebar_icon">{icon}</span>
                                     </div>
                                     <span className="sidebar_name">{name}</span>
                                 </div>
-                                <div className="tooltip" id={`tooltip-${index}`}>Tooltip content</div>
-                            </li>
-                        );
-                    })}
+                            </Link>
+                            <div
+                                className={`tooltip ${tooltipIndex === index ? "show" : ""}`}
+                                id={`tooltip-${index}`}
+                            >
+                                <ul>
+                                    <li>
+                                        lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </li>
+                                    <li>
+                                        lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </li>
+                                    <li>
+                                        lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    ))}
                 </ul>
             </aside>
         </div>
