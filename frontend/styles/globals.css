@@ -2,25 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-
-:root {
-    --color-bg: #b70c0c;
-    --color-border: #7a8d15;
-    --color-sidebar-item: #0b40b9;
-}
-
 .sidebar_wrapper {
     position: relative;
 }
 
+body {
+    font-family: 'SF Pro', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 .sidebar {
     width: 17rem;
-    height: 100%;
-    background-color: var(--color-bg);
+    height: 90vh;
     padding: 1rem;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
     overflow: hidden;
-    border-radius: 8%;
+    border-radius: 28px;
+    border: 1px solid rgba(245, 239, 235, 0.40);
+    background: rgba(255, 237, 224, 0.56);
+    box-shadow: 0 64px 64px -32px rgba(102, 37, 0, 0.56), 0 56px 64px -16px rgba(102, 37, 0, 0.56);
+    backdrop-filter: blur(80px);
 }
 
 .sidebar_top {
@@ -30,7 +30,7 @@
     gap: 1rem;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid #93867E;
 }
 
 .sidebar_logo {
@@ -43,6 +43,7 @@
 .sidebar_logo-name {
     font-size: 1.2rem;
     font-weight: 600;
+    color: rgba(36, 34, 32, 0.56);
 }
 
 .sidebar_list {
@@ -50,19 +51,17 @@
 }
 
 .sidebar_link {
-    font-size: 1rem;
-    text-decoration: none;
-    color: #000;
+    color: rgba(36, 34, 32, 0.56);
+    background: #D1B7AC15;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 24px;
+    text-transform: uppercase;
     padding: 0.8rem 1rem;
     display: flex;
-    background-color: #0b40b9;
+    opacity: 1;
     margin-bottom: 1rem;
     border-radius: 0.8rem;
-}
-
-.sidebar_link--active {
-    color: #fff;
-    background-color: #10b981;
 }
 
 .sidebar_icon {
@@ -87,10 +86,8 @@
     position: absolute;
     right: 0;
     top: 4.7rem;
-    background-color: var(--color-bg);
     width: 1.5rem;
     height: 1.5rem;
-    border: 1px solid var(--color-border);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -98,4 +95,9 @@
     cursor: pointer;
     transform: translateX(50%);
     font-size: 1.1rem;
+    fill: rgba(255, 237, 224, 0.56);
+    stroke-width: 1px;
+    stroke: rgba(245, 239, 235, 0.32);
+    backdrop-filter: blur(90px);
+    z-index: 10;
 }
