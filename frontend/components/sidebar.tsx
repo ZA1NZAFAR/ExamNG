@@ -1,12 +1,6 @@
 "use client"
 import Image from "next/image";
 import React, {ReactNode} from "react";
-import {AiOutlineHome} from "react-icons/ai";
-import {BsCalendar, BsPeople} from "react-icons/bs";
-import {TiContacts} from "react-icons/ti";
-import {FiMail} from "react-icons/fi";
-import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md";
-import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import Link from "next/link";
 import {useContext, useState, useEffect} from "react";
 
@@ -33,34 +27,21 @@ const sidebarItems: SidebarItem[] = [
         icon: <Image src="/Notification.svg" alt="Notifications" width={24} height={24}/>
     }
 ];
-/*
-const useActiveLink = () => {
-    const [activeLink, setActiveLink] = useState("");
+
+export default function Sidebar() : JSX.Element {
+    const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
     useEffect(() => {
-        const handleRouteChange = () => {
-            setActiveLink(window.location.pathname);
-        };
-
-        handleRouteChange(); // Set active link on initial render
-
-        // Listen to navigation changes
-        window.addEventListener("popstate", handleRouteChange);
-
-        return () => {
-            // Clean up listener
-            window.removeEventListener("popstate", handleRouteChange);
-        };
+        const storedCollapsedState = localStorage.getItem("sidebarCollapsed");
+        setIsCollapsed(storedCollapsedState === "true");
     }, []);
 
-    return activeLink;
-};*/
-
-export default function Sidebar() {
-    const [isCollapsed, setIsCollapsedSidebar] = useState<boolean>(false);
     const toggleSidebarCollapseHandler = () => {
-        setIsCollapsedSidebar((prevState) => !prevState);
-    }
+        const newState = !isCollapsed;
+        setIsCollapsed(newState);
+        localStorage.setItem("sidebarCollapsed", newState.toString());
+    };
+
     return (
         <div className="sidebar_wrapper">
             <button className="btn" onClick={toggleSidebarCollapseHandler}>
