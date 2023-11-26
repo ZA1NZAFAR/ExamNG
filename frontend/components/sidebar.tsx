@@ -51,7 +51,7 @@ export default function Sidebar(): JSX.Element {
             if (i === index) {
                 item.classList.add("hovered");
             } else if (i > index) {
-                item.style.transform = `translateY(60%)`;
+                item.style.transform = `translateY(40%)`;
             }
         });
     };
@@ -113,22 +113,24 @@ export default function Sidebar(): JSX.Element {
                                     <span className="sidebar_name">{name}</span>
                                 </div>
                             </Link>
+                            {index==0 && (
                             <div
                                 className={`tooltip ${tooltipIndex === index ? "show" : ""}`}
                                 id={`tooltip-${index}`}
                             >
                                 <ul>
                                     <li>
-                                        lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        JEE
                                     </li>
                                     <li>
-                                        lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Scala
                                     </li>
                                     <li>
-                                        lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Sociology
                                     </li>
                                 </ul>
                             </div>
+                                )}
                         </li>
                     ))}
                 </ul>

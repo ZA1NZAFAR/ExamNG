@@ -10,6 +10,7 @@ body {
     font-family: 'SF Pro', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+
 .sidebar_icon-wrapper {
     position: relative;
     display: inline-block;
@@ -17,6 +18,19 @@ body {
 .sidebar_item {
     transition: transform 0.3s ease-in-out;
 }
+
+.tooltip ul li:hover {
+    background: rgba(119, 91, 91, 0.16);
+    display: flex;
+    padding: 5px;
+    border-radius: 13px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    transition: background-color 0.4s ease;
+    font: bold 15px SF Pro Text;
+}
+
 .tooltip.show {
     display: block;
     z-index: 999;
@@ -26,20 +40,24 @@ body {
     top: 100%;
     left: 0;
     display: none;
-    border-radius: 5px;
-    border: 1px solid #ccc;
     padding: 5px;
-    background-color: #fff;
     z-index: 999;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    border-radius: 16px;
+    border: 0.5px solid rgba(245, 239, 235, 0.40);
+    color: rgba(36, 34, 32, 0.56);
+    background: rgba(255, 237, 224, 0.56);
+    box-shadow: 0px 64px 64px -32px rgba(102, 37, 0, 0.56);
+    backdrop-filter: blur(80px);
+    text-align: justify;
 }
 
-.sidebar_link:hover + .tooltip {
-    display: block;
-}
+
 .sidebar_item:hover .tooltip {
     display: block;
+    position : relative;
 }
+
 .sidebar {
     width: 17rem;
     height: 90vh;
