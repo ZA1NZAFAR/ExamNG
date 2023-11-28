@@ -1,12 +1,15 @@
+import { Instructor } from './physical';
+
 // Exam type
 export interface Exam {
     id: string;
-    name: string;
+    title?: string;
     duration?: number;
     startDate: Date;
     endDate: Date;
     average?: number;
     participants: Array<Participant>;
+    course: Course;
 }
 
 // Student group having an access to exam
@@ -21,5 +24,6 @@ export interface Participant {
 export interface Course {
     code: string;
     name: string;
+    instructor: Instructor;
     description?: string;
 }
