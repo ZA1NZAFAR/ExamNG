@@ -16,6 +16,6 @@ export type Exam = {
 }
 
 export type ExamPageParams = {
-	module: string;
+	moduleCode: string;
 	examId: string;
 }
