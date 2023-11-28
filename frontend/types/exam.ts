@@ -16,3 +16,10 @@ export interface Participant {
     size: number;
     description?: string;
 }
+
+// Course for which the exam is made
+export interface Course {
+    code: string;
+    name: string;
+    description?: string;
+}
