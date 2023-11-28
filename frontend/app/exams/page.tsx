@@ -4,6 +4,7 @@ import type {NextComponentType, NextPageContext } from "next";
 import {AppProps} from "next/app";
 import Sidebar from "@/components/sidebar";
 import {useEffect, useState} from "react";
+import {Input} from "@nextui-org/react";
 
 type CustomAppProps = AppProps & {
 	Component: NextComponentType<NextPageContext, any, {}>;
@@ -34,8 +35,7 @@ export default function ExamPage() {
 		};
 	}, []);
 	return (
-		<div className={`sidebar_wrapper ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
 		<Sidebar/>
-		</div>
+
 	);
 }
