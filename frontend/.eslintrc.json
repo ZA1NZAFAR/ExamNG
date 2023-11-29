@@ -22,7 +22,7 @@
         "react/react-in-jsx-scope": "off",
         "indent": [
             "error",
-            4
+            "tab"
         ],
         "linebreak-style": [
             "error",
