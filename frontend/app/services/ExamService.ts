@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Exam } from '@/types/exam';
+import { Exam, Course, Participant } from '@/types/exam';
+import { Instructor } from '@/types/physical';
 
 class ExamService {
     private apiUrl: string;
@@ -15,6 +16,37 @@ class ExamService {
 
     async getExamById(id: number): Promise<Exam> {
         const response = await axios.get<Exam>(`${this.apiUrl}/exams/${id}`);
+       
+        const exams: Array<Exam> = [];
+
+        let exam: Exam = {
+            id: '1',
+            title: 'Java JEE',
+            duration: 3,
+            startDate: new Date('2023-12-01T12:00:00'),
+            endDate: new Date('2023-12-01T15:00:00'),
+            participants: [
+                {
+                    code: 'M1APPLSI1',
+                    name: 'M1-APP-LSI-1',
+                    size: 35
+                }
+            ],
+            course: {
+                code: 'JavaJEE',
+                name: 'Java Edition Entreprise',
+                instructor: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    dateOfBirth: new Date('1972-03-18T19:24:35'),
+                    city: 'San-Francisco',
+                    country: 'USA',
+                    id: 1,
+                    occupation: 'Professor of Computer Science, Emeritus'
+                }
+            }
+        };
+
         return response.data;
     }
 
