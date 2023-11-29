@@ -22,11 +22,11 @@
         "react/react-in-jsx-scope": "off",
         "indent": [
             "error",
-            "tab"
+            4
         ],
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
