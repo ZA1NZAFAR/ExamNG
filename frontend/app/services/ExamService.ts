@@ -31,7 +31,7 @@ class ExamService {
                         ],
                         course: {
                             code: 'JavaJEE',
-                            name: 'Java Edition Entreprise',
+                            name: 'Java enterprise edition',
                             instructor: {
                                 firstName: 'John',
                                 lastName: 'Doe',
@@ -67,6 +67,33 @@ class ExamService {
                                 country: 'France',
                                 id: 2,
                                 occupation: 'Professor of Mathematics'
+                            }
+                        }
+                    },
+                    {
+                        id: '3',
+                        title: 'Sociology',
+                        duration: 2,
+                        startDate: new Date('2023-12-07T09:00:00'),
+                        endDate: new Date('2023-12-07T11:00:00'),
+                        participants: [
+                            {
+                                code: 'L3LSI1',
+                                name: 'L3-LSI-1',
+                                size: 40
+                            }
+                        ],
+                        course: {
+                            code: 'Sociology',
+                            name: 'Sociology',
+                            instructor: {
+                                firstName: 'Richard',
+                                lastName: 'Doe',
+                                dateOfBirth: new Date('1980-01-24T08:00:00'),
+                                city: 'New York',
+                                country: 'USA',
+                                id: 3,
+                                occupation: 'Professor of Social Sciences, Emeritus'
                             }
                         }
                     }
