@@ -5,6 +5,7 @@ import { title } from '@/components/primitives';
 import { Exam } from '@/types/exam';
 import { ExamServiceProvider } from '../contexts/providers/ExamServiceProvider';
 import { useExamService } from '../hooks/useExamService';
+import { ExamCard } from '@/components/examCard';
 
 const ExamPageContent: React.FC = () => {
 	const [exams, setExams] = useState<Array<Exam>>([]);
@@ -15,7 +16,6 @@ const ExamPageContent: React.FC = () => {
 		const fetchExams = async () => {
 			try {
 				const fetchedExams = await examService.getExams();
-				console.log(fetchedExams);
 				setExams(fetchedExams);
 			} catch (error) {
 				console.error('Error fetching exams:', error);
@@ -33,6 +33,7 @@ const ExamPageContent: React.FC = () => {
 					<p>{exam.title}</p>
 				</div>
 			)) }
+			<ExamCard />
 		</div>
 	);
 };

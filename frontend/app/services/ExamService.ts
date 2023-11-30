@@ -12,6 +12,7 @@ class ExamService {
 		// const response = await axios.get<Array<Exam>>(`${this.apiUrl}/exams`);
 		// return response.data;
 
+		// Mock data to test used on initial stages
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				const exams: Array<Exam> = [
@@ -105,8 +106,6 @@ class ExamService {
 				}
 			}, 1000);
 		});
-
-		// return Promise.resolve(exams);
 	}
 
 	async getExamById(id: number): Promise<Exam> {
