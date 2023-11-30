@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Card, CardBody, Image, Button, Slider } from '@nextui-org/react';
-import { BellRing, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
+import { Card, CardBody, Image, Progress, Switch } from '@nextui-org/react';
+import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
 import logo from '../resources/img/logo.png';
 
 export const ExamCard = () => {
-	const [liked, setLiked] = useState(false);
+	const [subscribed, setSubscribed] = useState(false);
+	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
 
 	return (
 		<Card
 			isBlurred
 			className="border-none bg-background/60 dark:bg-default-100/50 py-4"
 			shadow="sm"
-			// isPressable onPress={() => console.log('item pressed')}
+			isPressable onPress={() => console.log('item pressed')}
 		>
 			<CardBody>
 				<div className="items-center justify-center">
@@ -29,15 +30,16 @@ export const ExamCard = () => {
 						<div className="flex justify-between items-center mt-2">
 							<h1 className="text-large font-semibold text-foreground/90">Name</h1>
 
-							<Button
-								isIconOnly
+							<Switch
 								className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
-								radius="full"
-								variant="light"
-								onPress={() => setLiked((v) => !v)}
+								defaultSelected
+								size="lg"
+								color="secondary"
+								onChange={() => setSubscribed((v) => !v)}
+								startContent={<BellOff />}
+								endContent={<Bell />}
 							>
-								{liked ? <BellOff /> : <BellRing />}
-							</Button>
+							</Switch>
 						</div>
 
 						<div className="flex flex-col gap-4 my-2">
@@ -62,27 +64,25 @@ export const ExamCard = () => {
 								</div>
 							</div>
 						</div>
-						
-						<h2 className="font-medium mt-3">Duration</h2>
 
 						<div className="flex flex-col mt-3 gap-1">
-							<Slider
-								aria-label="Exam progress"
-								classNames={{
-									track: 'bg-default-500/30',
-								}}
-								color="foreground"
-								step={1}
-								minValue={0}
-								maxValue={300}
-								defaultValue={99}
+							<Progress
 								size="sm"
-								hideThumb={true}
-								isDisabled
-							/>
+								radius="sm"
+								classNames={{
+									base: 'max-w-md',
+									track: 'drop-shadow-md border border-default',
+									indicator: 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500',
+									label: 'tracking-wider font-medium text-default-600',
+									value: 'text-foreground/60',
+								}}
+								label={examProgress != Number.NEGATIVE_INFINITY ? 'Exam in progress' : 'Duration'}
+								value={65}
+								showValueLabel={true}
+							></Progress>
 							<div className="flex justify-between">
-								<p className="text-small">1:30</p>
-								<p className="text-small text-foreground/50">4:00</p>
+								<p className="text-small">08:00</p>
+								<p className="text-small text-foreground/50">10:00</p>
 							</div>
 						</div>
 					</div>
