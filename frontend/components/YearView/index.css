@@ -1,0 +1,22 @@
+.event-day {
+  background-color: rgb(9, 207, 9) !important;
+  color: white !important;
+}
+.calendar-container {
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+
+  position: relative;
+}
+
+.rbc-calendar {
+
+  margin-top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
