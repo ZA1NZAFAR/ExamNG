@@ -1,9 +1,15 @@
 import {
 	Question,
-	MCQuestion
+	MCQuestion,
+	TextQuestion
 } from '../../types/question';
+
 export function isMCQuestion(question: Question): question is MCQuestion {
 	return 'options' in question;
+}
+
+export function isTextQuestion(question: Question): question is TextQuestion {
+	return 'isTextQuestion' in question;
 }
 
 export function hasSingleCorrectOption(question: MCQuestion): boolean {

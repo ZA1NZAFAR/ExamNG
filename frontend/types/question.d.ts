@@ -3,15 +3,19 @@ import { Attachment } from '../attachment/attachment';
 /**
  * Represents a question.
  * @property {string} id The unique identifier of the question.
+ * @property {number} coefficient The coefficient of the question.
  * @property {string} statement The statement of the question.
  * @property {Attachment[]} attachments The attachments of the question.
- * @property {number} coefficient The coefficient of the question.
  */
 export type Question = {
   /**
    * The unique identifier of the question.
    */
   id: string;
+  /**
+   * The coefficient of the question.
+   */
+  coefficient: number;
   /**
    * The statement of the question.
    */
@@ -20,10 +24,19 @@ export type Question = {
    * The attachments of the question.
    */
   attachments: Attachment[];
+}
+
+/**
+ * Represents a text question.
+ * @extends Question
+ * @property {boolean} isTextQuestion Indicates whether the question is a text question. This property is always true.
+ */
+export type TextQuestion = Question & {
   /**
-   * The coefficient of the question.
+   * Indicates whether the question is a text question. This property is always true.
+   * @default true
    */
-  coefficient: number;
+  isTextQuestion: true;
 }
 
 
@@ -54,23 +67,4 @@ export type MCQuestion = Question & {
    * The options of the question.
    */
   options: MCOption[];
-}
-
-
-/**
- * Represents the properties of a question component.
- * @property {number} id The unique identifier of the question.
- * @property {Question} question The question.
- */
-export type QuestionProps = {
-  id: number;
-  question: Question;
-}
-
-/**
- * Represents the properties of an option component.
- * @property {MCOption} option The option.
- */
-export type OptionProps = {
-  option: MCOption;
 }

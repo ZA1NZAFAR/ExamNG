@@ -34,12 +34,3 @@ type ImageAttachment = {
  * It can be either a code attachment or an image attachment.
  */
 export type Attachment = CodeAttachment | ImageAttachment;
-
-
-/**
- * Represents the properties for an attachment component.
- * @property {Attachment} attachment - The attachment to display.
- */
-export type AttachmentProps = {
-  attachment: Attachment;
-}
