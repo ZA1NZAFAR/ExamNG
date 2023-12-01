@@ -19,7 +19,7 @@ export default function YearView({
   const currRange = YearView.range(date, { localizer });
 
   return (
-    <Grid templateColumns={"repeat(4, 1fr)"} gap={3}>
+    <Grid templateColumns={"repeat(4, 1fr)"} gap={12}>
       {currRange.map((month, index) => {
         return (
           <GridItem w="100%" key={index}>

@@ -12,11 +12,14 @@
 }
 
 .rbc-calendar {
-
-  margin-top: 50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+ padding-top: 50px;
 }
 
+.react-calendar {
+  height: 340px;
+}
+
+#description {
+  padding-top: 20px;
+}
 
