@@ -55,6 +55,11 @@ class ExamService {
 						endDate: new Date('2023-12-01T09:30:00'),
 						participants: [
 							{
+								code: 'M1APPLSI1',
+								name: 'M1-APP-LSI-1',
+								size: 35
+							},
+							{
 								code: 'M1APPLSI2',
 								name: 'M1-APP-LSI-2',
 								size: 37
