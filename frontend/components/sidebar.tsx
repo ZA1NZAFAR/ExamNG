@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {Input} from "@nextui-org/react";
+import Notifications from "@/components/notifications";
 
 interface SidebarItem {
     name: string;
@@ -13,17 +14,17 @@ const sidebarItems: SidebarItem[] = [
     {
         name: "Home",
         href: "/exams",
-        icon: <Image src="/exams.svg" alt="Exams" width={24} height={24} />,
+        icon: <Image src="/exams.svg" alt="Exams" width={24} height={24}/>,
     },
     {
         name: "Calendar",
         href: "/calendar",
-        icon: <Image src="/Sheets.svg" alt="Sheets" width={24} height={24} />,
+        icon: <Image src="/Sheets.svg" alt="Sheets" width={24} height={24}/>,
     },
     {
-        name: "Support",
-        href: "/support",
-        icon: <Image src="/Notification.svg" alt="Notifications" width={24} height={24} />,
+        name: "Notifications",
+        href: "#",
+        icon: <Notifications/>,
     },
 ];
 
@@ -31,7 +32,6 @@ export default function Sidebar(): JSX.Element {
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
     const [tooltipIndex, setTooltipIndex] = useState<number | null>(0);
 
-    // Récupérer l'état stocké dans le localStorage au chargement de la page
     useEffect(() => {
         const collapsedState = localStorage.getItem("sidebarCollapsed");
         if (collapsedState) {
@@ -99,7 +99,7 @@ export default function Sidebar(): JSX.Element {
                     <p className="sidebar_logo-name">Meryem Kose</p>
                 </div>
                 <ul className="sidebar_list" onMouseLeave={handleLeave}>
-                    {sidebarItems.map(({ name, icon, href }, index) => (
+                    {sidebarItems.slice(0, -1).map(({name, icon, href}, index) => (
                         <li
                             className="sidebar_item"
                             key={name}
@@ -114,31 +114,31 @@ export default function Sidebar(): JSX.Element {
                                     <span className="sidebar_name">{name}</span>
                                 </div>
                             </Link>
-                            {index==0 && (
-                            <div
-                                className={`tooltip ${tooltipIndex === index ? "show" : ""}`}
-                                id={`tooltip-${index}`}
-                            >
-                                <ul>
-                                    <div className="w-full flex flex-col gap-4">
-                                        <div key="underlined" className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-                                            <Input type="email" variant="underlined" label="Search..." />
+                            {index == 0 && (
+                                <div
+                                    className={`tooltip ${tooltipIndex === index ? "show" : ""}`}
+                                    id={`tooltip-${index}`}
+                                >
+                                    <ul>
+                                        <div className="w-full flex flex-col gap-4">
+                                            <div
+                                                key="underlined"
+                                                className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4"
+                                            >
+                                                <Input type="email" variant="underlined" label="Search..."/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <li>
-                                        JEE
-                                    </li>
-                                    <li>
-                                        Scala
-                                    </li>
-                                    <li>
-                                        Sociology
-                                    </li>
-                                </ul>
-                            </div>
-                                )}
+                                        <li>JEE</li>
+                                        <li>Scala</li>
+                                        <li>Sociology</li>
+                                    </ul>
+                                </div>
+                            )}
                         </li>
                     ))}
+
+                    <span>{sidebarItems[2].icon}</span>
+
                 </ul>
             </aside>
         </div>

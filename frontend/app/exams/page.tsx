@@ -1,14 +1,11 @@
 "use client"
 import "@/styles/globals.css";
-import type {NextComponentType, NextPageContext } from "next";
-import {AppProps} from "next/app";
+
 import Sidebar from "@/components/sidebar";
 import {useEffect, useState} from "react";
-import {Input} from "@nextui-org/react";
 
-type CustomAppProps = AppProps & {
-	Component: NextComponentType<NextPageContext, any, {}>;
-};
+import Notifications from "@/components/notifications";
+
 
 export default function ExamPage() {
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true);
@@ -35,7 +32,6 @@ export default function ExamPage() {
 		};
 	}, []);
 	return (
-		<Sidebar/>
-
+		<><Sidebar/></>
 	);
 }
