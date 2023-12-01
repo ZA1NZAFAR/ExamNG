@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { Exam } from '@/types/exam';
+import javaEE from '../../resources/img/java_ee.png';
+import cybersecurity from '../../resources/img/cybersecurity.jpg';
 
 class ExamService {
 	private apiUrl: string;
@@ -19,6 +21,7 @@ class ExamService {
 					{
 						id: '1',
 						title: 'Java JEE',
+						imageURL: javaEE.src,
 						duration: 3,
 						startDate: new Date('2023-12-01T12:00:00'),
 						endDate: new Date('2023-12-01T15:00:00'),
@@ -46,6 +49,7 @@ class ExamService {
 					{
 						id: '2',
 						title: 'Cybersecurity',
+						imageURL: cybersecurity.src,
 						duration: 1.30,
 						startDate: new Date('2023-12-01T08:00:00'),
 						endDate: new Date('2023-12-01T09:30:00'),

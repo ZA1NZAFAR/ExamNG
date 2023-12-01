@@ -4,6 +4,7 @@ import { Instructor } from './physical';
 export interface Exam {
     id: string;
     title?: string;
+    imageURL?: string;
     duration?: number;
     startDate: Date;
     endDate: Date;

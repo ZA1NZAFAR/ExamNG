@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Proptypes from 'prop-types';
-import { Card, CardBody, Image, Progress, Switch } from '@nextui-org/react';
+import Image from 'next/image';
+import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
 import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
-import logo from '../resources/img/logo.png';
 import { Exam } from '@/types/exam';
+import logo from '../resources/img/logo.png';
 
 export const ExamCard = ({ exam } : { exam: Exam }) => {
 	const [subscribed, setSubscribed] = useState(false);
@@ -18,13 +19,12 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 		>
 			<CardBody>
 				<div className="items-center justify-center">
-					<div className="overflow-visible">
+					<div className="relative overflow-hidden w-52 h-52 xl:w-80 xl:h-80">
 						<Image
 							alt="Exam cover"
-							className="object-cover rounded-xl"
-							shadow="md"
-							src={logo.src}
-							width={300}
+							className="object-cover rounded-xl shadow-md"
+							src={ exam.imageURL ? exam.imageURL : logo.src }
+							fill
 						/>
 					</div>
 
