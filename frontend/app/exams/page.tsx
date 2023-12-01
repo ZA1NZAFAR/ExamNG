@@ -28,12 +28,14 @@ const ExamPageContent: React.FC = () => {
 	return (
 		<div>
 			<h1 className={title()}>Exam</h1>
-			{ exams.map((exam) => (
-				// <div key={exam.id}>
-				// 	<p>{exam.title}</p>
-				// </div>
-				<ExamCard key={ exam.id } exam={ exam } />
-			)) }
+			<div className='flex flex-row flex-wrap gap-4 lg:gap-8 place-content-center lg:flex-nowrap'>
+				{ exams.map((exam) => (
+					// <div key={exam.id}>
+					// 	<p>{exam.title}</p>
+					// </div>
+					<ExamCard key={ exam.id } exam={ exam } />
+				)) }
+			</div>
 		</div>
 	);
 };

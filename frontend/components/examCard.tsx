@@ -12,7 +12,7 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 	return (
 		<Card
 			isBlurred
-			className="border-none bg-background/60 dark:bg-default-100/50 py-4"
+			className="border-none bg-background/60 dark:bg-default-100/50 py-4 grow-0 shrink-0"
 			shadow="sm"
 			isPressable onPress={() => console.log('item pressed')}
 		>
