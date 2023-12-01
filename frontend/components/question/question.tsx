@@ -1,6 +1,6 @@
 import React from 'react';
 import { Question } from '@/types/question';
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
 import { Divider } from '@nextui-org/divider';
 import { ExamContext } from './examContext';
 import AttachmentComponent from './attachment/attachment';
@@ -36,35 +36,35 @@ type QuestionProps = {
 }
 
 const QuestionComponent: React.FC<QuestionProps> = ({
-		id, question,
-		canAnswer = false,
-		showCoefficient = false
-	}) => {
+	id, question,
+	canAnswer = false,
+	showCoefficient = false
+}) => {
 	const examContext = React.useContext(ExamContext);
-	const showScore = showCoefficient ? "text-small text-default-500" : "hidden";
+	const showScore = showCoefficient ? 'text-small text-default-500' : 'hidden';
 	return (
 		<Card className="w-full text-start">
-      <CardHeader className="flex gap-3">
-        <div className="flex flex-col">
-          <p className="text-md">{id}. {question.statement}</p>
-          <p className={showScore}>Score: {question.coefficient}/{examContext.totalScore}</p>
-        </div>
-      </CardHeader>
-      <CardBody>
-      {
-        question.attachments.map((attachment, index) => (
-          <AttachmentComponent
-            key={index}
-            attachment={attachment}
-          />
-        ))
-      }
-      </CardBody>
-      <Divider/>
-      <CardFooter>
-        <AnswerComponent question={question} canAnswer={canAnswer}/>
-      </CardFooter>
-    </Card>
+			<CardHeader className="flex gap-3">
+				<div className="flex flex-col">
+					<p className="text-md">{id}. {question.statement}</p>
+					<p className={showScore}>Score: {question.coefficient}/{examContext.totalScore}</p>
+				</div>
+			</CardHeader>
+			<CardBody>
+				{
+					question.attachments.map((attachment, index) => (
+						<AttachmentComponent
+							key={index}
+							attachment={attachment}
+						/>
+					))
+				}
+			</CardBody>
+			<Divider/>
+			<CardFooter>
+				<AnswerComponent question={question} canAnswer={canAnswer}/>
+			</CardFooter>
+		</Card>
 	);
 };
 
