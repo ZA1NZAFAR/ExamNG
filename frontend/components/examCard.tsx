@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import Proptypes from 'prop-types';
 import { Card, CardBody, Image, Progress, Switch } from '@nextui-org/react';
 import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
 import logo from '../resources/img/logo.png';
+import { Exam } from '@/types/exam';
 
-export const ExamCard = () => {
+export const ExamCard = ({ exam } : { exam: Exam }) => {
 	const [subscribed, setSubscribed] = useState(false);
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
 
@@ -28,7 +30,7 @@ export const ExamCard = () => {
 
 					<div className="flex flex-col py-2">
 						<div className="flex justify-between items-center mt-2">
-							<h1 className="text-large font-semibold text-foreground/90">Name</h1>
+							<h1 className="text-large font-semibold text-foreground/90">{ exam.title }</h1>
 
 							<Switch
 								className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
@@ -90,4 +92,8 @@ export const ExamCard = () => {
 			</CardBody>
 		</Card>
 	);
+};
+
+ExamCard.propTypes = {
+	exam: Proptypes.object.isRequired,
 };

@@ -29,11 +29,11 @@ const ExamPageContent: React.FC = () => {
 		<div>
 			<h1 className={title()}>Exam</h1>
 			{ exams.map((exam) => (
-				<div key={exam.id}>
-					<p>{exam.title}</p>
-				</div>
+				// <div key={exam.id}>
+				// 	<p>{exam.title}</p>
+				// </div>
+				<ExamCard key={ exam.id } exam={ exam } />
 			)) }
-			<ExamCard />
 		</div>
 	);
 };
