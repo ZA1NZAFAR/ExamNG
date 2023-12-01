@@ -10,7 +10,7 @@ export class ExamService {
     }
     return ExamService._instance;
   }
-  constructor() {
+  private constructor() {
   }
 
   async getModules() {
@@ -25,8 +25,8 @@ export class ExamService {
     try {
       const response = await fetch(`${envConfig.backendAPI}/modules/${moduleCode}/${examId}`);
       return await response.json();
-    } catch {
-      throw new Error('Network error');
+    } catch (error) {
+      throw error;
     }
   }
 }

@@ -1,8 +1,19 @@
 import React from 'react';
 import { Image } from '@nextui-org/image';
 import { Textarea } from '@nextui-org/input';
-import { AttachmentProps } from '@/types/attachment';
+import { Attachment } from '@/types/attachment';
 import { isImageAttachment } from './attachment.util';
+
+/**
+ * Represents the properties for an attachment component.
+ * @property {Attachment} attachment - The attachment to display.
+ */
+type AttachmentProps = {
+	/**
+	 * The attachment to display.
+	 */
+  attachment: Attachment;
+}
 
 const AttachmentComponent: React.FC<AttachmentProps> = ({ attachment }) => {
 	if (isImageAttachment(attachment)) {
@@ -19,6 +30,7 @@ const AttachmentComponent: React.FC<AttachmentProps> = ({ attachment }) => {
 			placeholder="Enter your code here"
 			className="max-w-xs"
 			value={attachment.code}
+			isDisabled
 		/>
 	);
 };
