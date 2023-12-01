@@ -23,8 +23,8 @@ class ExamService {
 						title: 'Java JEE',
 						imageURL: javaEE.src,
 						duration: 3,
-						startDate: new Date('2023-12-01T12:00:00'),
-						endDate: new Date('2023-12-01T15:00:00'),
+						startDate: new Date('2023-06-12T12:00:00'),
+						endDate: new Date('2023-06-12T15:00:00'),
 						participants: [
 							{
 								code: 'M1APPLSI1',

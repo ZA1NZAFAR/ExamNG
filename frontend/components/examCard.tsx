@@ -10,6 +10,39 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 	const [subscribed, setSubscribed] = useState(false);
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
 
+	const formatDate = (date: Date): string => {
+		const currentDate = new Date();
+
+		const year = date.getFullYear();
+		const month = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);		// Month is zero-based, so add 1
+		const day = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
+		const hour = date.getHours() < 10 ? ('0' + date.getHours()) : date.getHours();
+		const minute = date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes();
+
+		let formattedDate = day + '/' + month + '/' + year + ' ' + hour + ':' + minute + ' ';
+		const daysDifference = dateDifferenceInDays(currentDate, date); 
+
+		if (daysDifference < 0) {
+			formattedDate += `(${Math.abs(daysDifference)} days ago)`;
+		} else if (daysDifference > 0) {
+			formattedDate += `(in ${daysDifference} days)`;
+		} else {
+			formattedDate += '(exam is today)';
+		}
+
+		return formattedDate;
+	};
+
+	const dateDifferenceInDays = (date1: Date, date2: Date): number => {
+		const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+		// Discard the time and time-zone information
+		const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+		const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+	
+		return Math.floor((utc2 - utc1) / MS_PER_DAY);
+	};
+
 	return (
 		<Card
 			isBlurred
@@ -45,25 +78,27 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 
 					<div className="flex flex-col gap-4 my-2">
 						<div className="flex flex-row justify-between">
-							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
+							<div className='flex flex-row justify-start items-center text-xs xl:text-small text-foreground/80'>
 								<UsersRound className='mr-2' />
-								<div className='w-14 block overflow-hidden text-start text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24'>
+								<div className='w-14 h-14 block overflow-hidden text-start text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
 									{ exam.participants.map(participant => 
 										<p key={participant.code} className='inline-block'>{ participant.name }</p>) 
 									}
 								</div>
 							</div>
-							<div className='flex flex-row justify-end items-center text-small text-foreground/80'>
+							<div className='flex flex-row justify-end items-center text-xs xl:text-small text-foreground/80'>
 								<Book className='mr-2' />
-								<div className='w-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24'>
+								<div className='w-14 h-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
 									<p className='inline-block'>{ exam.course.name }</p>
 								</div>
 							</div>
 						</div>
 						<div className="flex flex-row justify-between">
-							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
+							<div className='flex flex-row justify-start items-center text-xs xl:text-small text-foreground/80'>
 								<Calendar className='mr-2' />
-								<p>Date</p>
+								<div className='w-14 h-14 block overflow-hidden text-start text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
+									<p>{ formatDate(exam.startDate) }</p>
+								</div>
 							</div>
 							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
 								<BarChart2 className='mr-2' />
