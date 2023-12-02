@@ -25,6 +25,7 @@ class ExamService {
 						duration: 3,
 						startDate: new Date('2023-06-12T12:00:00'),
 						endDate: new Date('2023-06-12T15:00:00'),
+						average: 12.50,
 						participants: [
 							{
 								code: 'M1APPLSI1',
@@ -51,8 +52,8 @@ class ExamService {
 						title: 'Cybersecurity',
 						imageURL: cybersecurity.src,
 						duration: 1.30,
-						startDate: new Date('2023-12-01T08:00:00'),
-						endDate: new Date('2023-12-01T09:30:00'),
+						startDate: new Date('2023-12-02T08:00:00'),
+						endDate: new Date('2023-12-02T09:30:00'),
 						participants: [
 							{
 								code: 'M1APPLSI1',

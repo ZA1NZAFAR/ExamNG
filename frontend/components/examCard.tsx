@@ -20,12 +20,13 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 		const minute = date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes();
 
 		let formattedDate = day + '/' + month + '/' + year + ' ' + hour + ':' + minute + ' ';
-		const daysDifference = dateDifferenceInDays(currentDate, date); 
+		const daysDifference = dateDifferenceInDays(currentDate, date);
+		const daysFormatted = Math.abs(daysDifference) > 1 ? 'days' : 'day';
 
 		if (daysDifference < 0) {
-			formattedDate += `(${Math.abs(daysDifference)} days ago)`;
+			formattedDate += `(${-daysDifference} ${daysFormatted} ago)`;
 		} else if (daysDifference > 0) {
-			formattedDate += `(in ${daysDifference} days)`;
+			formattedDate += `(in ${daysDifference} ${daysFormatted})`;
 		} else {
 			formattedDate += '(exam is today)';
 		}
@@ -42,6 +43,11 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 	
 		return Math.floor((utc2 - utc1) / MS_PER_DAY);
 	};
+
+	const classAvgGrade = (average: number): string => {
+		const MAX_GRADE = 20;
+		return average + '/' + MAX_GRADE;
+	}
 
 	return (
 		<Card
@@ -102,7 +108,9 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 							</div>
 							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
 								<BarChart2 className='mr-2' />
-								<p>Average</p>
+								<div className='w-14 h-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
+									<p className='inline-block'>{ exam.average ? classAvgGrade(exam.average) : 'N/A' }</p>
+								</div>
 							</div>
 						</div>
 					</div>
