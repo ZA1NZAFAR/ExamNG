@@ -1,22 +1,28 @@
+// notifications.tsx
 import React, { useState } from "react";
-import { Button } from "@nextui-org/react";
 import UserCard from "@/components/notif_card";
-import Image from "next/image"; // Assurez-vous d'utiliser le bon chemin d'importation
+import Image from "next/image";
+import {useAppContext} from "@/components/AppContextProps";
 
 interface Notification {
     id: number;
+    sideBarActive: boolean;
 }
 
-export default function Notifications() {
+interface NotificationsProps {
+    sideBarIsActive: boolean;
+}
+
+export default function Notifications({ sideBarIsActive }: NotificationsProps) {
+    const { isCollapsed } = useAppContext();
     const initialNotifications: Notification[] = [
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-        { id: 4 },
+        { id: 1, sideBarActive: sideBarIsActive },
+        { id: 2, sideBarActive: sideBarIsActive },
+        { id: 3, sideBarActive: sideBarIsActive },
+        { id: 4, sideBarActive: sideBarIsActive },
     ];
     const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
     const [showNotifications, setShowNotifications] = useState(false);
-
     const handleShowNotifications = () => {
         setShowNotifications(!showNotifications);
     };
@@ -30,7 +36,13 @@ export default function Notifications() {
         <div>
             <div className="sidebar_link">
                 <div className="sidebar_icon-wrapper">
-                    <span className="sidebar_icon"><Image src="/Notification.svg" alt="Notifications" width={24} height={24} onClick={handleShowNotifications}/></span>
+                    <span className="sidebar_icon">
+                        {notifications.length > 0 ? (
+                            <Image src="/NotifOn.svg" alt="Notifications On" width={24} height={24} onClick={handleShowNotifications} />
+                        ) : (
+                            <Image src="/NotifOff.svg" alt="Notifications empty" width={24} height={24} onClick={handleShowNotifications} />
+                        )}
+                    </span>
                 </div>
                 <span className="sidebar_name" onClick={handleShowNotifications}>Notifications</span>
             </div>
@@ -43,6 +55,7 @@ export default function Notifications() {
                             <UserCard
                                 key={notification.id}
                                 id={notification.id}
+                                sideBarIsActive={isCollapsed}
                                 onDelete={() => handleDeleteNotification(notification.id)}
                             />
                         ))

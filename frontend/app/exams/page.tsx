@@ -5,6 +5,7 @@ import Sidebar from "@/components/sidebar";
 import {useEffect, useState} from "react";
 
 import Notifications from "@/components/notifications";
+import {AppProvider} from "@/components/AppContextProps";
 
 
 export default function ExamPage() {
@@ -32,6 +33,6 @@ export default function ExamPage() {
 		};
 	}, []);
 	return (
-		<><Sidebar/></>
+		<AppProvider><Sidebar/></AppProvider>
 	);
 }

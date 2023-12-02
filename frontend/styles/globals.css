@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Common styles for all devices */
 .sidebar_wrapper {
     position: relative;
 }
@@ -10,11 +11,11 @@ body {
     font-family: 'SF Pro', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-
 .sidebar_icon-wrapper {
     position: relative;
     display: inline-block;
 }
+
 .sidebar_item {
     transition: transform 0.3s ease-in-out;
 }
@@ -22,40 +23,36 @@ body {
 .tooltip ul li:hover {
     background: rgba(119, 91, 91, 0.16);
     display: flex;
-    padding: 5px;
-    border-radius: 13px;
+    padding: 0.2rem;
+    border-radius: 0.5rem; /* Using 13px equivalent in relative units */
     align-items: flex-start;
-    gap: 10px;
+    gap: 0.6rem; /* Using 10px equivalent in relative units */
     align-self: stretch;
     transition: background-color 0.4s ease;
-    font: bold 15px SF Pro Text;
+    font: bold 0.9375rem SF Pro Text; /* Using 15px equivalent in relative units */
 }
 
 .tooltip.show {
     display: block;
-    z-index: 999;
+    width: 100%;
+    z-index: 10;
 }
+
 .tooltip {
     position: absolute;
     top: 100%;
     left: 0;
     display: none;
-    padding: 5px;
-    z-index: 999;
+    padding: 0.3125rem; /* Using 5px equivalent in relative units */
+    z-index: 10;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-    border-radius: 16px;
-    border: 0.5px solid rgba(245, 239, 235, 0.40);
+    border-radius: 0.8rem; /* Using 16px equivalent in relative units */
+    border: 0.03125px solid rgba(245, 239, 235, 0.40); /* Using 0.5px equivalent in relative units */
     color: rgba(36, 34, 32, 0.56);
     background: rgba(255, 237, 224, 0.56);
-    box-shadow: 0px 64px 64px -32px rgba(102, 37, 0, 0.56);
-    backdrop-filter: blur(80px);
+    box-shadow: 0px 4rem 4rem -2rem rgba(102, 37, 0, 0.56); /* Using 64px equivalent in relative units */
+    backdrop-filter: blur(5rem); /* Using 80px equivalent in relative units */
     text-align: justify;
-}
-
-
-.sidebar_item:hover .tooltip {
-    display: block;
-    position : relative;
 }
 
 .sidebar {
@@ -64,11 +61,11 @@ body {
     padding: 1rem;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
     overflow: hidden;
-    border-radius: 28px;
-    border: 1px solid rgba(245, 239, 235, 0.40);
+    border-radius: 1.8rem; /* Using 28px equivalent in relative units */
+    border: 0.03125rem solid rgba(245, 239, 235, 0.40); /* Using 1px equivalent in relative units */
     background: rgba(255, 237, 224, 0.56);
-    box-shadow: 0 64px 64px -32px rgba(102, 37, 0, 0.56), 0 56px 64px -16px rgba(102, 37, 0, 0.56);
-    backdrop-filter: blur(80px);
+    box-shadow: 0 4rem 4rem -2rem rgba(102, 37, 0, 0.56), 0 3.5rem 4rem -1rem rgba(102, 37, 0, 0.56); /* Using 64px and 56px equivalent in relative units */
+    backdrop-filter: blur(5rem);
 }
 
 .sidebar_top {
@@ -78,7 +75,7 @@ body {
     gap: 1rem;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #93867E;
+    border-bottom: 0.0625rem solid #93867E; /* Using 1px equivalent in relative units */
 }
 
 .sidebar_logo {
@@ -100,8 +97,8 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-}
 
+}
 
 .sidebar_link {
     position: relative;
@@ -109,15 +106,16 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0.8rem 1rem;
-    background: #D1B7AC15;
+    background: rgba(209, 183, 172, 0.082); /* Using rgba for transparency */
     color: rgba(36, 34, 32, 0.56);
-    font-size: 11px;
+    font-size: 0.6875rem; /* Using 11px equivalent in relative units */
     font-weight: 700;
-    line-height: 24px;
+    line-height: 1.5; /* Using 24px equivalent in relative units */
     text-transform: uppercase;
-    border-radius: 0.8rem;
+    border-radius: 0.8125rem;
     opacity: 1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
 }
 
 .sidebar_icon {
@@ -154,6 +152,6 @@ body {
     fill: rgba(255, 237, 224, 0.56);
     stroke-width: 1px;
     stroke: rgba(245, 239, 235, 0.32);
-    backdrop-filter: blur(90px);
+    backdrop-filter: blur(5.625rem); /* Using 90px equivalent in relative units */
     z-index: 10;
 }
