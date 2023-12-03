@@ -1,25 +1,139 @@
 .event-day {
-  background-color: rgb(9, 207, 9) !important;
-  color: white !important;
+    background-color: #dca0a0 !important;
+    color: white !important;
 }
-.calendar-container {
-  height: 100vh;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
 
-  position: relative;
+.calendar-container {
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.react-calendar__tile--now {
+    background: #ffffff;
 }
 
 .rbc-calendar {
- padding-top: 50px;
+    width: 100%;
+    gap: 40px;
+    border-radius: 64px;
+    padding: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 28px 844px 0px rgba(0, 0, 0, 0.18);
+    margin-right: 50px;
+    height: 180vh;
+
+    /* phone */
+    @media screen and (min-width: 250px ) and (max-width: 400px) {
+        width: 100%;
+        height: 148vh;
+    }
+
+    @media screen and (min-width: 400px ) and (max-width: 550px) {
+        width: 100%;
+        height: 139vh;
+    }
+    /* tab */
+    @media screen and (min-width: 700px ) and (max-width:  770px) {
+        width: 100%;
+        height: 120vh;
+    }
+    @media screen and (min-width: 820px ) and (max-width:  850px) {
+        width: 100%;
+        height: 105vh;
+    }
+    @media screen and (min-width: 900px ) and (max-width:  1100px) {
+        width: 100%;
+        height: 90vh;
+    }
+    /* laptop */
+    @media screen and (min-width: 1200px ) and (max-width:  1300px) {
+        width: 100%;
+        height: 155vh;
+    }
 }
 
 .react-calendar {
-  height: 340px;
+    height: 340px;
+}
+
+#title {
+    padding-top: 20px;
+    text-align: left;
+    padding-left: 10px;
+    font: bold 15px SF Pro Text;
 }
 
 #description {
-  padding-top: 20px;
+    align-self: stretch;
+    padding-top: 20px;
+    color: #9192A4;
+    font: bold 15px SF Pro Text;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    padding-bottom: 20px;
 }
 
+.full-calendar-page {
+    width: 1500px;
+    height: 1400px;
+    flex-shrink: 0;
+    border-radius: 10px;
+
+    /* phone */
+    @media screen and (min-width: 250px ) and (max-width: 399px) {
+        width: 100%;
+    }
+
+   @media screen and (min-width: 400px ) and (max-width: 550px) {
+        width: 100%;
+    }
+    /* tab */
+    @media screen and (min-width: 700px ) and (max-width:  770px) {
+        width: 100%;
+    }
+    @media screen and (min-width: 820px ) and (max-width:  850px) {
+        width: 100%;
+    }
+   @media screen and (min-width: 900px ) and (max-width:  1024px) {
+        width: 100%;
+    }
+    /* laptop */
+    @media screen and (min-width: 1200px ) and (max-width:  1300px) {
+        width: 100%;
+    }
+}
+
+/*calendar title*/
+.tracking-tight {
+    align-self: stretch;
+    color: #9192A4;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px;
+}
+
+/* 2023 */
+.rbc-toolbar-label {
+    align-self: stretch;
+    color: #404040;
+    margin-top: 8px;
+    text-align: right;
+    font: bold 15px SF Pro Text;
+    font-size: 30px;
+    font-style: normal;
+}
+
+/* toolbar */
+.rbc-toolbar {
+    align-self: stretch;
+    font-size: 20px;
+    font-weight: 510;
+    line-height: 48px;
+    text-align: right;
+}

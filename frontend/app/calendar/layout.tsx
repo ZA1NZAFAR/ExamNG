@@ -7,7 +7,7 @@ export default function CalendarLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<section>
+		<section className= "full-calendar-page" >
 			<div>
 				{children}
 			</div>
