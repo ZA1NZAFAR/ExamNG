@@ -47,7 +47,11 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 	const classAvgGrade = (average: number): string => {
 		const MAX_GRADE = 20;
 		return average + '/' + MAX_GRADE;
-	}
+	};
+
+	const calculateExamProgress = (startTime: Date, endTime: Date) => {
+		
+	};
 
 	return (
 		<Card
