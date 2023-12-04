@@ -52,8 +52,8 @@ class ExamService {
 						title: 'Cybersecurity',
 						imageURL: cybersecurity.src,
 						duration: 1.30,
-						startDate: new Date('2023-12-02T08:00:00'),
-						endDate: new Date('2023-12-02T09:30:00'),
+						startDate: new Date('2023-12-04T02:00:00'),
+						endDate: new Date('2023-12-04T04:30:00'),
 						participants: [
 							{
 								code: 'M1APPLSI1',
@@ -84,8 +84,8 @@ class ExamService {
 						id: '3',
 						title: 'Sociology',
 						duration: 2,
-						startDate: new Date('2023-12-07T09:00:00'),
-						endDate: new Date('2023-12-07T11:00:00'),
+						startDate: new Date('2024-03-15T09:00:00'),
+						endDate: new Date('2024-03-15T11:00:00'),
 						participants: [
 							{
 								code: 'L3LSI1',

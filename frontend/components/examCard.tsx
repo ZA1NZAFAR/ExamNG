@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Proptypes from 'prop-types';
 import Image from 'next/image';
 import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
@@ -66,9 +66,14 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 			const diffMsPastTimeSinceStart = (currentTime - startTime);		// milliseconds between now & start time
 			const diffMinsDuration = Math.round(((diffMsDuration % MS_PER_DAY) % MS_PER_HOUR) / MS_PER_MINUTE);
 			const diffMinsPastTimeSinceStart = Math.round(((diffMsPastTimeSinceStart % MS_PER_DAY) % MS_PER_HOUR) / MS_PER_MINUTE);
+			console.log(diffMinsPastTimeSinceStart / diffMinsDuration * 100);
 			setExamProgress(diffMinsPastTimeSinceStart / diffMinsDuration * 100);
 		}
 	};
+
+	useEffect(() => {
+		calculateExamProgress(exam.startDate, exam.endDate);
+	}, []);
 
 	return (
 		<Card
@@ -147,7 +152,7 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 								label: 'tracking-wider font-medium text-default-600',
 								value: 'text-foreground/60',
 							}}
-							label={examProgress != Number.NEGATIVE_INFINITY ? 'Exam in progress' : 'Duration'}
+							label={(examProgress > 0 && examProgress < 100) ? 'Exam in progress' : 'Duration'}
 							value={examProgress}
 							showValueLabel={true}
 						></Progress>
