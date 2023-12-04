@@ -50,7 +50,24 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 	};
 
 	const calculateExamProgress = (startTime: Date, endTime: Date) => {
-		
+		const currentTime = new Date();
+		const MS_PER_DAY = 86_400_000;
+		const MS_PER_HOUR = 3_600_000;
+		const MS_PER_MINUTE = 60_000;
+
+		// Exam is planned, hasn't yet started
+		if (currentTime < startTime) {
+			setExamProgress(0);
+		// Exam has taken place in the past
+		} else if (currentTime > endTime) {
+			setExamProgress(100);
+		} else {
+			const diffMsDuration = (endTime - startTime);					// milliseconds between end time & start time
+			const diffMsPastTimeSinceStart = (currentTime - startTime);		// milliseconds between now & start time
+			const diffMinsDuration = Math.round(((diffMsDuration % MS_PER_DAY) % MS_PER_HOUR) / MS_PER_MINUTE);
+			const diffMinsPastTimeSinceStart = Math.round(((diffMsPastTimeSinceStart % MS_PER_DAY) % MS_PER_HOUR) / MS_PER_MINUTE);
+			setExamProgress(diffMinsPastTimeSinceStart / diffMinsDuration * 100);
+		}
 	};
 
 	return (
@@ -131,7 +148,7 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 								value: 'text-foreground/60',
 							}}
 							label={examProgress != Number.NEGATIVE_INFINITY ? 'Exam in progress' : 'Duration'}
-							value={65}
+							value={examProgress}
 							showValueLabel={true}
 						></Progress>
 						<div className="flex justify-between">
