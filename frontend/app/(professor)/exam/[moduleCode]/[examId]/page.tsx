@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { title } from '@/components/primitives';
-import { ExamService } from '@/services/examService';
 import QuestionComponent from '@/components/question/question';
 import { Exam } from '@/types/module';
 import { ExamContext } from '@/components/question/examContext';
+import { useExamService } from '@/hooks/useService';
 
 /**
  * Represents the parameters for an exam page.
@@ -27,14 +27,14 @@ export default function ExamPage({ params }: { params: ExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
 	
 	const { moduleCode, examId } = params;
-	const examService = ExamService.instance;
+	const examService = useExamService();
 
-	useEffect(() => {
+	React.useEffect(() => {
 		(async () => {
 			const exam = await examService.getExam(moduleCode, examId);
 			setExam(exam);
 		})();
-	});
+	}, [examService, moduleCode, examId]);
 	if (!exam) {
 		return <h1>Loading...</h1>;
 	}
