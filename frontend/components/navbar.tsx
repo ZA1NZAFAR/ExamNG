@@ -32,11 +32,11 @@ import {
 import { Logo } from '@/components/icons';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthContext } from '@/services/authService';
+import { useAuthService } from '@/hooks/useService';
 
 export const Navbar = () => {
 	const router = useRouter();
-	const authService = React.useContext(AuthContext);
+	const authService = useAuthService();
 	function handleLogin() {
 		if (authService.user) {
 			authService.logout();

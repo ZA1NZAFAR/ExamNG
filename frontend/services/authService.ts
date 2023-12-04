@@ -1,17 +1,7 @@
-'use client'
-
 import { testUser } from '@/mockData/user';
 import { User } from '@/types/user';
-import React from 'react';
 
-class AuthService {
-  private static _instance: AuthService;
-  static get instance() {
-    if (!AuthService._instance) {
-      AuthService._instance = new AuthService();
-    }
-    return AuthService._instance;
-  }
+export class AuthService {
   user: User | null;
   constructor() {
     this.user = testUser;
@@ -25,5 +15,3 @@ class AuthService {
     this.user = null;
   }
 }
-
-export const AuthContext = React.createContext<AuthService>(AuthService.instance);

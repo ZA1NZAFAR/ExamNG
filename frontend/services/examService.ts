@@ -2,17 +2,6 @@ import { envConfig } from "@/config/envConfig";
 import { Exam } from "@/types/module";
 
 export class ExamService {
-  private static _instance: ExamService;
-
-  static get instance() {
-    if (!ExamService._instance) {
-      ExamService._instance = new ExamService();
-    }
-    return ExamService._instance;
-  }
-  private constructor() {
-  }
-
   async getModules() {
     return await fetch(`${envConfig.backendAPI}/modules`).then(res => res.json());
   }
