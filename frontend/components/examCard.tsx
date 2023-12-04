@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Proptypes from 'prop-types';
 import Image from 'next/image';
 import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
@@ -9,6 +9,7 @@ import logo from '../resources/img/logo.png';
 export const ExamCard = ({ exam } : { exam: Exam }) => {
 	const [subscribed, setSubscribed] = useState(false);
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
+	const intervalIDRef = useRef<NodeJS.Timeout | null>(null);
 
 	const formatDate = (date: Date): string => {
 		const currentDate = new Date();
@@ -51,29 +52,39 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 
 	const calculateExamProgress = (startTime: Date, endTime: Date) => {
 		const currentTime = new Date();
-		const MS_PER_DAY = 86_400_000;
-		const MS_PER_HOUR = 3_600_000;
 		const MS_PER_MINUTE = 60_000;
 
 		// Exam is planned, hasn't yet started
 		if (currentTime < startTime) {
+			if (intervalIDRef.current) {
+				clearInterval(intervalIDRef.current);
+				intervalIDRef.current = null;
+			}
+
 			setExamProgress(0);
 		// Exam has taken place in the past
 		} else if (currentTime > endTime) {
+			if (intervalIDRef.current) {
+				clearInterval(intervalIDRef.current);
+				intervalIDRef.current = null;
+			}
+
 			setExamProgress(100);
+		// Exam is in progress
 		} else {
-			const diffMsDuration = (endTime - startTime);					// milliseconds between end time & start time
-			const diffMsPastTimeSinceStart = (currentTime - startTime);		// milliseconds between now & start time
-			const diffMinsDuration = Math.round(((diffMsDuration % MS_PER_DAY) % MS_PER_HOUR) / MS_PER_MINUTE);
-			const diffMinsPastTimeSinceStart = Math.round(((diffMsPastTimeSinceStart % MS_PER_DAY) % MS_PER_HOUR) / MS_PER_MINUTE);
-			console.log(diffMinsPastTimeSinceStart / diffMinsDuration * 100);
+			const diffMsDuration = (endTime.getTime() - startTime.getTime());					// milliseconds between end time & start time
+			const diffMsPastTimeSinceStart = (currentTime.getTime() - startTime.getTime());		// milliseconds between now & start time
+			const diffMinsDuration = Math.round(diffMsDuration / MS_PER_MINUTE);
+			const diffMinsPastTimeSinceStart = Math.round(diffMsPastTimeSinceStart / MS_PER_MINUTE);
 			setExamProgress(diffMinsPastTimeSinceStart / diffMinsDuration * 100);
 		}
 	};
 
 	useEffect(() => {
 		calculateExamProgress(exam.startDate, exam.endDate);
-	}, []);
+		intervalIDRef.current = setInterval(() => calculateExamProgress(exam.startDate, exam.endDate), 60_000);
+		return () => clearInterval(intervalIDRef.current!);
+	}, [exam.startDate, exam.endDate]);
 
 	return (
 		<Card

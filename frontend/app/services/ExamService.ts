@@ -51,9 +51,9 @@ class ExamService {
 						id: '2',
 						title: 'Cybersecurity',
 						imageURL: cybersecurity.src,
-						duration: 1.30,
-						startDate: new Date('2023-12-04T02:00:00'),
-						endDate: new Date('2023-12-04T04:30:00'),
+						duration: 2.30,
+						startDate: new Date('2023-12-05T08:00:00'),
+						endDate: new Date('2023-12-05T10:30:00'),
 						participants: [
 							{
 								code: 'M1APPLSI1',
