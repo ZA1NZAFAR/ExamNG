@@ -5,7 +5,7 @@ import { title } from '@/components/primitives';
 import QuestionComponent from '@/components/question/question';
 import { Exam } from '@/types/module';
 import { ExamContext } from '@/components/question/examContext';
-import { useExamService } from '@/hooks/useService';
+import { useService } from '@/hooks/useService';
 
 /**
  * Represents the parameters for an exam page.
@@ -27,7 +27,7 @@ export default function ExamPage({ params }: { params: ExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
 	
 	const { moduleCode, examId } = params;
-	const examService = useExamService();
+	const { examService } = useService();
 
 	React.useEffect(() => {
 		(async () => {
