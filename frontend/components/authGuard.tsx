@@ -3,10 +3,10 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { AuthGuardProps } from '@/types';
-import { useAuthService } from '@/hooks/useService';
+import { useService } from '@/hooks/useService';
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ userType = 'none', redirectPath = '/', children }) => {
-	const authService = useAuthService();
+	const { authService } = useService();
 
 	if (!authService.user) {
 		redirect(redirectPath); // TODO: need to implement where to redirect
