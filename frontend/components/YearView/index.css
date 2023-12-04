@@ -16,13 +16,12 @@
 }
 
 .rbc-calendar {
-    width: 100%;
     gap: 40px;
     border-radius: 64px;
     padding: 30px;
     background: #FFFFFF;
     box-shadow: 0px 28px 844px 0px rgba(0, 0, 0, 0.18);
-    margin-right: 50px;
+    margin: auto;
     height: 180vh;
 
     /* phone */
@@ -49,8 +48,8 @@
         height: 90vh;
     }
     /* laptop */
-    @media screen and (min-width: 1200px ) and (max-width:  1300px) {
-        width: 100%;
+    @media screen and (min-width: 1200px ) and (max-width:  1500px) {
+        width: 97%;
         height: 155vh;
     }
 }
@@ -103,7 +102,7 @@
         width: 100%;
     }
     /* laptop */
-    @media screen and (min-width: 1200px ) and (max-width:  1300px) {
+    @media screen and (min-width: 1200px ) and (max-width:  1500px) {
         width: 100%;
     }
 }

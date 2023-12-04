@@ -30,8 +30,10 @@ const events = [
 ];
 
 export default function Calendar() {
-  const [view, setView] = useState(Views.WEEK);
+  //const [view, setView] = useState(Views.WEEK);
+  const [view, setView] = useState<View>('week');
   const [date, setDate] = useState(new Date());
+
 
   return (
     <BigCalendar

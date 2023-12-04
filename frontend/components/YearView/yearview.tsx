@@ -16,7 +16,7 @@ export default function YearView({
   onNavigate,
   events,
 }: ViewProps) {
-  const currRange = YearView.range(date, { localizer });
+  const currRange = YearView.range(new Date(date), { localizer });
 
   return (
     <Grid templateColumns={"repeat(4, 1fr)"} gap={12}>
