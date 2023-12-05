@@ -5,9 +5,9 @@ import {
 } from '../../../types/attachment';
 
 export function isImageAttachment(attachment: Attachment): attachment is ImageAttachment {
-	return 'imageUrl' in attachment;
+	return (attachment as ImageAttachment).imageUrl !== undefined;
 }
 
 export function isCodeAttachment(attachment: Attachment): attachment is CodeAttachment {
-	return 'language' in attachment;
+	return (attachment as CodeAttachment).language !== undefined;
 }

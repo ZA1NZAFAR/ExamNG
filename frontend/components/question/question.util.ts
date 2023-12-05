@@ -1,15 +1,20 @@
 import {
 	Question,
 	MCQuestion,
-	TextQuestion
+	TextQuestion,
+	CodeQuestion
 } from '../../types/question';
 
 export function isMCQuestion(question: Question): question is MCQuestion {
-	return 'options' in question;
+	return (question as MCQuestion).options !== undefined;
 }
 
 export function isTextQuestion(question: Question): question is TextQuestion {
-	return 'isTextQuestion' in question;
+	return (question as TextQuestion).isTextQuestion !== undefined;
+}
+
+export function isCodeQuestion(question: Question): question is CodeQuestion {
+	return (question as CodeQuestion).defaultLanguage !== undefined;
 }
 
 export function hasSingleCorrectOption(question: MCQuestion): boolean {
