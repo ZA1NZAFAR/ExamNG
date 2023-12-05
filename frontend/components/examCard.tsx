@@ -169,7 +169,7 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 						></Progress>
 						<div className="flex justify-between">
 							<p className="text-small">{ formatDate(exam.startDate).split(' ')[1] }</p>
-							<p className="text-small text-foreground/50">{ formatDate(exam.endDate).split(' ')[1] }</p>
+							<p className={`text-small ${examProgress > 0 && examProgress < 100 ? 'text-foreground/50' : ''}`}>{ formatDate(exam.endDate).split(' ')[1] }</p>
 						</div>
 					</div>
 				</div>
