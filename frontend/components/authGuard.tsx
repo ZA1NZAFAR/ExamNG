@@ -2,8 +2,13 @@
 
 import React from 'react';
 import { redirect } from 'next/navigation';
-import { AuthGuardProps } from '@/types';
 import { useService } from '@/hooks/useService';
+
+type AuthGuardProps = {
+  userType?: 'none' | 'teacher' | 'student';
+  redirectPath?: string;
+  children: React.ReactNode;
+}
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ userType = 'none', redirectPath = '/', children }) => {
 	const { authService } = useService();
