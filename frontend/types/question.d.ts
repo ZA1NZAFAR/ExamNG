@@ -1,4 +1,5 @@
-import { Attachment } from '../attachment/attachment';
+import { Attachment } from "./attachment";
+import { Language } from "./language";
 
 /**
  * Represents a question.
@@ -27,7 +28,7 @@ export type Question = {
 }
 
 /**
- * Represents a text question.
+ * Represents a question that requires a text answer.
  * @extends Question
  * @property {boolean} isTextQuestion Indicates whether the question is a text question. This property is always true.
  */
@@ -37,6 +38,23 @@ export type TextQuestion = Question & {
    * @default true
    */
   isTextQuestion: true;
+}
+
+/**
+ * Represents a question that requires a code answer.
+ * @extends Question
+ * @property {Language} defaultLanguage The default language of the code.
+ * @property {string} [initialCode] The initial code for the question.
+ */
+export type CodeQuestion = Question & {
+  /**
+   * The default language of the code question.
+   */
+  defaultLanguage: Language | null;
+  /**
+   * The initial code for the question.
+   */
+  initialCode?: string;
 }
 
 

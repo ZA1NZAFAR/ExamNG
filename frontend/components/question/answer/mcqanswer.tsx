@@ -8,7 +8,7 @@ import { CheckboxGroup, Checkbox } from '@nextui-org/checkbox';
 /**
  * Represents the properties of a multiple-choice question component.
  * @property {MCQuestion} question The MC question object containing its content.
- * @property {boolean} canAnswer Whether the answer can be submitted.
+ * @property {boolean} isDisabled Whether the answer can be submitted.
  */
 type MCQAnswerProps = {
 	/**
@@ -19,16 +19,16 @@ type MCQAnswerProps = {
    * Whether the answer can be submitted.
    * @default false
    */
-  canAnswer: boolean;
+  isDisabled?: boolean;
 }
 
 const MCQAnswerComponent: React.FC<MCQAnswerProps> = ({
 	question,
-	canAnswer = false,
+	isDisabled = false,
 }) => {
 	if (hasSingleCorrectOption(question)) {
 		return (
-			<RadioGroup isDisabled={canAnswer}>
+			<RadioGroup isDisabled={isDisabled}>
 				{question.options.map((option, index) => (
 					<Radio key={index} value={option.statement}>
 						{option.statement}
@@ -38,7 +38,7 @@ const MCQAnswerComponent: React.FC<MCQAnswerProps> = ({
 		);
 	}
 	return (
-		<CheckboxGroup isDisabled={canAnswer}>
+		<CheckboxGroup isDisabled={isDisabled}>
 			{question.options.map((option, index) => (
 				<Checkbox key={index} value={option.statement}>
 					{option.statement}

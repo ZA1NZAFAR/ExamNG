@@ -1,5 +1,5 @@
 import React from 'react';
-import { Language } from '@/types/attachment';
+import { Language } from '@/types/language';
 import Editor from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 
@@ -24,10 +24,10 @@ const LINE_HEIGHT = 19;
 
 function CodeAttachmentComponent ({ language, code }: CodeAttachmentProps) {
 	const { theme } = useTheme();
-	const height = Math.min(MAX_LINES, code.split('\n').length) * LINE_HEIGHT;
+	const height = Math.min(MAX_LINES, code.split('\n').length + 1) * LINE_HEIGHT;
 	return (
 		<Editor
-			height={height}
+			height={`${height}px`}
 			language={language}
 			className="max-w"
 			theme={theme === 'dark' ? 'vs-dark' : 'light'}

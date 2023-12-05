@@ -11,7 +11,7 @@ import AnswerComponent from './answer/answer';
  * Represents the properties of a question component.
  * @property {number} id The unique identifier of the question.
  * @property {Question} question The question object containing its content.
- * @property {boolean} canAnswer Whether the answer can be submitted.
+ * @property {boolean} disableAnswer Whether the answer can be submitted.
  * @property {boolean} showCoefficient Whether the coefficient should be shown.
  */
 type QuestionProps = {
@@ -27,7 +27,7 @@ type QuestionProps = {
 	 * Whether the answer can be submitted.
 	 * @default false
 	*/
-	canAnswer?: boolean;
+	disableAnswer?: boolean;
 	/**
 	 * Whether the coefficient should be shown.
 	 * @default false
@@ -37,7 +37,7 @@ type QuestionProps = {
 
 const QuestionComponent: React.FC<QuestionProps> = ({
 	id, question,
-	canAnswer = false,
+	disableAnswer = false,
 	showCoefficient = false
 }) => {
 	const examContext = React.useContext(ExamContext);
@@ -61,8 +61,9 @@ const QuestionComponent: React.FC<QuestionProps> = ({
 				}
 			</CardBody>
 			<Divider/>
-			<CardFooter>
-				<AnswerComponent question={question} canAnswer={canAnswer}/>
+			<CardFooter className="flex flex-col items-start text-start gap-2">
+				<p className="text-small">Your answer</p>
+				<AnswerComponent question={question} isDisabled={disableAnswer}/>
 			</CardFooter>
 		</Card>
 	);
