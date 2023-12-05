@@ -1,13 +1,21 @@
 /**
+ * Represents a language.
+ */
+export type Language = 'javascript' | 'typescript' | 'css' | 'less' | 'scss' | 'json' | 'html' |
+'xml' | 'php' | 'csharp' | 'cpp' | 'kotlin' | 'markdown' | 'java' | 'vb' | 'sql' |
+'mysql' | 'batch' | 'yaml' | 'fsharp' | 'lua' | 'powershell' | 'python' | 'pgsql' | 'sass' |
+'rust' | 'dockerfile';
+
+/**
  * Represents a code attachment.
- * @property {string} language - The language of the code.
+ * @property {Language} language - The language of the code.
  * @property {string} [code] - The code content.
  */
-type CodeAttachment = {
+export type CodeAttachment = {
   /**
    * The language of the code.
    */
-  language: string;
+  language: Language;
   /**
    * The code content.
    */
@@ -18,7 +26,7 @@ type CodeAttachment = {
  * @property {string} imageUrl - The URL of the image.
  * @property {string} [description] - The description of the image.
  */
-type ImageAttachment = {
+export type ImageAttachment = {
   /**
    * The URL of the image.
    */
