@@ -45,7 +45,7 @@ export type TextQuestion = Question & {
  * @property {string} statement The statement or text of the option.
  * @property {boolean} correctOption Indicates whether the option is the correct answer.
  */
-type MCOption = {
+export type MCOption = {
   /**
    * The statement or text of the option.
    */
