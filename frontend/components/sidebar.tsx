@@ -62,7 +62,12 @@ export default function Sidebar(): JSX.Element {
         {
             name: "Calendar",
             href: "/calendar",
-            icon: <Image src="/Sheets.svg" alt="Sheets" width={24} height={24}/>,
+            icon: <Image src="/Calendar.svg" alt="Sheets" width={24} height={24}/>,
+        },
+        {
+            name: "Exams reviews",
+            href: "#",
+            icon: <Image src="/Sheets.svg" alt="Exams" width={24} height={24}/>,
         },
         {
             name: "Notifications",
@@ -149,7 +154,7 @@ export default function Sidebar(): JSX.Element {
                         </li>
                     ))}
 
-                    <span className = "sidebar_item">{sidebarItems[2].icon}</span>
+                    <span className = "sidebar_item">{sidebarItems[3].icon}</span>
 
                 </ul>
             </aside>
