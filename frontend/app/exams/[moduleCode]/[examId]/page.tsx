@@ -12,7 +12,7 @@ import { useService } from '@/hooks/useService';
  * @property {string} moduleCode - The module code of the exam.
  * @property {string} examId - The unique identifier of the exam.
  */
-type ExamPageParams = {
+type SingleExamPageParams = {
 	/**
 	 * The module code of the exam.
 	 */
@@ -23,7 +23,7 @@ type ExamPageParams = {
 	examId: string;
 }
 
-export default function ExamPage({ params }: { params: ExamPageParams}) {
+export default function SingleExamPage({ params }: { params: SingleExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
 	
 	const { moduleCode, examId } = params;
