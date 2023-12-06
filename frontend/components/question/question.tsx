@@ -41,7 +41,7 @@ const QuestionComponent: React.FC<QuestionProps> = ({
 	showCoefficient = false
 }) => {
 	const examContext = React.useContext(ExamContext);
-	const showScore = showCoefficient ? 'text-small text-default-500' : 'hidden';
+	const showScore = showCoefficient ? 'text-sm text-default-500' : 'hidden';
 	return (
 		<Card className="w-full text-start">
 			<CardHeader className="flex gap-3">
@@ -62,7 +62,7 @@ const QuestionComponent: React.FC<QuestionProps> = ({
 			</CardBody>
 			<Divider/>
 			<CardFooter className="flex flex-col items-start text-start gap-2">
-				<p className="text-small">Your answer</p>
+				<p className="text-sm">Your answer</p>
 				<AnswerComponent question={question} isDisabled={disableAnswer}/>
 			</CardFooter>
 		</Card>

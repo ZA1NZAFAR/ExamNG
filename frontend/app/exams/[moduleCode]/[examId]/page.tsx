@@ -6,6 +6,7 @@ import QuestionComponent from '@/components/question/question';
 import { Exam } from '@/types/module';
 import { ExamContext } from '@/components/question/examContext';
 import { useService } from '@/hooks/useService';
+import QuestionSkeleton from '@/components/question/questionSkeleton';
 
 /**
  * Represents the parameters for an exam page.
@@ -36,7 +37,13 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 		})();
 	}, [examService, moduleCode, examId]);
 	if (!exam) {
-		return <h1>Loading...</h1>;
+		return (
+			<>
+				<h1 className={title()}>Exam: {moduleCode}</h1>
+				<h2>{examId}</h2>
+				<QuestionSkeleton />
+			</>
+		);
 	}
 
 	const totalScore = exam.questions.reduce((total, question) => total + question.coefficient, 0);
@@ -44,7 +51,7 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 	return (	
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
-			<h2>{params.examId}</h2>
+			<h2>{examId}</h2>
 			{exam.questions.map((question, index) => (
 				<QuestionComponent
 					key={index}
