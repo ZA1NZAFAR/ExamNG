@@ -1,3 +1,5 @@
+'use client';
+
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -28,8 +30,22 @@ import {
 } from '@/components/icons';
 
 import { Logo } from '@/components/icons';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useService } from '@/hooks/useService';
 
 export const Navbar = () => {
+	const router = useRouter();
+	const { authService } = useService();
+	function handleLogin() {
+		if (authService.user) {
+			authService.logout();
+			router.refresh();
+			return;
+		}
+		authService.login();
+		router.refresh();
+	}
 	const searchInput = (
 		<Input
 			aria-label="Search"
@@ -50,6 +66,11 @@ export const Navbar = () => {
 			type="search"
 		/>
 	);
+
+	let loginIcon = ' not logged in';
+	if (authService.user != null) {
+		loginIcon = authService.user.type;
+	}
 
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
@@ -91,6 +112,9 @@ export const Navbar = () => {
 					</Link>
 					<Link isExternal href={siteConfig.links.github} aria-label="Github">
 						<GithubIcon className="text-default-500" />
+					</Link>
+					<Link aria-label="Login" onClick={handleLogin}>
+						{ loginIcon }
 					</Link>
 					<ThemeSwitch />
 				</NavbarItem>
