@@ -55,7 +55,7 @@ export default function Sidebar(): JSX.Element {
     };
     let sidebarItems: SidebarItem[] = [
         {
-            name: "Home",
+            name: "Exams",
             href: "/exams",
             icon: <Image src="/exams.svg" alt="Exams" width={24} height={24}/>,
         },
