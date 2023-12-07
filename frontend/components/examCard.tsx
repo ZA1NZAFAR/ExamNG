@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Proptypes from 'prop-types';
 import Image from 'next/image';
 import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
 import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
@@ -176,8 +175,4 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 			</CardBody>
 		</Card>
 	);
-};
-
-ExamCard.propTypes = {
-	exam: Proptypes.object.isRequired,
 };

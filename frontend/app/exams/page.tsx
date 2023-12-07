@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { title } from '@/components/primitives';
 import { Exam } from '@/types/exam';
 import { ExamServiceProvider } from '../contexts/providers/ExamServiceProvider';
 import { useExamService } from '../hooks/useExamService';
