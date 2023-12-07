@@ -4,7 +4,7 @@ export default function ExamLayout({
 	children: React.ReactNode;
 }) {
 	return (
-			<div className="inline-block text-center justify-center">
+			<div className="inline-block max-w-lg text-center justify-center gap-4 py-8 md:py-5">
 				{children}
 			</div>
 	);

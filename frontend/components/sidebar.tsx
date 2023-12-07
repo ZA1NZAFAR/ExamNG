@@ -80,16 +80,16 @@ export default function Sidebar(): JSX.Element {
             <button className="btn" onClick={toggleSidebarCollapseHandler}>
                 {isCollapsed ? (
                     <Image
-                        width={80}
-                        height={80}
+                        width={150}
+                        height={150}
                         className="sidebar_logo"
                         src="/ArrowRight.svg"
                         alt="logo"
                     />
                 ) : (
                     <Image
-                        width={80}
-                        height={80}
+                        width={150}
+                        height={150}
                         className="sidebar_logo"
                         src="/ArrowLeft.svg"
                         alt="logo"
