@@ -6,15 +6,11 @@ export const siteConfig = {
 	navItems: [
 		{
 			label: "Exams",
-			href: "/",
+			href: "/exams",
 		},
     {
-      label: "Partners",
-      href: "/partners",
-    },
-    {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Calendar",
+      href: "/calendar",
     },
     {
       label: "Support",
@@ -27,7 +23,12 @@ export const siteConfig = {
 	{
 		label: "Calendar",
 		href: "/calendar",
-	}
+	},
+    {
+      label: "About us",
+      href: "/about",
+    }
+
 	],
 	navMenuItems: [
 		{
@@ -47,7 +48,7 @@ export const siteConfig = {
 			href: "/team",
 		},
 		{
-			label: "Calendar",
+			label: "calendar",
 			href: "/calendar",
 		},
 		{
