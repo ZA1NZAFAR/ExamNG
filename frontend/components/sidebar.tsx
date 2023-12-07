@@ -38,7 +38,7 @@ export default function Sidebar(): JSX.Element {
             if (i === index) {
                 item.classList.add("hovered");
             } else if (i > index && index == 0) {
-                item.style.transform = `translateY(250%)`;
+                item.style.transform = !isCollapsed ? `translateY(250%)` : 'translateY(2%)';
             } else if (i > index && index != 0) {
                 item.style.transform = `translateY(2%)`;
             }
@@ -123,7 +123,7 @@ export default function Sidebar(): JSX.Element {
                                     <span className="sidebar_name">{name}</span>
                                 </div>
                             </Link>
-                            {index == 0 && (
+                            {index == 0 && !isCollapsed && (
                                 <div
                                     className={`tooltip ${tooltipIndex === index ? "show" : ""}`}
                                     id={`tooltip-${index}`}
@@ -137,6 +137,7 @@ export default function Sidebar(): JSX.Element {
 
                                             >
                                             </div>
+
                                             <div className="w-full md:w-auto flex flex-col">
                                                 <ul className="flex flex-col">
                                                     <div className = "w-full text-left mb-2 mt-0">
@@ -147,6 +148,7 @@ export default function Sidebar(): JSX.Element {
                                                     <li className="w-full text-left">Sociology</li>
                                                 </ul>
                                             </div>
+
                                         </div>
                                     </ul>
                                 </div>

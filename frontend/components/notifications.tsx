@@ -55,7 +55,6 @@ export default function Notifications({ sideBarIsActive }: NotificationsProps) {
                             <UserCard
                                 key={notification.id}
                                 id={notification.id}
-                                sideBarIsActive={isCollapsed}
                                 onDelete={() => handleDeleteNotification(notification.id)}
                             />
                         ))
