@@ -11,11 +11,6 @@
     "plugin:react/recommended"
   ],
   "ignorePatterns": [ "**/node_modules/*" ],
-  "settings": {
-    "next/core-web-vitals": {
-      "rootDir": "frontend/"
-    }
-  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
