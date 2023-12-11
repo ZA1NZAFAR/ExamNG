@@ -14,11 +14,16 @@
     "lint"
   ],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
-    "eslint": "^8.54.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
     "eslint-config-next": "^14.0.4",
     "eslint-plugin-react": "^7.33.2",
     "pre-commit": "^1.2.2"
-  }
+  },
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=8.12.0"
+  },
+  "packageManager": "pnpm@8.12.0"
 }

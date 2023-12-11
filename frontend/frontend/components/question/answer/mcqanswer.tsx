@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { MCQuestion } from '@/types/question';
 import React from 'react';
