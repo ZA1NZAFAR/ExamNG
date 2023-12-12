@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
 import { Divider } from '@nextui-org/divider';
-import {Skeleton} from "@nextui-org/skeleton";
+import {Skeleton} from '@nextui-org/skeleton';
 
 
 const QuestionSkeleton = () => {

@@ -1,3 +1,159 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Common styles for all devices */
+.sidebar_wrapper {
+    position: relative;
+}
+
+body {
+    font-family: 'SF Pro', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.sidebar_icon-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.sidebar_item {
+    transition: transform 0.3s ease-in-out;
+}
+
+.tooltip ul li:hover {
+    background: rgba(119, 91, 91, 0.16);
+    display: flex;
+    padding: 0.2rem;
+    border-radius: 0.5rem; /* Using 13px equivalent in relative units */
+    align-items: flex-start;
+    gap: 0.6rem; /* Using 10px equivalent in relative units */
+    align-self: stretch;
+    transition: background-color 0.4s ease;
+    font: bold 0.9375rem SF Pro Text; /* Using 15px equivalent in relative units */
+}
+
+.tooltip.show {
+    display: block;
+    width: 100%;
+    z-index: 10;
+}
+
+.tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    padding: 0.3125rem; /* Using 5px equivalent in relative units */
+    z-index: 10;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    border-radius: 0.8rem; /* Using 16px equivalent in relative units */
+    border: 0.03125px solid rgba(245, 239, 235, 0.40); /* Using 0.5px equivalent in relative units */
+    color: rgba(36, 34, 32, 0.56);
+    background: rgba(255, 237, 224, 0.56);
+    box-shadow: 0px 4rem 4rem -2rem rgba(102, 37, 0, 0.56); /* Using 64px equivalent in relative units */
+    backdrop-filter: blur(5rem); /* Using 80px equivalent in relative units */
+    text-align: justify;
+}
+
+.sidebar {
+    margin-left: 20%;
+    width: 17rem;
+    height: 90vh;
+    padding: 1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    overflow: hidden;
+    border-radius: 1.8rem; /* Using 28px equivalent in relative units */
+    border: 0.03125rem solid rgba(245, 239, 235, 0.40); /* Using 1px equivalent in relative units */
+    background: rgba(255, 237, 224, 0.56);
+    box-shadow: 0 4rem 4rem -2rem rgba(102, 37, 0, 0.56), 0 3.5rem 4rem -1rem rgba(102, 37, 0, 0.56); /* Using 64px and 56px equivalent in relative units */
+    backdrop-filter: blur(5rem);
+}
+
+.sidebar_top {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 0.0625rem solid #93867E; /* Using 1px equivalent in relative units */
+}
+
+.sidebar_logo {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    border-radius: 1rem;
+}
+
+.sidebar_logo-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(36, 34, 32, 0.56);
+}
+
+.sidebar_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.sidebar_link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1rem;
+    background: rgba(199, 93, 35, 0.07);
+    color: rgba(36, 34, 32, 0.56);
+    font-size: 0.6875rem; /* Using 11px equivalent in relative units */
+    font-weight: 700;
+    line-height: 1.5; /* Using 24px equivalent in relative units */
+    text-transform: uppercase;
+    border-radius: 0.8125rem;
+    opacity: 1;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
+}
+
+.sidebar_icon {
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+.sidebar_name {
+    margin-left: 0.5rem;
+}
+
+[data-collapse="true"] {
+    width: 5.3rem;
+}
+
+[data-collapse="true"] .sidebar_name,
+[data-collapse="true"] .sidebar_logo-name {
+    display: none;
+}
+
+.btn {
+    position: absolute;
+    left: 93%;
+    right: 0;
+    top: 4.7rem;
+    width:1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform: translateX(50%);
+    font-size: 1.1rem;
+    background-color: rgba(199, 93, 35, 0.07);;
+    stroke-width: 1px;
+    stroke: rgba(245, 239, 235, 0.32);
+    backdrop-filter: blur(5.625rem);
+    z-index: 10;
+}
