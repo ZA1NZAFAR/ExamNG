@@ -37,11 +37,13 @@ export default function ExamLayout({
 		};
 	}, []);
 	return (
-		<div className="inline-block flex flex-row">
-			<SideBarProvider><Sidebar/></SideBarProvider>
-			<div className="inline-block flex flex-row text-center w-full justify-center gap-4 ps-20 py-8 md:py-5">
+		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+			<SideBarProvider>
+				<Sidebar />
+			</SideBarProvider>
+			<div className="inline-block max-w-full text-center justify-center">
 				{children}
 			</div>
-		</div>	
+		</section>
 	);
 }

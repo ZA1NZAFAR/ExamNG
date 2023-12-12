@@ -4,7 +4,11 @@
 
 /* Common styles for all devices */
 .sidebar_wrapper {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    z-index: 999;
 }
 
 body {
