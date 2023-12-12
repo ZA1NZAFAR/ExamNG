@@ -1,8 +1,7 @@
 'use client';
+
 import '@/styles/globals.css';
-import Sidebar from '@/components/sidebar/sidebar';
 import React, { useState, useEffect } from 'react';
-import {SideBarProvider} from '@/components/sidebar/SideBarContext';
 import { Exam } from '@/types/exam';
 import { ExamServiceProvider } from '../../contexts/providers/ExamServiceProvider';
 import { useExamService } from '../../hooks/useExamService';
@@ -67,11 +66,8 @@ export default function ExamPage() {
 		};
 	}, []);
 	return (
-		<>
-			<SideBarProvider><Sidebar/></SideBarProvider>
-			<ExamServiceProvider apiUrl={apiUrl}>
-				<ExamPageContent />
-			</ExamServiceProvider>
-		</>
+		<ExamServiceProvider apiUrl={apiUrl}>
+			<ExamPageContent />
+		</ExamServiceProvider>
 	);
 }
