@@ -1,19 +1,19 @@
-"use client"
-import "@/styles/globals.css";
-
-import Sidebar from "@/components/sidebar";
-import {useEffect, useState} from "react";
-
-import Notifications from "@/components/notifications";
-import {AppProvider} from "@/components/AppContextProps";
-
+'use client';
+import '@/styles/globals.css';
+import Sidebar from '@/components/sidebar/sidebar';
+import {useEffect, useState} from 'react';
+import {SideBarProvider} from '@/components/sidebar/SideBarContext';
 
 export default function ExamPage() {
+	// TODO: verify if we still need isSidebarCollapsed
+	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true);
-
+	/*
+	TODO: might be useful
 	const toggleSidebarCollapseHandler = () => {
 		setIsSidebarCollapsed((prevState: any) => !prevState);
 	};
+	*/
 
 	useEffect(() => {
 		const handleRouteChange = () => {
@@ -25,14 +25,14 @@ export default function ExamPage() {
 		};
 
 		// Listen to navigation changes
-		window.addEventListener("popstate", handleRouteChange);
+		window.addEventListener('popstate', handleRouteChange);
 
 		// Clean up listener
 		return () => {
-			window.removeEventListener("popstate", handleRouteChange);
+			window.removeEventListener('popstate', handleRouteChange);
 		};
 	}, []);
 	return (
-		<AppProvider><Sidebar/></AppProvider>
+		<SideBarProvider><Sidebar/></SideBarProvider>
 	);
 }
