@@ -1,11 +1,14 @@
+import React from "react";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
 export default function CalendarLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
 	return (
-		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-			<div className="inline-block max-w-lg text-center justify-center">
+		<section className= "full-calendar-page" >
+			<div>
 				{children}
 			</div>
 		</section>

@@ -12,6 +12,10 @@
     "lint"
   ],
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@fullcalendar/core": "^6.1.9",
+    "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/react": "^6.1.9",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.18",
@@ -31,6 +35,8 @@
     "next-themes": "^0.2.1",
     "postcss": "8.4.31",
     "react": "18.2.0",
+    "react-big-calendar": "^1.8.5",
+    "react-calendar": "^4.6.1",
     "react-dom": "18.2.0",
     "react-icons": "^4.12.0",
     "tailwind-variants": "^0.1.18",
@@ -40,6 +46,7 @@
   "devDependencies": {
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
+    "@types/react-big-calendar": "^1.8.5",
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",

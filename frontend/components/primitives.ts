@@ -1,4 +1,4 @@
-import { tv } from 'tailwind-variants';
+import {tv} from 'tailwind-variants';
 
 export const title = tv({
 	base: 'tracking-tight inline font-semibold',
@@ -47,7 +47,7 @@ export const subtitle = tv({
 			true: '!w-full',
 		},
 	},
-	defaultVariants:{
+	defaultVariants: {
 		fullWidth: true
 	}
 });

@@ -20,10 +20,15 @@ export const siteConfig = {
       label: "FAQ",
       href: "/faq",
     },
+	{
+		label: "Calendar",
+		href: "/calendar",
+	},
     {
       label: "About us",
       href: "/about",
     }
+
 	],
 	navMenuItems: [
 		{
