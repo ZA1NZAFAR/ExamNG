@@ -9,12 +9,12 @@
  * Import all services here and register them in the serviceRegistry.
  * No need to import the services anywhere else in the application.
  */
-import { ExamService } from "./examService";
-import { AuthService } from "./authService";
+import { ExamService } from './examService';
+import { AuthService } from './authService';
 
 export const serviceRegistry = {
-  examService: new ExamService(),
-  authService: new AuthService(),
+	examService: new ExamService(),
+	authService: new AuthService(),
 };
 export type ServiceRegistryKey = keyof typeof serviceRegistry;
 

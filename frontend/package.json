@@ -1,16 +1,12 @@
 {
-  "name": "next-app-template",
+  "name": "frontend",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint --fix"
+    "start": "next start"
   },
-  "pre-commit": [
-    "lint"
-  ],
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
     "@fullcalendar/core": "^6.1.9",
@@ -46,12 +42,6 @@
   "devDependencies": {
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
-    "@types/react-big-calendar": "^1.8.5",
-    "@types/react-dom": "18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
-    "eslint": "^8.54.0",
-    "eslint-plugin-react": "^7.33.2",
-    "pre-commit": "^1.2.2"
+    "@types/react-dom": "18.2.7"
   }
 }

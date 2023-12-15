@@ -1,5 +1,5 @@
-import { Attachment } from "./attachment";
-import { Language } from "./language";
+import { Attachment } from './attachment';
+import { Language } from './language';
 
 /**
  * Represents a question.

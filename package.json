@@ -1,0 +1,24 @@
+{
+  "name": "examng",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "frontend": "pnpm --filter frontend",
+    "lint": "eslint . --fix"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "^8.54.0",
+    "eslint-config-next": "^14.0.4",
+    "eslint-plugin-react": "^7.33.2",
+    "pre-commit": "^1.2.2"
+  }
+}
