@@ -7,7 +7,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "frontend": "pnpm --filter frontend",
+    "front": "pnpm --filter frontend",
     "lint": "eslint . --fix",
     "prepare": "husky install"
   },
