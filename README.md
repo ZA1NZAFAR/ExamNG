@@ -13,6 +13,7 @@ This monoproject uses PNPM to manage its javascript project.
 ### Clone and checkout branch
 ```bash
 git clone https://github.com/ZA1NZAFAR/ExamNG.git
+cd ExamNG
 git checkout frontend
 ```
 
