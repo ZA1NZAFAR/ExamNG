@@ -16,7 +16,7 @@ pnpm i
 ```
 
 ### Set up environment variable file
-For frontend: ``./app/frontend/.env.development.local``
+For frontend: ``./app/frontend/.env.development.local``.
 Check the format in the config file in ``./app/frontend/config/envConfig.ts``
 
 ## Development tips
