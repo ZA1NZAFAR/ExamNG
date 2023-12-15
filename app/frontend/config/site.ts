@@ -8,26 +8,26 @@ export const siteConfig = {
 			label: 'Exams',
 			href: '/exams',
 		},
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Support",
-      href: "/support",
-    },
-    {
-      label: "FAQ",
-      href: "/faq",
-    },
-	{
-		label: "Calendar",
-		href: "/calendar",
-	},
-    {
-      label: "About us",
-      href: "/about",
-    }
+		{
+			label: 'Calendar',
+			href: '/calendar',
+		},
+		{
+			label: 'Support',
+			href: '/support',
+		},
+		{
+			label: 'FAQ',
+			href: '/faq',
+		},
+		{
+			label: 'Calendar',
+			href: '/calendar',
+		},
+		{
+			label: 'About us',
+			href: '/about',
+		}
 
 	],
 	navMenuItems: [

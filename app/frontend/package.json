@@ -9,14 +9,14 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
     "@fullcalendar/react": "^6.1.9",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
+    "@monaco-editor/react": "^4.6.0",
     "@mui/material": "^5.14.18",
     "@nextui-org/card": "^2.0.24",
-    "@monaco-editor/react": "^4.6.0",
     "@nextui-org/react": "^2.2.9",
     "@react-aria/ssr": "^3.8.0",
     "@react-aria/visually-hidden": "^3.8.6",
@@ -27,6 +27,7 @@
     "framer-motion": "^10.16.4",
     "intl-messageformat": "^10.5.0",
     "lucide-react": "^0.294.0",
+    "moment": "^2.29.4",
     "next": "^14.0.3",
     "next-themes": "^0.2.1",
     "postcss": "8.4.31",
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
+    "@types/react-big-calendar": "^1.8.7",
     "@types/react-dom": "18.2.7"
   }
 }

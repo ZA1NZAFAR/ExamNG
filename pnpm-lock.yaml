@@ -33,7 +33,7 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
 
-  frontend/frontend:
+  app/frontend:
     dependencies:
       '@chakra-ui/react':
         specifier: ^2.8.2
@@ -92,6 +92,9 @@ importers:
       lucide-react:
         specifier: ^0.294.0
         version: 0.294.0(react@18.2.0)
+      moment:
+        specifier: ^2.29.4
+        version: 2.29.4
       next:
         specifier: ^14.0.3
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -132,6 +135,9 @@ importers:
       '@types/react':
         specifier: 18.2.21
         version: 18.2.21
+      '@types/react-big-calendar':
+        specifier: ^1.8.7
+        version: 1.8.7
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
@@ -4131,6 +4137,10 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@types/date-arithmetic@4.1.4:
+    resolution: {integrity: sha512-p9eZ2X9B80iKiTW4ukVj8B4K6q9/+xFtQ5MGYA5HWToY9nL4EkhV9+6ftT2VHpVMEZb5Tv00Iel516bVdO+yRw==}
+    dev: true
+
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
@@ -4164,6 +4174,14 @@ packages:
 
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
+
+  /@types/react-big-calendar@1.8.7:
+    resolution: {integrity: sha512-uquhk4AoKvukFVONG/2orQOmzioDKk+0mFns14TdyqHGmRq99R8+LCPIZdOVT5MMJ3zDScGqSFOsQlIbHhunEA==}
+    dependencies:
+      '@types/date-arithmetic': 4.1.4
+      '@types/prop-types': 15.7.11
+      '@types/react': 18.2.21
+    dev: true
 
   /@types/react-dom@18.2.7:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}

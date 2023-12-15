@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { Avatar, Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react';
+import { Avatar, Button } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { useSideBarContext } from '@/components/sidebar/SideBarContext';
 
 interface UserCardProps {

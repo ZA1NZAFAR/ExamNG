@@ -6,6 +6,8 @@ import { Exam } from '@/types/exam';
 import logo from '../resources/img/logo.png';
 
 export const ExamCard = ({ exam } : { exam: Exam }) => {
+	// TODO: check if we need subscribed
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [subscribed, setSubscribed] = useState(false);
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
 	const intervalIDRef = useRef<NodeJS.Timeout | null>(null);
