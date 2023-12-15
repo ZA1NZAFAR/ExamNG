@@ -10,6 +10,12 @@ This monoproject uses PNPM to manage its javascript project.
 2. Node.js v20.10.0
 3. Download [PNPM](https://pnpm.io/installation).
 
+### Clone and checkout branch
+```bash
+git clone https://github.com/ZA1NZAFAR/ExamNG.git
+git checkout frontend
+```
+
 ### Install dependencies
 ```bash
 pnpm i
