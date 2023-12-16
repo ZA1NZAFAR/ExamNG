@@ -1,3 +1,4 @@
+export * from './answer';
 export * from './attachment';
 export * from './exam';
 export * from './generic';
