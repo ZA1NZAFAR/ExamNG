@@ -1,3 +1,6 @@
+import { Module } from './module';
+import { Group } from './group';
+
 /**
  * Represents an exam.
  * @property {string} id The unique identifier of the exam.
@@ -6,6 +9,7 @@
  * @property {Date} endDate The end date of the exam.
  * @property {boolean} isValidated Whether the exam is validated or not.
  * @property {boolean} isSubmitted Whether the exam is submitted or not.
+ * @property {Object} summaryFields The summary fields of the exam.
  */
 export type Exam = {
   /** The unique identifier of the exam. */
@@ -26,5 +30,17 @@ export type Exam = {
   * @default false
   * */
   isSubmitted: boolean;
+  /** The summary fields of the exam. */
+  summaryFields: {
+    /** The module of the exam. */
+    module: Module;
+    /** The student groups assigned to the exam. */
+    groups: Group[];
+    /**
+    * The average score of the exam. It is a number between 0 and a defined maximum score.
+    * Defined maximum score can be configured via environment variable.
+    * */
+    average?: number;
+  };
 }
 
