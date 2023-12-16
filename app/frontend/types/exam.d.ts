@@ -30,17 +30,27 @@ export type Exam = {
   * @default false
   * */
   isSubmitted: boolean;
-  /** The summary fields of the exam. */
-  summaryFields: {
-    /** The module of the exam. */
-    module: Module;
-    /** The student groups assigned to the exam. */
-    groups: Group[];
+  /**
+  * The summary fields of the exam.
+  * @readonly
+  * */
+  readonly summaryFields: {
+    /**
+    * The module of the exam.
+    * @readonly
+    * */
+    readonly module: Readonly<Module>;
+    /**
+    * The student groups assigned to the exam.
+    * @readonly
+    * */
+    readonly groups: Readonly<Group[]>;
     /**
     * The average score of the exam. It is a number between 0 and a defined maximum score.
     * Defined maximum score can be configured via environment variable.
+    * @readonly
     * */
-    average?: number;
+    readonly average?: number;
   };
 }
 
