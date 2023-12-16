@@ -1,5 +1,5 @@
 import React from 'react';
-import { LANGUAGES, Language } from '@/types/language';
+import { LANGUAGES, Language } from '@/types';
 import Editor from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';

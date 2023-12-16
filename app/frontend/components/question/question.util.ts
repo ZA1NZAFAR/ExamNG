@@ -3,7 +3,7 @@ import {
 	MCQuestion,
 	TextQuestion,
 	CodeQuestion
-} from '../../types/question';
+} from '@/types';
 
 export function isMCQuestion(question: Question): question is MCQuestion {
 	return (question as MCQuestion).options !== undefined;

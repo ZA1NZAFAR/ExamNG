@@ -2,7 +2,7 @@ import {
 	Attachment,
 	ImageAttachment,
 	CodeAttachment
-} from '../../../types/attachment';
+} from '@/types';
 
 export function isImageAttachment(attachment: Attachment): attachment is ImageAttachment {
 	return (attachment as ImageAttachment).imageUrl !== undefined;

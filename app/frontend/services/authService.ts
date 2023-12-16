@@ -1,5 +1,5 @@
 import { testUser } from '@/mockData/user';
-import { User } from '@/types/user';
+import { User } from '@/types';
 
 export class AuthService {
 	user: User | null;

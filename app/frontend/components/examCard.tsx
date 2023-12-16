@@ -2,15 +2,27 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
 import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
-import { Exam } from '@/types/exam';
+import { Exam  } from '@/types';
 import logo from '../resources/img/logo.png';
+import { envConfig } from '@/config/envConfig';
 
-export const ExamCard = ({ exam } : { exam: Exam }) => {
+/**
+ * Represents the properties for an exam card.
+ * @property {Exam} exam - The exam to display.
+ */
+type ExamCardProps = {
+  /** The exam to display. */
+  exam: Exam;
+};
+
+export const ExamCard = ({ exam } : ExamCardProps) => {
 	// TODO: check if we need subscribed
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [subscribed, setSubscribed] = useState(false);
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
 	const intervalIDRef = useRef<NodeJS.Timeout | null>(null);
+
+	const { module, groups, average } = exam.summaryFields;
 
 	const formatDate = (date: Date): string => {
 		const currentDate = new Date();
@@ -46,9 +58,11 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 		return Math.floor((utc2 - utc1) / MS_PER_DAY);
 	};
 
-	const classAvgGrade = (average: number): string => {
-		const MAX_GRADE = 20;
-		return average + '/' + MAX_GRADE;
+	const classAvgGrade = (): string => {
+		if (average) {
+			return 'N/A';
+		}
+		return average + '/' + envConfig.defaultTotalScore;
 	};
 
 	const calculateExamProgress = (startTime: Date, endTime: Date) => {
@@ -99,14 +113,14 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 					<Image
 						alt="Exam cover"
 						className="object-cover rounded-xl shadow-md"
-						src={ exam.imageURL ? exam.imageURL : logo.src }
+						src={ module.imageURL.length>0 ? module.imageURL : logo.src }
 						fill
 					/>
 				</div>
 
 				<div className="flex flex-col py-2">
 					<div className="flex justify-between items-center mt-2">
-						<h1 className="text-large font-semibold text-foreground/90">{ exam.title }</h1>
+						<h1 className="text-large font-semibold text-foreground/90">{ exam.summaryFields.module.name }</h1>
 
 						<Switch
 							className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
@@ -125,15 +139,15 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 							<div className='flex flex-row justify-start items-center text-xs xl:text-small text-foreground/80'>
 								<UsersRound className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-start text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									{ exam.participants.map(participant => 
-										<p key={participant.code} className='inline-block'>{ participant.name }</p>) 
+									{ groups.map(group => 
+										<p key={group.id} className='inline-block'>{ group.name }</p>) 
 									}
 								</div>
 							</div>
 							<div className='flex flex-row justify-end items-center text-xs xl:text-small text-foreground/80'>
 								<Book className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									<p className='inline-block'>{ exam.course.name }</p>
+									<p className='inline-block'>{ module.name }</p>
 								</div>
 							</div>
 						</div>
@@ -147,7 +161,7 @@ export const ExamCard = ({ exam } : { exam: Exam }) => {
 							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
 								<BarChart2 className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									<p className='inline-block'>{ exam.average ? classAvgGrade(exam.average) : 'N/A' }</p>
+									<p className='inline-block'>{ classAvgGrade() }</p>
 								</div>
 							</div>
 						</div>
