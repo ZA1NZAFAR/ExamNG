@@ -1,7 +1,9 @@
-import { User } from '@/types/user';
+import { User } from '@/types';
 
 export const testUser: User = {
-	username: 'test',
+	id: '1',
+	firstName: 'John',
+	lastName: 'Doe',
 	email: 'abc@xyz.com',
 	type: 'teacher'
 };
