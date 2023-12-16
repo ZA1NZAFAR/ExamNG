@@ -16,3 +16,11 @@ export type Result<T> = {
   /** The results of the query. */
   results: T[];
 }
+
+/**
+ * Utility type to remove the summaryFields property from a type.
+ * Only used for any type that has a summaryFields property.
+ * Also renders the type readonly.
+ * @template T The type to remove the summaryFields property from.
+ * */
+export type Summary<T> = Readonly<Omit<T, 'summaryFields'>>; 
