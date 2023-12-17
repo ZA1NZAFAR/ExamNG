@@ -120,7 +120,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 
 				<div className="flex flex-col py-2">
 					<div className="flex justify-between items-center mt-2">
-						<h1 className="text-large font-semibold text-foreground/90">{ exam.summaryFields.module.name }</h1>
+						<h1 className="text-large font-semibold text-foreground/90">{ exam.summaryFields.module.description }</h1>
 
 						<Switch
 							className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
@@ -147,7 +147,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 							<div className='flex flex-row justify-end items-center text-xs xl:text-small text-foreground/80'>
 								<Book className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									<p className='inline-block'>{ module.name }</p>
+									<p className='inline-block'>{ module.description }</p>
 								</div>
 							</div>
 						</div>
