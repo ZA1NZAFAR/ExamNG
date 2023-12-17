@@ -1,11 +1,14 @@
 import { envConfig } from '@/config/envConfig';
-import { Exam, Module, Question, PageResult } from '@/types';
+import { Exam, Module, Question, PageResult, PageOptions } from '@/types';
 import axios from 'axios';
 
-export class ExamService {
-  
-	async getModules(): Promise<PageResult<Module>> {
-		const response = await axios.get<PageResult<Module>>(`${envConfig.backendAPI}/modules`);
+export class ExamService {  
+	async getModules(options: PageOptions = {
+		page: 1,
+		pageSize: envConfig.defaultQueryPageSize
+	}): Promise<PageResult<Module>> {
+		const { page, pageSize } = options;
+		const response = await axios.get<PageResult<Module>>(`${envConfig.backendAPI}/modules?page=${page}&pageSize=${pageSize}`);
 		return response.data;
 	}
 
@@ -14,8 +17,14 @@ export class ExamService {
 		return response.data;
 	}
 
-	async getExams(moduleCode: string): Promise<PageResult<Exam>> {
-		const response = await axios.get<PageResult<Exam>>(`${envConfig.backendAPI}/modules/${moduleCode}/exams`);
+	async getExams(
+		moduleCode: string,
+		options: PageOptions = {
+			page: 1,
+			pageSize: envConfig.defaultQueryPageSize
+		}): Promise<PageResult<Exam>> {
+		const { page, pageSize } = options;
+		const response = await axios.get<PageResult<Exam>>(`${envConfig.backendAPI}/modules/${moduleCode}/exams?page=${page}&pageSize=${pageSize}`);
 		return response.data;
 	}
 
@@ -29,8 +38,15 @@ export class ExamService {
 		return response.data;
 	}
 
-	async getExamQuestions(moduleCode: string, examId: string): Promise<PageResult<Question>> {
-		const response = await axios.get<PageResult<Question>>(`${envConfig.backendAPI}/modules/${moduleCode}/exams/${examId}/questions`);
+	async getExamQuestions(
+		moduleCode: string,
+		examId: string,
+		options: PageOptions = {
+			page: 1,
+			pageSize: envConfig.defaultQueryPageSize
+		}): Promise<PageResult<Question>> {
+		const { page, pageSize } = options;
+		const response = await axios.get<PageResult<Question>>(`${envConfig.backendAPI}/modules/${moduleCode}/exams/${examId}/questions?page=${page}&pageSize=${pageSize}`);
 		return response.data;
 	}
 
