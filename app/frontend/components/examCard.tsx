@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
+import { Link } from '@nextui-org/link';
 import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
 import { Exam  } from '@/types';
 import logo from '../resources/img/logo.png';
@@ -108,7 +109,9 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 			isBlurred
 			className="border-none bg-background/60 dark:bg-default-100/50 py-4 grow-0 shrink-0"
 			shadow="sm"
-			isPressable onPress={() => console.log('item pressed')}
+			as={Link}
+			href={`/exams/${module.code}/${exam.id}`}
+			isPressable
 		>
 			<CardBody>
 				<div className="relative overflow-hidden w-52 h-52 xl:w-80 xl:h-80">
