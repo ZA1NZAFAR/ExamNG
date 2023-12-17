@@ -6,7 +6,7 @@
  * @property {number} currentPage The current page.
  * @property {T[]} results The results of the query.
  */
-export type Result<T> = {
+export type PageResult<T> = {
   /** The total number of results. */
   count: number;
   /** The page size. */
