@@ -5,8 +5,8 @@ import { Group } from './group';
  * Represents an exam.
  * @property {string} id The unique identifier of the exam.
  * @property {string} description The description of the exam.
- * @property {Date} startTime The start time of the exam.
- * @property {Date} endTime The end time of the exam.
+ * @property {number} startTimestamp The start timestamp of the exam, using Unix time.
+ * @property {number} endTimestamp The end timestamp of the exam, using Unix time.
  * @property {boolean} isValidated Whether the exam is validated or not.
  * @property {boolean} isSubmitted Whether the exam is submitted or not.
  * @property {Object} summaryFields The summary fields of the exam.
@@ -16,10 +16,10 @@ export type Exam = {
   id: string;
   /** The description of the exam. */
   description: string;
-  /** The start time of the exam. */
-  startTime: Date;
-  /** The end time of the exam. */
-  endTime: Date;
+  /** The start timestamp of the exam, using Unix time. */
+  startTimestamp: number;
+  /** The end timestamp of the exam, using Unix time. */
+  endTimestamp: number;
   /**
   * Whether the exam is validated or not.
   * @default false

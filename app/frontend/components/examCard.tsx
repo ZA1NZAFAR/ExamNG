@@ -24,9 +24,9 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 
 	const { module, groups, average } = exam.summaryFields;
 
-	const formatDate = (date: Date): string => {
+	const formatDate = (timestamp: number): string => {
+		const date = new Date(timestamp);
 		const currentDate = new Date();
-
 		const year = date.getFullYear();
 		const month = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);		// Month is zero-based, so add 1
 		const day = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
@@ -59,13 +59,15 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 	};
 
 	const classAvgGrade = (): string => {
-		if (average) {
+		if (!average) {
 			return 'N/A';
 		}
 		return average + '/' + envConfig.defaultTotalScore;
 	};
 
-	const calculateExamProgress = (startTime: Date, endTime: Date) => {
+	const calculateExamProgress = (startTimestamp: number, endTimestamp: number) => {
+		const startTime = new Date(startTimestamp);
+		const endTime = new Date(endTimestamp);
 		const currentTime = new Date();
 		const MS_PER_MINUTE = 60_000;
 
@@ -96,10 +98,10 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 	};
 
 	useEffect(() => {
-		calculateExamProgress(exam.startTime, exam.endTime);
-		intervalIDRef.current = setInterval(() => calculateExamProgress(exam.startTime, exam.endTime), 60_000);
+		calculateExamProgress(exam.startTimestamp, exam.endTimestamp);
+		intervalIDRef.current = setInterval(() => calculateExamProgress(exam.startTimestamp, exam.endTimestamp), 60_000);
 		return () => clearInterval(intervalIDRef.current!);
-	}, [exam.startTime, exam.endTime]);
+	}, [exam.startTimestamp, exam.endTimestamp]);
 
 	return (
 		<Card
@@ -155,7 +157,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 							<div className='flex flex-row justify-start items-center text-xs xl:text-small text-foreground/80'>
 								<Calendar className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-start text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									<p>{ formatDate(exam.startTime) }</p>
+									<p>{ formatDate(exam.startTimestamp) }</p>
 								</div>
 							</div>
 							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
@@ -183,8 +185,8 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 							showValueLabel={true}
 						></Progress>
 						<div className="flex justify-between">
-							<p className="text-small">{ formatDate(exam.startTime).split(' ')[1] }</p>
-							<p className={`text-small ${examProgress > 0 && examProgress < 100 ? 'text-foreground/50' : ''}`}>{ formatDate(exam.endTime).split(' ')[1] }</p>
+							<p className="text-small">{ formatDate(exam.startTimestamp).split(' ')[1] }</p>
+							<p className={`text-small ${examProgress > 0 && examProgress < 100 ? 'text-foreground/50' : ''}`}>{ formatDate(exam.endTimestamp).split(' ')[1] }</p>
 						</div>
 					</div>
 				</div>
