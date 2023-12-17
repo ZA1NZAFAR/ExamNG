@@ -1,5 +1,5 @@
 import React from 'react';
-import { LANGUAGES, Language } from '@/types';
+import { LANGUAGES, Language } from '@/types/data/language';
 import Editor from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';
@@ -31,12 +31,13 @@ const MIN_LINES = 3;
 const MAX_LINES = 10;
 const LINE_HEIGHT = 19;
 
+const sortedLanguages = Array.from(LANGUAGES).sort((a, b) => a.localeCompare(b));
+
 function CodeAnswerComponent ({ defaultLanguage = null, initialCode = '', isDisabled = false }: CodeAnswerProps) {
 	const selectedLanguage = defaultLanguage || 'javascript';
 	const { theme } = useTheme();
 	const [ isWordWrapEnabled, setIsWordWrapEnabled ] = React.useState<boolean>(false);
 	const [ language, setLanguage ] = React.useState<Language>(selectedLanguage);
-	const languages = LANGUAGES.toSorted();
 	const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, initialCode.split('\n').length + 1));
 	const height = (isDisabled ? minimumLines : MAX_LINES) * LINE_HEIGHT;
 
@@ -54,7 +55,7 @@ function CodeAnswerComponent ({ defaultLanguage = null, initialCode = '', isDisa
 					selectedKeys={[language]}
 					isDisabled={ !!defaultLanguage }
 				>
-					{languages.map((lang) => (
+					{sortedLanguages.map((lang) => (
 						<SelectItem key={lang} value={lang}>
 							{lang}
 						</SelectItem>
