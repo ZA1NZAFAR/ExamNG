@@ -96,10 +96,10 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 	};
 
 	useEffect(() => {
-		calculateExamProgress(exam.startDate, exam.endDate);
-		intervalIDRef.current = setInterval(() => calculateExamProgress(exam.startDate, exam.endDate), 60_000);
+		calculateExamProgress(exam.startTime, exam.endTime);
+		intervalIDRef.current = setInterval(() => calculateExamProgress(exam.startTime, exam.endTime), 60_000);
 		return () => clearInterval(intervalIDRef.current!);
-	}, [exam.startDate, exam.endDate]);
+	}, [exam.startTime, exam.endTime]);
 
 	return (
 		<Card
@@ -155,7 +155,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 							<div className='flex flex-row justify-start items-center text-xs xl:text-small text-foreground/80'>
 								<Calendar className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-start text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									<p>{ formatDate(exam.startDate) }</p>
+									<p>{ formatDate(exam.startTime) }</p>
 								</div>
 							</div>
 							<div className='flex flex-row justify-start items-center text-small text-foreground/80'>
@@ -183,8 +183,8 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 							showValueLabel={true}
 						></Progress>
 						<div className="flex justify-between">
-							<p className="text-small">{ formatDate(exam.startDate).split(' ')[1] }</p>
-							<p className={`text-small ${examProgress > 0 && examProgress < 100 ? 'text-foreground/50' : ''}`}>{ formatDate(exam.endDate).split(' ')[1] }</p>
+							<p className="text-small">{ formatDate(exam.startTime).split(' ')[1] }</p>
+							<p className={`text-small ${examProgress > 0 && examProgress < 100 ? 'text-foreground/50' : ''}`}>{ formatDate(exam.endTime).split(' ')[1] }</p>
 						</div>
 					</div>
 				</div>
