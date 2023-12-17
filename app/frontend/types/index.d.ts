@@ -1,10 +1,14 @@
-export * from './answer';
-export * from './attachment';
-export * from './exam';
-export * from './generic';
-export * from './group';
-export * from './language';
-export * from './module';
+// export all data types
+export * from './data/answer';
+export * from './data/attachment';
+export * from './data/exam';
+export * from './data/generic';
+export * from './data/group';
+export * from './data/language';
+export * from './data/module';
+export * from './data/question';
+export * from './data/user';
+
+// export all other utility types
 export * from './props';
-export * from './question';
-export * from './user';
+export * from './request';

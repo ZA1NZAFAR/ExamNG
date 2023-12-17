@@ -1,4 +1,4 @@
-import { Language } from './question';
+import { Language } from '../language';
 
 /**
  * Represents a code attachment.

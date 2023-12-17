@@ -1,5 +1,5 @@
 import { Attachment } from './attachment';
-import { Language } from './language';
+import { Language } from '../data/language';
 
 /**
  * Represents the type of a question.
