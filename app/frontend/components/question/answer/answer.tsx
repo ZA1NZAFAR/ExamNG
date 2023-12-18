@@ -1,4 +1,4 @@
-import { Question } from '@/types/question';
+import { Question } from '@/types';
 import MCQAnswerComponent from './mcqAnswer';
 import { isCodeQuestion, isMCQuestion, isTextQuestion } from '../question.util';
 import { Textarea } from '@nextui-org/input';

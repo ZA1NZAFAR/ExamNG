@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from '@nextui-org/image';
-import { Attachment } from '@/types/attachment';
+import { Attachment } from '@/types';
 import { isImageAttachment } from './attachment.util';
 import CodeAttachmentComponent from './codeAttachment';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Question } from '@/types/question';
+import { Question } from '@/types';
 import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
 import { Divider } from '@nextui-org/divider';
 import { ExamContext } from './examContext';

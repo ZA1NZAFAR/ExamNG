@@ -24,7 +24,24 @@ pnpm i
 
 ### Set up environment variable file
 For frontend: ``./app/frontend/.env.development.local``.
+
 Check the format in the config file in ``./app/frontend/config/envConfig.ts``
+
+#### Show console.log() result in browser for client component
+Add the following line to your ``.env.development.local`` file:
+```
+NODE_OPTIONS=--inspect
+```
+
+#### Next.JS backend for local development:
+There is a backend API available using Next.JS App router.
+
+In order to use it in local development, set the base backend API environment variable to the api route:
+```
+NEXT_PUBLIC_BACKEND_API=http://localhost:3000/api
+```
+
+By default, Next.JS use port 3000. If you use different port then set that port to the env file.
 
 ## Development tips
 

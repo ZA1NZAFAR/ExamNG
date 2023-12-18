@@ -1,5 +1,5 @@
 import React from 'react';
-import { Language } from '@/types/language';
+import { Language } from '@/types';
 import Editor from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 

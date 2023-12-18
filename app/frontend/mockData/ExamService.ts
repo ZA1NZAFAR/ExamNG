@@ -1,7 +1,7 @@
+// old ExamService.ts file that contains some mock data, can be useful for later
+
 import axios from 'axios';
-import { Exam } from '@/types/exam';
-import javaEE from '../../resources/img/java_ee.png';
-import cybersecurity from '../../resources/img/cybersecurity.jpg';
+import { Exam } from '@/types';
 
 class ExamService {
 	private apiUrl: string;
@@ -10,23 +10,20 @@ class ExamService {
 		this.apiUrl = apiUrl;
 	}
 
-	async getExams(): Promise<Array<Exam>> {
+	async getExams() {
 		// const response = await axios.get<Array<Exam>>(`${this.apiUrl}/exams`);
 		// return response.data;
 
 		// Mock data to test used on initial stages
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				const exams: Array<Exam> = [
+				const exams = [
 					{
 						id: '1',
-						title: 'Java JEE',
-						imageURL: javaEE.src,
-						duration: 3,
+						description: 'Java JEE',
 						startDate: new Date('2023-06-12T12:00:00'),
 						endDate: new Date('2023-06-12T15:00:00'),
-						average: 12.50,
-						participants: [
+						groups: [
 							{
 								code: 'M1APPLSI1',
 								name: 'M1-APP-LSI-1',
@@ -49,12 +46,11 @@ class ExamService {
 					},
 					{
 						id: '2',
-						title: 'Cybersecurity',
-						imageURL: cybersecurity.src,
+						description: 'Cybersecurity',
 						duration: 2.30,
 						startDate: new Date('2023-12-05T08:00:00'),
 						endDate: new Date('2023-12-05T10:30:00'),
-						participants: [
+						groups: [
 							{
 								code: 'M1APPLSI1',
 								name: 'M1-APP-LSI-1',
@@ -82,11 +78,11 @@ class ExamService {
 					},
 					{
 						id: '3',
-						title: 'Sociology',
+						description: 'Sociology',
 						duration: 2,
 						startDate: new Date('2024-03-15T09:00:00'),
 						endDate: new Date('2024-03-15T11:00:00'),
-						participants: [
+						groups: [
 							{
 								code: 'L3LSI1',
 								name: 'L3-LSI-1',
@@ -118,22 +114,22 @@ class ExamService {
 		});
 	}
 
-	async getExamById(id: number): Promise<Exam> {
-		const response = await axios.get<Exam>(`${this.apiUrl}/exams/${id}`);
+	async getExamById(id: number) {
+		const response = await axios.get(`${this.apiUrl}/exams/${id}`);
 		return response.data;
 	}
 
-	async createExam(newExam: Exam): Promise<Exam> {
-		const response = await axios.post<Exam>(`${this.apiUrl}/exams`, newExam);
+	async createExam(newExam: Exam) {
+		const response = await axios.post(`${this.apiUrl}/exams`, newExam);
 		return response.data;
 	}
 
-	async updateExam(id: number, updatedExam: Exam): Promise<Exam> {
-		const response = await axios.put<Exam>(`${this.apiUrl}/exams/${id}`, updatedExam);
+	async updateExam(id: number, updatedExam: Exam) {
+		const response = await axios.put(`${this.apiUrl}/exams/${id}`, updatedExam);
 		return response.data;
 	}
 
-	async removeExam(id: number): Promise<void> {
+	async removeExam(id: number) {
 		await axios.delete(`${this.apiUrl}/exams/${id}`);
 	}
 }

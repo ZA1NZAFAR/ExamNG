@@ -1,6 +1,6 @@
 'use client';
 
-import { MCQuestion } from '@/types/question';
+import { MCQuestion } from '@/types';
 import React from 'react';
 import { hasSingleCorrectOption } from '../question.util';
 import { RadioGroup, Radio } from '@nextui-org/radio';

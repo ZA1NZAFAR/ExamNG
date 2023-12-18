@@ -3,7 +3,7 @@
 import React from 'react';
 import { title } from '@/components/primitives';
 import QuestionComponent from '@/components/question/question';
-import { Exam } from '@/types/module';
+import { Exam, Question } from '@/types';
 import { ExamContext } from '@/components/question/examContext';
 import { useService } from '@/hooks/useService';
 import QuestionSkeleton from '@/components/question/questionSkeleton';
@@ -26,17 +26,20 @@ type SingleExamPageParams = {
 
 export default function SingleExamPage({ params }: { params: SingleExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
-	
+	const [questions, setQuestions] = React.useState<Question[]>([]);
+
 	const { moduleCode, examId } = params;
 	const { examService } = useService();
 
 	React.useEffect(() => {
 		(async () => {
-			const exam = await examService.getExam(moduleCode, examId);
-			setExam(exam);
+			const fetchedExam = await examService.getExamById(moduleCode, examId);
+			setExam(fetchedExam);
+			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId);
+			setQuestions(fetchedQuestions.results);
 		})();
 	}, [examService, moduleCode, examId]);
-	if (!exam) {
+	if (!exam || questions.length === 0) {
 		return (
 			<>
 				<h1 className={title()}>Exam: {moduleCode}</h1>
@@ -46,13 +49,13 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 		);
 	}
 
-	const totalScore = exam.questions.reduce((total, question) => total + question.coefficient, 0);
+	const totalScore = questions.reduce((total, question) => total + question.coefficient, 0);
 
 	return (	
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
 			<h2>{examId}</h2>
-			{exam.questions.map((question, index) => (
+			{questions.map((question, index) => (
 				<QuestionComponent
 					key={index}
 					id={index + 1}

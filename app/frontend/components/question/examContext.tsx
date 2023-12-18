@@ -1,6 +1,6 @@
 'use client';
 
-import { Exam } from '@/types/module';
+import { Exam } from '@/types';
 import React from 'react';
 
 
