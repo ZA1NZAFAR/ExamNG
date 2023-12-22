@@ -4,9 +4,10 @@ import { Card, CardBody } from '@nextui-org/react';
 
 export const Support = () => {
 	return (
-		<Card className='flex flex-row justify-center items-center text-center w-3/4 h-3/4'>
-			<CardBody>
-				<p>Support</p>
+		<Card className='w-1/2 h-1/2 mt-12'>
+			<CardBody className='flex flex-col justify-center items-start p-14'>
+				<h3 className='text-5xl font-semibold tracking-wide antialiased mb-12'>Stuck in a pickle?</h3>
+				<p>We&apos;ve got the answer!<br/>Don&apos;t hesitate to throw us a line for a rescue mission 🚀</p>
 			</CardBody>
 		</Card>
 	);
