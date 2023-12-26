@@ -7,6 +7,10 @@ import { Exam, Question } from '@/types';
 import { ExamContext } from '@/components/question/examContext';
 import { useService } from '@/hooks/useService';
 import QuestionSkeleton from '@/components/question/questionSkeleton';
+import { useDisclosure } from '@nextui-org/use-disclosure';
+import { Button } from '@nextui-org/button';
+import QuestionForm from '@/components/questionForm/questionForm';
+import { QuestionContext, defaultQuestionData } from '@/components/questionForm/questionContext';
 
 /**
  * Represents the parameters for an exam page.
@@ -27,9 +31,22 @@ type SingleExamPageParams = {
 export default function SingleExamPage({ params }: { params: SingleExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
 	const [questions, setQuestions] = React.useState<Question[]>([]);
+	const [ question, setQuestion ] = React.useState<Question>(defaultQuestionData);
+	const [ errors, setErrors ] = React.useState<Record<string, string>>({});
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const { moduleCode, examId } = params;
-	const { examService } = useService();
+	const { examService, authService } = useService();
+
+	function openEditModal(editIndex: number) {
+		if (editIndex === -1) {
+			setQuestion(defaultQuestionData);
+		} else {
+			setQuestion(questions[editIndex]);
+		}
+		onOpen();
+	}
+	const canEdit = authService.isTeacher && !exam?.isValidated;
 
 	React.useEffect(() => {
 		(async () => {
@@ -55,13 +72,35 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
 			<h2>{examId}</h2>
+			<Button
+				color={canEdit ? 'primary' : 'default'}
+				disabled={!canEdit}
+				onPress={() => openEditModal(-1)}>
+        Add Question
+			</Button>
+			<QuestionContext.Provider value={{ question, errors, setQuestion, setErrors }}>
+				<QuestionForm
+					isOpen={isOpen}
+					onOpenChange={onOpenChange}
+				/>
+			</QuestionContext.Provider>
 			{questions.map((question, index) => (
-				<QuestionComponent
+				<div
 					key={index}
-					id={index + 1}
-					question={question}
-					disableAnswer
-					showCoefficient />
+					className='relative'>
+					<QuestionComponent
+						id={index + 1}
+						question={question}
+						disableAnswer
+						showCoefficient />
+					<Button
+						className='absolute top-2 right-2 z-50'
+						color={canEdit ? 'primary' : 'default'}
+						disabled={!canEdit}
+						onPress={() => openEditModal(index)}>
+            Edit Question
+					</Button>
+				</div>
 			))}
 		</ExamContext.Provider>
 	);

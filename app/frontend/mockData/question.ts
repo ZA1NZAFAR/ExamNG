@@ -1,5 +1,6 @@
 const attachment1 = {
 	language: 'javascript',
+	title: 'helloworld.js',
 	code: 'console.log("Hello World")'
 };
 

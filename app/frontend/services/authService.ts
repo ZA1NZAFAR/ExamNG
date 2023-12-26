@@ -6,6 +6,10 @@ export class AuthService {
 	constructor() {
 		this.user = testUser;
 	}
+
+	get isTeacher() {
+		return this.user?.type === 'teacher';
+	}
   
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	login = async (email: string = '', password: string = '') => {
