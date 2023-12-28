@@ -60,3 +60,35 @@ export async function PUT(request: NextRequest, { params } : { params: QuestionP
 
 	return NextResponse.json(question);
 }
+
+export async function DELETE(request: NextRequest, { params } : { params: QuestionParams }) {
+	const { moduleCode, examId, questionId } = params;
+	const moduleSearch = mockModules.get(moduleCode);
+
+	if (moduleSearch === undefined) {
+		return NextResponse.json({ message: `Module with code ${moduleCode} not found` }, { status: 404 }); 
+	}
+
+	const examSearch = moduleSearch.exams.get(examId);
+
+	if (examSearch === undefined) {
+		return NextResponse.json({ message: `Exam with id ${examId} not found` }, { status: 404 });
+	}
+
+	const questionSearch = mockQuestions.get(questionId);
+
+	if (questionSearch === undefined) {
+		return NextResponse.json({ message: `Question with id ${questionId} not found` }, { status: 404 });
+	}
+
+	if (!(examSearch.questions.includes(questionId))) {
+		return NextResponse.json({ message: `Question with id ${questionId} not found in exam with id ${examId}` }, { status: 400 });
+	}
+
+	examSearch.questions = examSearch.questions.filter((question) => question !== questionId);
+	mockQuestions.delete(questionId);
+	console.log('Deleted question with id', questionId);
+	console.log('Exam questions', moduleSearch.exams);
+
+	return NextResponse.json({ message: `Question with id ${questionId} deleted` });
+}
