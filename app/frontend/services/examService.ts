@@ -1,6 +1,6 @@
 import { envConfig } from '@/config/envConfig';
 import { Exam, Module, Question, PageResult, PageOptions } from '@/types';
-import httpClient from './httpClient';
+import httpClient from '../utils/httpClient';
 
 export class ExamService {  
 	async getModules(options: PageOptions = {
