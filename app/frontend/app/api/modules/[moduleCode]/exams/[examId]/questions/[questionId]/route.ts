@@ -29,7 +29,7 @@ export async function PUT(request: NextRequest, { params } : { params: QuestionP
 		return NextResponse.json({ message: `Question with id ${questionId} not found` }, { status: 404 });
 	}
 
-	if (!(questionId in examSearch.questions)) {
+	if (!(examSearch.questions.includes(questionId))) {
 		return NextResponse.json({ message: `Question with id ${questionId} not found in exam with id ${examId}` }, { status: 400 });
 	}
 
