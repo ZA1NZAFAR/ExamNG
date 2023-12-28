@@ -5,6 +5,7 @@ import { Divider } from '@nextui-org/divider';
 import { ExamContext } from './examContext';
 import AttachmentComponent from './attachment/attachment';
 import AnswerComponent from './answer/answer';
+import SafeHTML from '../safeHtml';
 
 
 /**
@@ -46,7 +47,7 @@ const QuestionComponent: React.FC<QuestionProps> = ({
 		<Card className="w-full text-start">
 			<CardHeader className="flex gap-3">
 				<div className="flex flex-col">
-					<p className="text-md">{id}. {question.statement}</p>
+					<div className="text-md">{id}. <SafeHTML html={question.statement} /></div>
 					<p className={showScore}>Score: {question.coefficient}/{examContext.totalScore}</p>
 				</div>
 			</CardHeader>

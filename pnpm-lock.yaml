@@ -83,12 +83,18 @@ importers:
       draft-js:
         specifier: ^0.11.7
         version: 0.11.7(react-dom@18.2.0)(react@18.2.0)
+      draftjs-to-html:
+        specifier: ^0.9.1
+        version: 0.9.1
       eslint-config-next:
         specifier: 14.0.2
         version: 14.0.2(eslint@8.55.0)(typescript@5.0.4)
       framer-motion:
         specifier: ^10.16.4
         version: 10.16.16(react-dom@18.2.0)(react@18.2.0)
+      html-to-draftjs:
+        specifier: ^1.5.0
+        version: 1.5.0(draft-js@0.11.7)(immutable@4.3.4)
       intl-messageformat:
         specifier: ^10.5.0
         version: 10.5.8
@@ -132,6 +138,12 @@ importers:
       '@types/draft-js':
         specifier: ^0.11.16
         version: 0.11.16
+      '@types/draftjs-to-html':
+        specifier: ^0.8.4
+        version: 0.8.4
+      '@types/html-to-draftjs':
+        specifier: ^1.4.3
+        version: 1.4.3
       '@types/node':
         specifier: 20.5.7
         version: 20.5.7
@@ -4154,6 +4166,18 @@ packages:
       immutable: 3.7.6
     dev: true
 
+  /@types/draftjs-to-html@0.8.4:
+    resolution: {integrity: sha512-5FZcjFoJL57N/IttLCTCNI0krX+181oCl5hf76u3TqPkqBAphHrJAO9ReYesx9138kcObaYmpnWC2Yrqxoqd2Q==}
+    dependencies:
+      '@types/draft-js': 0.11.16
+    dev: true
+
+  /@types/html-to-draftjs@1.4.3:
+    resolution: {integrity: sha512-8TAgtzFA/sfwjGNXJ7Zod5tgnqsfJFQZYB8Nmu9GIoF7AVSwRm2quF1Ve09dHgHxSVsTSSy2diZSVdeSvTe7vg==}
+    dependencies:
+      '@types/draft-js': 0.11.16
+    dev: true
+
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
@@ -4983,6 +5007,10 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /draftjs-to-html@0.9.1:
+    resolution: {integrity: sha512-fFstE6+IayaVFBEvaFt/wN8vdj8FsTRzij7dy7LI9QIwf5LgfHFi9zSpvCg+feJ2tbYVqHxUkjcibwpsTpgFVQ==}
     dev: false
 
   /draftjs-utils@0.10.2(draft-js@0.11.7)(immutable@4.3.4):
