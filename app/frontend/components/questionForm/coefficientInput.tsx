@@ -1,9 +1,9 @@
 import { Input } from '@nextui-org/input';
 import React from 'react';
-import { QuestionContext } from './questionContext';
+import { QuestionFormContext } from './questionFormContext';
 
 const CoefficientInput: React.FC = () => {
-	const { question, setQuestion, errors, setErrors } = React.useContext(QuestionContext);
+	const { question, setQuestion, errors, setErrors } = React.useContext(QuestionFormContext);
   
 	function parseCoefficient(value: string) {
 		const coefficient = parseFloat(value);

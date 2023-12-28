@@ -10,7 +10,8 @@ import QuestionSkeleton from '@/components/question/questionSkeleton';
 import { useDisclosure } from '@nextui-org/use-disclosure';
 import { Button } from '@nextui-org/button';
 import QuestionForm from '@/components/questionForm/questionForm';
-import { QuestionContext, defaultQuestionData } from '@/components/questionForm/questionContext';
+import { QuestionFormContext, defaultQuestionData } from '@/components/questionForm/questionFormContext';
+import { useRouter } from 'next/navigation';
 
 /**
  * Represents the parameters for an exam page.
@@ -34,6 +35,7 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 	const [ question, setQuestion ] = React.useState<Question>(defaultQuestionData);
 	const [ errors, setErrors ] = React.useState<Record<string, string>>({});
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const router = useRouter();
 
 	const { moduleCode, examId } = params;
 	const { examService, authService } = useService();
@@ -68,6 +70,25 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 
 	const totalScore = questions.reduce((total, question) => total + question.coefficient, 0);
 
+	function handleAddQuestion(question: Question) {
+		examService.createExamQuestion(moduleCode, examId, question);
+		router.refresh();
+	}
+
+	function handleEditQuestion(question: Question) {
+		examService.updateExamQuestion(moduleCode, examId, question.id, question);
+		router.refresh();
+	}
+
+	function deleteError(key: string) {
+		if (!errors[key]) {
+			return;
+		}
+		const newErrors = { ...errors };
+		delete newErrors[key];
+		setErrors(newErrors);
+	}
+
 	return (	
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
@@ -78,12 +99,14 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 				onPress={() => openEditModal(-1)}>
         Add Question
 			</Button>
-			<QuestionContext.Provider value={{ question, errors, setQuestion, setErrors }}>
+			<QuestionFormContext.Provider value={{ question, errors, setQuestion, setErrors, deleteError }}>
 				<QuestionForm
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}
+					onAddQuestion={handleAddQuestion}
+					onEditQuestion={handleEditQuestion}
 				/>
-			</QuestionContext.Provider>
+			</QuestionFormContext.Provider>
 			{questions.map((question, index) => (
 				<div
 					key={index}
@@ -94,11 +117,12 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 						disableAnswer
 						showCoefficient />
 					<Button
+						isIconOnly
 						className='absolute top-2 right-2 z-50'
 						color={canEdit ? 'primary' : 'default'}
 						disabled={!canEdit}
 						onPress={() => openEditModal(index)}>
-            Edit Question
+						<span className="material-icons">edit</span>
 					</Button>
 				</div>
 			))}

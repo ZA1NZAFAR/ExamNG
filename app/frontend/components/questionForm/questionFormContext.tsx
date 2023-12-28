@@ -11,11 +11,10 @@ export const defaultQuestionData: Question = {
 	attachments: []
 };
 
-export const QuestionContext = React.createContext({
+export const QuestionFormContext = React.createContext({
 	question: defaultQuestionData,
 	errors: {} as ErrorMessages,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	setQuestion: (_: Question) => {},
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	setErrors: (_: ErrorMessages) => {},
+	deleteError: (_: string) => {},
 });
