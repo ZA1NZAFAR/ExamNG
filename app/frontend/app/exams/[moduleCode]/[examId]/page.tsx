@@ -11,7 +11,7 @@ import { useDisclosure } from '@nextui-org/use-disclosure';
 import { Button } from '@nextui-org/button';
 import QuestionForm from '@/components/questionForm/questionForm';
 import { QuestionFormContext, defaultQuestionData } from '@/components/questionForm/questionFormContext';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 /**
  * Represents the parameters for an exam page.
@@ -34,11 +34,21 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 	const [questions, setQuestions] = React.useState<Question[]>([]);
 	const [ question, setQuestion ] = React.useState<Question>(defaultQuestionData);
 	const [ errors, setErrors ] = React.useState<Record<string, string>>({});
+	// TODO: add pagination
+	const searchParams = useSearchParams();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [ page, setPage ] = React.useState<number>(parseInt(searchParams.get('page') ?? '1'));
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [ pageSize, setPageSize ] = React.useState<number>(parseInt(searchParams.get('pageSize') ?? '10'));
+	const [ render, setRender ] = React.useState<number>(0);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const router = useRouter();
 
 	const { moduleCode, examId } = params;
 	const { examService, authService } = useService();
+
+	function reloadExamQuestions() {
+		setRender(render + 1);
+	}
 
 	function openEditModal(editIndex: number) {
 		if (editIndex === -1) {
@@ -54,10 +64,10 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 		(async () => {
 			const fetchedExam = await examService.getExamById(moduleCode, examId);
 			setExam(fetchedExam);
-			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId);
+			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId, { page, pageSize });
 			setQuestions(fetchedQuestions.results);
 		})();
-	}, [examService, moduleCode, examId]);
+	}, [render]);
 	if (!exam || questions.length === 0) {
 		return (
 			<>
@@ -72,12 +82,17 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 
 	function handleAddQuestion(question: Question) {
 		examService.createExamQuestion(moduleCode, examId, question);
-		router.refresh();
+		reloadExamQuestions();
 	}
 
 	function handleEditQuestion(question: Question) {
 		examService.updateExamQuestion(moduleCode, examId, question.id, question);
-		router.refresh();
+		reloadExamQuestions();
+	}
+
+	function handleDeleteQuestion(questionId: string) {
+		examService.deleteExamQuestion(moduleCode, examId, questionId);
+		reloadExamQuestions();
 	}
 
 	function deleteError(key: string) {
@@ -116,14 +131,22 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 						question={question}
 						disableAnswer
 						showCoefficient />
-					<Button
-						isIconOnly
-						className='absolute top-2 right-2 z-50'
-						color={canEdit ? 'primary' : 'default'}
-						disabled={!canEdit}
-						onPress={() => openEditModal(index)}>
-						<span className="material-icons">edit</span>
-					</Button>
+					<div className='absolute flex top-2 right-2 z-50 gap-2'>
+						<Button
+							isIconOnly
+							color={canEdit ? 'primary' : 'default'}
+							disabled={!canEdit}
+							onPress={() => openEditModal(index)}>
+							<span className="material-icons">edit</span>
+						</Button>
+						<Button
+							isIconOnly
+							color={canEdit ? 'danger' : 'default'}
+							disabled={!canEdit}
+							onPress={() => handleDeleteQuestion(question.id)}>
+							<span className="material-icons">delete</span>
+						</Button>
+					</div>
 				</div>
 			))}
 		</ExamContext.Provider>
