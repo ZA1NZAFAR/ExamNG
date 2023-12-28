@@ -1,6 +1,6 @@
 import React from 'react';
 import { LANGUAGES, Language } from '@/types/data/language';
-import Editor from '@monaco-editor/react';
+import Editor, { OnChange } from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';
 import { Select, SelectItem } from '@nextui-org/select';
@@ -10,8 +10,9 @@ import { Select, SelectItem } from '@nextui-org/select';
  * @property {Language} defaultLanguage - The default language of the code.
  * @property {string} initialCode - The initial code to display.
  * @property {boolean} isDisabled - Whether the answer can be submitted.
+ * @property {OnChange} onChange - The callback function to be called when the code changes.
  */
-type CodeAnswerProps = {
+type CodeEditorProps = {
   /**
    * The default language of the code.
    */
@@ -19,12 +20,19 @@ type CodeAnswerProps = {
   /**
    * The initial code to display.
    */
-  initialCode?: string;
+  code?: string;
   /**
    * Whether the answer can be submitted.
    * @default false
    */
   isDisabled?: boolean;
+  /**
+   * The callback function to be called when the code changes.
+   * @default () => {}
+   * @param {string} value - The new code.
+   * @param {Monaco} event - The Monaco event.
+   */
+  onChange?: OnChange;
 }
 
 const MIN_LINES = 3;
@@ -33,12 +41,17 @@ const LINE_HEIGHT = 19;
 
 const sortedLanguages = Array.from(LANGUAGES).sort((a, b) => a.localeCompare(b));
 
-function CodeAnswerComponent ({ defaultLanguage = null, initialCode = '', isDisabled = false }: CodeAnswerProps) {
+function CodeEditor ({
+	defaultLanguage = null,
+	code = '',
+	isDisabled = false,
+	onChange = () => {}
+}: CodeEditorProps) {
 	const selectedLanguage = defaultLanguage || 'javascript';
 	const { theme } = useTheme();
 	const [ isWordWrapEnabled, setIsWordWrapEnabled ] = React.useState<boolean>(false);
 	const [ language, setLanguage ] = React.useState<Language>(selectedLanguage);
-	const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, initialCode.split('\n').length + 1));
+	const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
 	const height = (isDisabled ? minimumLines : MAX_LINES) * LINE_HEIGHT;
 
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -73,7 +86,8 @@ function CodeAnswerComponent ({ defaultLanguage = null, initialCode = '', isDisa
 				className="max-w"
 				language={language}
 				theme={theme === 'dark' ? 'vs-dark' : 'light'}
-				defaultValue={initialCode}
+				value={code}
+				onChange={onChange}
 				options={{
 					readOnly: isDisabled,
 					readOnlyMessage: { value: 'You cannot submit your answer' },
@@ -86,4 +100,4 @@ function CodeAnswerComponent ({ defaultLanguage = null, initialCode = '', isDisa
 	);
 }
 
-export default CodeAnswerComponent;
+export default CodeEditor;
