@@ -42,14 +42,12 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 	onAddQuestion,
 	onEditQuestion
 }) => {
-	const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set(['1']));
-	// TODO: use setQuestion to update the question context
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { question, setQuestion, errors } = React.useContext(QuestionFormContext);
+	const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set(['1', '3']));
 	const isInEditMode = question.id !== defaultQuestionData.id;
   
 	function updateSelectedKeysForTypeUsingAnswerAccordionItem() {
-		if (selectedKeys !== 'all') {
+		if (selectedKeys !== 'all' && (isMCQuestion(question) || isCodeQuestion(question))) {
 			const newSelectedKeys = new Set(selectedKeys);
 			setSelectedKeys(newSelectedKeys.add('3'));
 		}

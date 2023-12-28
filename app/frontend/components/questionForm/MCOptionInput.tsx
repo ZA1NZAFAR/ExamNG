@@ -14,7 +14,8 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({ index }) => {
 	const { question, setQuestion, errors, setErrors, deleteError } = React.useContext(QuestionFormContext);
 
 	React.useEffect(() => {
-		setErrors({...errors, [`option${index}Statement`]: 'Option statement cannot be empty'});
+		if ((question as MCQuestion).options[index].statement === '')
+			setErrors({...errors, [`option${index}Statement`]: 'Option statement cannot be empty'});
 	}, []);
 
 	if (isMCQuestion(question) && question.options.length > index) {
