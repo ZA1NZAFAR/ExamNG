@@ -20,7 +20,7 @@ export function isCodeQuestion(question: Question): question is CodeQuestion {
 }
 
 export function hasSingleCorrectOption(question: MCQuestion): boolean {
-	return question.options.filter(option => option.correctOption).length === 1;
+	return question.options.filter(option => option.isCorrectOption).length === 1;
 }
 
 export function isMCQuestionValid(question: MCQuestion): boolean {

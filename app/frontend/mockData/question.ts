@@ -15,19 +15,19 @@ const question1 = {
 	options: [
 		{
 			statement: 'Option 1',
-			correctOption: true
+			isCorrectOption: true
 		},
 		{
 			statement: 'Option 2',
-			correctOption: false
+			isCorrectOption: false
 		},
 		{
 			statement: 'Option 3',
-			correctOption: false
+			isCorrectOption: false
 		},
 		{
 			statement: 'Option 4',
-			correctOption: false
+			isCorrectOption: false
 		}
 	]
 };
@@ -41,19 +41,19 @@ const question2 = {
 	options: [
 		{
 			statement: 'Option 1',
-			correctOption: true
+			isCorrectOption: true
 		},
 		{
 			statement: 'Option 2',
-			correctOption: true
+			isCorrectOption: true
 		},
 		{
 			statement: 'Option 3',
-			correctOption: false
+			isCorrectOption: false
 		},
 		{
 			statement: 'Option 4',
-			correctOption: false
+			isCorrectOption: false
 		}
 	]
 };
