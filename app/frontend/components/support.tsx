@@ -1,12 +1,13 @@
-import React from 'react';
-import { Card, CardBody, Input } from '@nextui-org/react';
+import React, { useState } from 'react';
+import { Card, CardBody, Input, CheckboxGroup, Checkbox } from '@nextui-org/react';
 // import { envConfig } from '@/config/envConfig';
 
 export const Support = () => {
-	const [firstName, setFirstName] = React.useState('John');
-	const [lastName, setLastName] = React.useState('Doe');
-	const [email, setEmail] = React.useState('user@examng.net');
-	const [phoneNumber, setPhoneNumber] = React.useState('+33 06 12 34 56 78');
+	const [firstName, setFirstName] = useState('John');
+	const [lastName, setLastName] = useState('Doe');
+	const [email, setEmail] = useState('user@examng.net');
+	const [phoneNumber, setPhoneNumber] = useState('+33 06 12 34 56 78');
+	const [isInvalid, setIsInvalid] = useState(true);
 
 	return (
 		<Card className='w-1/2 h-1/2 mt-12'>
@@ -31,7 +32,7 @@ export const Support = () => {
 						className="max-w-xs"
 					/>
 				</div>
-				<div className='flex flex-row justify-between items-center w-full mb-20 mt-5'>
+				<div className='flex flex-row justify-between items-center w-full mt-5'>
 					<Input
 						value={email}
 						type="email"
@@ -49,6 +50,22 @@ export const Support = () => {
 						className="max-w-xs"
 					/>
 				</div>
+				<CheckboxGroup
+					isRequired
+					orientation='horizontal'
+					isInvalid={isInvalid}
+					label="Select subject:"
+					color='default'
+					onValueChange={(value) => {
+						setIsInvalid(value.length < 1);
+					}}
+					className='my-14'
+				>
+					<Checkbox value="general-inquiry">General inquiry</Checkbox>
+					<Checkbox value="informations">Informations</Checkbox>
+					<Checkbox value="about-students">About students</Checkbox>
+					<Checkbox value="about-professor-access">About professor access</Checkbox>
+				</CheckboxGroup>
 			</CardBody>
 		</Card>
 	);
