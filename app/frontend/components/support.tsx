@@ -3,18 +3,19 @@ import { Card, CardBody, Input, CheckboxGroup, Checkbox } from '@nextui-org/reac
 // import { envConfig } from '@/config/envConfig';
 
 export const Support = () => {
-	const [firstName, setFirstName] = useState('John');
-	const [lastName, setLastName] = useState('Doe');
-	const [email, setEmail] = useState('user@examng.net');
-	const [phoneNumber, setPhoneNumber] = useState('+33 06 12 34 56 78');
-	const [isInvalid, setIsInvalid] = useState(true);
+	const [firstName, setFirstName] = useState<string>('John');
+	const [lastName, setLastName] = useState<string>('Doe');
+	const [email, setEmail] = useState<string>('user@examng.net');
+	const [phoneNumber, setPhoneNumber] = useState<string>('+33 06 12 34 56 78');
+	const [isInvalid, setIsInvalid] = useState<boolean>(true);
+	const [selected, setSelected] = useState<Array<string>>([]);
 
 	return (
 		<Card className='w-1/2 h-1/2 mt-12'>
 			<CardBody className='flex flex-col justify-center items-start p-14'>
-				<h3 className='text-5xl font-semibold tracking-wide antialiased mb-10 text-gray-800'>Stuck in a pickle?</h3>
-				<p><span className='text-left font-normal tracking-normal text-lg text-gray-700/50'>We&apos;ve got the answer!<br />Don&apos;t hesitate to throw us a line for a rescue mission</span> 🚀</p>
-				<div className='flex flex-row justify-between items-center w-full mt-20 mb-5'>
+				<h3 className='text-5xl max-md:text-3xl font-semibold tracking-wide antialiased mb-10 max-md:mb-5 text-gray-800'>Stuck in a pickle?</h3>
+				<p><span className='text-left font-normal tracking-normal text-lg max-md:text-base text-gray-700/50'>We&apos;ve got the answer!<br />Don&apos;t hesitate to throw us a line for a rescue mission</span> 🚀</p>
+				<div className='flex max-md:flex-col flex-row justify-between items-center w-full mt-20 max-md:mt-14 mb-5'>
 					<Input
 						value={firstName}
 						type="text"
@@ -32,7 +33,7 @@ export const Support = () => {
 						className="max-w-xs"
 					/>
 				</div>
-				<div className='flex flex-row justify-between items-center w-full mt-5'>
+				<div className='flex max-md:flex-col flex-row justify-between items-center w-full mt-5'>
 					<Input
 						value={email}
 						type="email"
@@ -54,12 +55,14 @@ export const Support = () => {
 					isRequired
 					orientation='horizontal'
 					isInvalid={isInvalid}
-					label="Select subject:"
+					label="Select subject"
 					color='default'
 					onValueChange={(value) => {
 						setIsInvalid(value.length < 1);
+						setSelected(value);
 					}}
-					className='my-14'
+					value={selected}
+					className='my-14 max-md:my-8'
 				>
 					<Checkbox value="general-inquiry">General inquiry</Checkbox>
 					<Checkbox value="informations">Informations</Checkbox>
