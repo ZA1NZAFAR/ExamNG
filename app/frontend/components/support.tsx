@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardBody, Input, CheckboxGroup, Checkbox } from '@nextui-org/react';
+import { Card, CardBody, Input, CheckboxGroup, Checkbox, Textarea } from '@nextui-org/react';
 // import { envConfig } from '@/config/envConfig';
 
 export const Support = () => {
@@ -69,6 +69,15 @@ export const Support = () => {
 					<Checkbox value="about-students">About students</Checkbox>
 					<Checkbox value="about-professor-access">About professor access</Checkbox>
 				</CheckboxGroup>
+				<Textarea
+					minRows={1}
+					maxRows={5}
+					isRequired
+					variant='underlined'
+					label="Message"
+					placeholder="Write your message..."
+					className='mb-14 max-md:mb-8'
+				/>
 			</CardBody>
 		</Card>
 	);
