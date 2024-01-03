@@ -9,10 +9,11 @@ export const Support = () => {
 	const [phoneNumber, setPhoneNumber] = useState<string>('+33 06 12 34 56 78');
 	const [isInvalid, setIsInvalid] = useState<boolean>(true);
 	const [selected, setSelected] = useState<Array<string>>([]);
+	const [message, setMessage] = useState<string>('');
 
 	return (
 		<Card className='w-1/2 h-1/2 mt-12'>
-			<CardBody className='flex flex-col justify-center items-start p-14'>
+			<CardBody className='flex flex-col justify-center items-start px-16 py-14'>
 				<h3 className='text-5xl max-md:text-3xl font-semibold tracking-wide antialiased mb-10 max-md:mb-5 text-gray-800'>Stuck in a pickle?</h3>
 				<p><span className='text-left font-normal tracking-normal text-lg max-md:text-base text-gray-700/50'>We&apos;ve got the answer!<br />Don&apos;t hesitate to throw us a line for a rescue mission</span> 🚀</p>
 				<div className='flex max-md:flex-col flex-row justify-between items-center w-full mt-20 max-md:mt-14 mb-5'>
@@ -75,7 +76,10 @@ export const Support = () => {
 					isRequired
 					variant='underlined'
 					label="Message"
+					labelPlacement='outside'
 					placeholder="Write your message..."
+					value={message}
+					onValueChange={setMessage}
 					className='mb-14 max-md:mb-8'
 				/>
 			</CardBody>
