@@ -82,6 +82,9 @@ export const Support = () => {
 					onValueChange={setMessage}
 					className='mb-14 max-md:mb-8'
 				/>
+				<div className='flex max-md:flex-col flex-row justify-between items-center w-full'>
+					<h4 className='text-3xl max-md:text-1xl font-medium tracking-normal antialiased text-gray-800'>Let&apos;s talk!</h4>
+				</div>
 			</CardBody>
 		</Card>
 	);
