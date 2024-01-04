@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardBody, Input, CheckboxGroup, Checkbox, Textarea, Button } from '@nextui-org/react';
+import { Phone } from 'lucide-react';
 // import { envConfig } from '@/config/envConfig';
 
 export const Support = () => {
@@ -83,7 +84,13 @@ export const Support = () => {
 					className='mb-14 max-md:mb-8'
 				/>
 				<div className='flex max-md:flex-col flex-row justify-between items-center w-full'>
-					<h4 className='text-3xl max-md:text-1xl font-medium tracking-normal antialiased text-gray-800'>Let&apos;s talk!</h4>
+					<div className='flex flex-col justify-between items-start'>
+						<h4 className='text-3xl max-md:text-1xl font-medium tracking-normal antialiased text-gray-800'>Let&apos;s talk!</h4>
+						<div>
+							<Phone className='inline-block mr-2 my-6' />
+							<span>+33 06 12 34 56 78</span>
+						</div>
+					</div>
 					<Button color="success" variant="shadow" className='w-3/12 h-16 text-lg text-white'>
 						Send message
 					</Button>  
