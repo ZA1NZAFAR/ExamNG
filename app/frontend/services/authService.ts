@@ -3,6 +3,9 @@ import { User } from '@/types';
 
 export class AuthService {
 	user: User | null;
+	config = {
+		useWordwrapByDefault: false,
+	};
 	constructor() {
 		this.user = testUser;
 	}
