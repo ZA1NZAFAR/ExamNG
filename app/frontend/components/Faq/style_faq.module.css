@@ -2,7 +2,7 @@
     font-size: 37.3pt;
     color: #9B59B6;
     text-align: center;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     font-family: SF Pro, sans-serif;
     font-style: normal;
     font-weight: 510;
@@ -12,7 +12,7 @@
     font-size: 37.3pt;
     color: #444444;
     text-align: center;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     font-family: SF Pro, sans-serif;
     font-style: normal;
     font-weight: 510;
@@ -60,7 +60,7 @@
     font-size: 15pt;
     margin-left: 22%;
     color: #444444;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     font-family: SF Pro, sans-serif;
     font-style: normal;
     font-weight: 510;
