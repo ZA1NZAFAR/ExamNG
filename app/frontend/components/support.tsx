@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardBody, Input, CheckboxGroup, Checkbox, Textarea, Button } from '@nextui-org/react';
-import { Phone } from 'lucide-react';
+import { Phone, Home } from 'lucide-react';
 // import { envConfig } from '@/config/envConfig';
 
 export const Support = () => {
@@ -14,7 +14,7 @@ export const Support = () => {
 
 	return (
 		<Card className='w-1/2 h-1/2 mt-12'>
-			<CardBody className='flex flex-col justify-center items-start px-16 py-14'>
+			<CardBody className='flex flex-col justify-center items-start px-16 py-14 max-lg:px-12 max-lg:py-10'>
 				<h3 className='text-5xl max-md:text-3xl font-semibold tracking-wide antialiased mb-10 max-md:mb-5 text-gray-800'>Stuck in a pickle?</h3>
 				<p><span className='text-left font-normal tracking-normal text-lg max-md:text-base text-gray-700/50'>We&apos;ve got the answer!<br />Don&apos;t hesitate to throw us a line for a rescue mission</span> 🚀</p>
 				<div className='flex max-md:flex-col flex-row justify-between items-center w-full mt-20 max-md:mt-14 mb-5'>
@@ -87,11 +87,15 @@ export const Support = () => {
 					<div className='flex flex-col justify-between items-start'>
 						<h4 className='text-3xl max-md:text-1xl font-medium tracking-normal antialiased text-gray-800'>Let&apos;s talk!</h4>
 						<div>
-							<Phone className='inline-block mr-2 my-6' />
+							<Phone className='inline-block mr-2 my-6 max-md:my-4' />
 							<span>+33 06 12 34 56 78</span>
 						</div>
+						<div>
+							<Home className='inline-block mr-2' />
+							<span>30-32 Av. de la République, 94800 Villejuif</span>
+						</div>
 					</div>
-					<Button color="success" variant="shadow" className='w-3/12 h-16 text-lg text-white'>
+					<Button color="success" variant="shadow" className='xl:w-3/12 lg:h-16 lg:text-lg text-white my-6 max-md:my-4'>
 						Send message
 					</Button>  
 				</div>
