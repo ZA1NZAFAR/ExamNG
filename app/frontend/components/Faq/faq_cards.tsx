@@ -2,14 +2,7 @@ import React from "react";
 import {Button, Card, CardBody, ScrollShadow} from "@nextui-org/react";
 import style from "./style_faq.module.css";
 import {Avatar} from "@nextui-org/react";
-import {Input} from "@nextui-org/react";
-import {SearchIcon} from "./SearchIcon";
-import {CardFooter} from "@nextui-org/card";
-interface ListItem {
-    title: string;
-    img: string;
-    text: string;
-}
+import Link from "next/link";
 
 const FaqCards: React.FC = () => {
     {
@@ -100,7 +93,9 @@ const FaqCards: React.FC = () => {
                 <h1 className={style.footer_heading}>Where the magic ends (but the help doesn't!)</h1>
                 <p className={style.text_footer}>Got a question? Don't be shy, hit us up! We're all ears and ready to
                     sprinkle some assistance magic your way!</p>
+                <Link href="/support">
                 <Button className={style.button}>👋 Contact us</Button>
+                </Link>
                 <br/>
                 <img className={style.button} src="/Divider.svg" alt="divider"/>
                 <div className={style.textContainer}>
