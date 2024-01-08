@@ -1,47 +1,53 @@
 import { Input } from '@nextui-org/input';
 import React from 'react';
-import { QuestionFormContext } from './questionFormContext';
+import { useQuestionFormStore } from './questionFormStore';
+import { useShallow } from 'zustand/react/shallow';
 
 const CoefficientInput: React.FC = () => {
-	const { question, setQuestion, errors, setErrors } = React.useContext(QuestionFormContext);
-  
+	const { coefficient, setCoefficient, coefficientError, setCoefficientError, deleteCoefficientError } = useQuestionFormStore(
+		useShallow((state) => ({
+			coefficient: state.question.coefficient,
+			setCoefficient: (newCoefficient: number) => state.setQuestion({ ...state.question, coefficient: newCoefficient }),
+			coefficientError: state.errors.coefficient,
+			setCoefficientError: (newCoefficientError: string) => state.setErrors({ ...state.errors, coefficient: newCoefficientError }),
+			deleteCoefficientError: () => state.deleteError('coefficient')
+	})));
+
+
 	function parseCoefficient(value: string) {
-		const coefficient = parseFloat(value);
-		console.log(coefficient);
-		if (isNaN(coefficient)) {
-			setErrors({ ...errors, coefficient: 'Coefficient must be a positive number' });
+		const newCoefficient = parseFloat(value);
+		if (isNaN(newCoefficient)) {
+			setCoefficientError('Coefficient must be a number');
 			return 0;
 		}
-		if (coefficient <= 0) {
-			setErrors({ ...errors, coefficient: 'Coefficient must be positive' });
+		if (newCoefficient <= 0) {
+			setCoefficientError('Coefficient must be positive');
 			return 0;
 		}
-		const newErrors = { ...errors };
-		delete newErrors.coefficient;
-		setErrors(newErrors);
-		return coefficient;
+		deleteCoefficientError();
+		return newCoefficient;
 	}
 
 	function onValueChange(value: string) {
-		const coefficient = parseCoefficient(value);
-		if (coefficient === question.coefficient) return;
-		setQuestion({ ...question, coefficient: coefficient });
+		const newCoefficient = parseCoefficient(value);
+		if (newCoefficient === coefficient) return;
+		setCoefficient(newCoefficient);
 	}
 
 	return (
 		<Input
 			type="number"
 			label="Coefficient"
-			value={question.coefficient.toString()}
+			value={coefficient.toString()}
 			step="0.01"
 			placeholder="1.00"
 			onValueChange={onValueChange}
 			labelPlacement="outside"
-			isInvalid={!!errors.coefficient}
+			isInvalid={!!coefficientError}
 			endContent={
 				<span className="text-gray-500">pts</span>
 			}
-			errorMessage={errors.coefficient}
+			errorMessage={coefficientError}
 		/>
 	);
 };

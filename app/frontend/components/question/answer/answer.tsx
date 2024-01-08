@@ -15,11 +15,11 @@ type AnswerProps = {
 	 * The question to answer.
 	 */
 	question: Question;
-  /**
-   * Whether the answer can be submitted.
-   * @default false
-   */
-  isDisabled?: boolean;
+	/**
+	 * Whether the answer can be submitted.
+	 * @default false
+	 */
+	isDisabled?: boolean;
 }
 
 const AnswerComponent: React.FC<AnswerProps> = ({ question, isDisabled = false }) => {
@@ -43,7 +43,8 @@ const AnswerComponent: React.FC<AnswerProps> = ({ question, isDisabled = false }
 	if (isCodeQuestion(question)) {
 		return (
 			<CodeAnswerComponent
-				question={question}
+				initialCode={question.initialCode}
+				defaultLanguage={question.defaultLanguage}
 				isDisabled={isDisabled}
 			/>
 		);

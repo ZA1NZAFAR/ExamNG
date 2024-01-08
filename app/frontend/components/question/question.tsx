@@ -19,11 +19,11 @@ type QuestionProps = {
 	/**
 	 * The unique identifier of the question.
 	 */
-  id: number;
+	id: number;
 	/**
 	 * The question object containing its content.
 	 */
-  question: Question;
+	question: Question;
 	/**
 	 * Whether the answer can be submitted.
 	 * @default false

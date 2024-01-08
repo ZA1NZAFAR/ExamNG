@@ -1,84 +1,107 @@
 import React from 'react';
-import { QuestionFormContext } from './questionFormContext';
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import { MCOption, MCQuestion } from '@/types';
-import { isMCQuestion } from '../question/question.util';
 import { Checkbox } from '@nextui-org/react';
+import { useQuestionFormStore } from './questionFormStore';
+import { useShallow } from 'zustand/react/shallow';
 
 type MCOptionInputProps = {
-  index: number;
+	index: number;
 };
 
-const MCOptionInput: React.FC<MCOptionInputProps> = ({ index }) => {
-	const { question, setQuestion, errors, setErrors, deleteError } = React.useContext(QuestionFormContext);
+const MCOptionInput: React.FC<MCOptionInputProps> = ({
+	index,
+}) => {
+	const {
+		option,
+		setOption,
+		deleteOption,
+		optionErrors,
+		setOptionError,
+		deleteOptionError
+	} = useQuestionFormStore(useShallow((state) => ({
+		option: (state.question as MCQuestion).options[index],
+		setOption: (newOption: MCOption) => {
+			const newOptions = [...(state.question as MCQuestion).options];
+			newOptions[index] = newOption;
+			state.setQuestion({
+				...state.question,
+				options: newOptions,
+			} as MCQuestion);
+		},
+		deleteOption: () => {
+			const newOptions = [...(state.question as MCQuestion).options];
+			newOptions.splice(index, 1);
+			state.setQuestion({
+				...state.question,
+				options: newOptions,
+			} as MCQuestion);
+		},
+		optionErrors: Object.keys(state.errors).filter((key) => key.startsWith(`option${index}`)).reduce((obj, key) => {
+			obj[key] = state.errors[key];
+			return obj;
+		}, {} as Record<string, string>),
+		setOptionError: (key: string, newOptionError: string) => state.setErrors({ ...state.errors, [`option${index}-${key}`]: newOptionError }),
+		deleteOptionError: (key:string) => state.deleteError(`option${index}-${key}`)
+	})));
 
 	React.useEffect(() => {
-		if ((question as MCQuestion).options[index].statement === '')
-			setErrors({...errors, [`option${index}Statement`]: 'Option statement cannot be empty'});
+		if (option.statement === '')
+			setOptionError('statement', 'Option statement cannot be empty');
 	}, []);
-
-	if (isMCQuestion(question) && question.options.length > index) {
-		const option = question.options[index];
     
-		const updateOptions = (key: keyof MCOption, value: unknown) => {
-			const newOptions = [...question.options];
-			newOptions[index] = {
-				...option,
-				[key]: value,
-			} as MCOption;
-			setQuestion({
-				...question,
-				options: newOptions,
-			} as MCQuestion);
-			if (key === 'statement') {
-				const newErrors = {...errors};
-				if (value === '') {
-					setErrors({...newErrors, [`option${index}Statement`]: 'Option statement cannot be empty'});
-				} else {
-					deleteError(`option${index}Statement`);
-				}
+	const updateOptions = (key: keyof MCOption, value: unknown) => {
+		setOption({
+			...option,
+			[key]: value,
+		});
+		if (key === 'statement') {
+			if (value === '') {
+				setOptionError('statement', 'Option statement cannot be empty');
+			} else {
+				deleteOptionError('statement');
 			}
-		};
-    
-		const deleteOption = () => {
-			deleteError(`option${index}Statement`);
-			const newOptions = [...question.options];
-			newOptions.splice(index, 1);
-			setQuestion({
-				...question,
-				options: newOptions,
-			} as MCQuestion);
-		};
+		}
+	};
 
-		return (
-			<div className="flex gap-4">
-				<Input
-					className="flex-grow"
-					type="text"
-					label={`Option ${index + 1}`}
-					placeholder="Add your option here"
-					value={option.statement}
-					onValueChange={(value) => updateOptions('statement', value) }
-					isRequired
-					isInvalid={!!errors[`option${index}Statement`]}
-					errorMessage={errors[`option${index}Statement`]}
-				/>
-				<Checkbox
-					isSelected={option.isCorrectOption}
-					onValueChange={(value) => updateOptions('isCorrectOption', value)}>
-          Correct
-				</Checkbox>
-				<Button
-					isIconOnly
-					onPress={deleteOption}
-					color="danger">
-					<span className="material-icons">delete</span>
-				</Button>
-			</div>
-		);
-	}
-	return <></>;
+	const handleDeleteOption = () => {
+		deleteOptionError('statement');
+		deleteOption();
+	};
+
+	return (
+		<div className="flex gap-4 place-items-center">
+			<Input
+				className="flex-grow"
+				size="sm"
+				type="text"
+				label={`Option ${index + 1}`}
+				placeholder="Add your option here"
+				value={option.statement}
+				onChange={(event) => {
+					updateOptions('statement', event.target.value);
+				}}
+				isRequired
+				isInvalid={!!optionErrors[`statement`]}
+				errorMessage={optionErrors[`statement`]}
+			/>
+			<Checkbox
+				isSelected={option.isCorrectOption}
+				onChange={(event) => {
+					updateOptions('isCorrectOption', event.target.checked);
+				}}
+			>
+				Correct
+			</Checkbox>
+			<Button
+				isIconOnly
+				onPress={handleDeleteOption}
+				color="danger">
+				<span className="material-icons">delete</span>
+			</Button>
+		</div>
+	);
 };
 
 export default MCOptionInput;

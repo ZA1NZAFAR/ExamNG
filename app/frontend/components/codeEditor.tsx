@@ -4,19 +4,27 @@ import Editor, { OnChange } from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';
 import { Select, SelectItem } from '@nextui-org/select';
+import { useService } from '@/hooks/useService';
 
 /**
  * Represents the props for the CodeAnswer component.
- * @property {Language} defaultLanguage - The default language of the code.
- * @property {string} initialCode - The initial code to display.
+ * @property {Language | null} language - The language of the code.
+ * @property {boolean} isLanguageLocked - Whether the language can be changed.
+ * @property {string} code - The initial code to display.
  * @property {boolean} isDisabled - Whether the answer can be submitted.
- * @property {OnChange} onChange - The callback function to be called when the code changes.
+ * @property {OnChange} onCodeChange - The callback function to be called when the code changes.
+ * @property {(language: Language) => void} onLanguageChange - The callback function to be called when the language changes.
  */
 type CodeEditorProps = {
   /**
-   * The default language of the code.
+   * The language of the code.
    */
-  defaultLanguage: Language | null;
+  language: Language | null;
+  /**
+   * Whether the language can be changed.
+   * @default false
+   */
+  isLanguageLocked?: boolean;
   /**
    * The initial code to display.
    */
@@ -32,7 +40,13 @@ type CodeEditorProps = {
    * @param {string} value - The new code.
    * @param {Monaco} event - The Monaco event.
    */
-  onChange?: OnChange;
+  onCodeChange?: OnChange;
+  /**
+   * The callback function to be called when the language changes.
+   * @default () => {}
+   * @param {Language} language - The new language.
+   */
+  onLanguageChange?: (language?: Language) => void;
 }
 
 const MIN_LINES = 3;
@@ -42,20 +56,24 @@ const LINE_HEIGHT = 19;
 const sortedLanguages = Array.from(LANGUAGES).sort((a, b) => a.localeCompare(b));
 
 function CodeEditor ({
-	defaultLanguage = null,
+	language,
 	code = '',
 	isDisabled = false,
-	onChange = () => {}
+  isLanguageLocked = false,
+	onCodeChange = () => {},
+  onLanguageChange = (_) => {}
 }: CodeEditorProps) {
-	const selectedLanguage = defaultLanguage || 'javascript';
 	const { theme } = useTheme();
-	const [ isWordWrapEnabled, setIsWordWrapEnabled ] = React.useState<boolean>(false);
-	const [ language, setLanguage ] = React.useState<Language>(selectedLanguage);
-	const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
+  const { userService } = useService();
+
+  const [isWordWrapEnabled, setIsWordWrapEnabled] = React.useState(userService.isWordwrapByDefault);
+	
+  const defaultLanguage = language || 'javascript';
+  const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
 	const height = (isDisabled ? minimumLines : MAX_LINES) * LINE_HEIGHT;
 
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setLanguage(e.target.value as Language);
+		onLanguageChange(e.target.value as Language);
 	};
 	return (
 		<>
@@ -65,8 +83,8 @@ function CodeEditor ({
 					label="Language"
 					className="flex-initial w-64"
 					onChange={handleSelectionChange}
-					selectedKeys={[language]}
-					isDisabled={ !!defaultLanguage }
+					selectedKeys={[defaultLanguage]}
+					isDisabled={ isLanguageLocked }
 				>
 					{sortedLanguages.map((lang) => (
 						<SelectItem key={lang} value={lang}>
@@ -82,12 +100,11 @@ function CodeEditor ({
 			</div>
 			<Editor
 				height={`${height}px`}
-				defaultLanguage={selectedLanguage}
 				className="max-w"
-				language={language}
+				language={defaultLanguage}
 				theme={theme === 'dark' ? 'vs-dark' : 'light'}
 				value={code}
-				onChange={onChange}
+				onChange={onCodeChange}
 				options={{
 					readOnly: isDisabled,
 					readOnlyMessage: { value: 'You cannot submit your answer' },

@@ -1,36 +1,44 @@
 import { Editor as TextEditor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import '@/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { QuestionFormContext } from './questionFormContext';
 import React from 'react';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import HTMLSanitize from '@/utils/htmlSanitizer';
+import { useQuestionFormStore } from './questionFormStore';
+import { useShallow } from 'zustand/react/shallow';
 
 const StatementInput = () => {
 	const [ editorState, setEditorState ] = React.useState(EditorState.createEmpty());
-	const { question, setQuestion, errors, setErrors, deleteError } = React.useContext(QuestionFormContext);
+	const { statement, setStatement, statementError, setStatementError, deleteStatementError } = useQuestionFormStore(
+		useShallow((state) => ({
+			statement: state.question.statement,
+			setStatement: (newStatement: string) => state.setQuestion({ ...state.question, statement: newStatement }),
+			statementError: state.errors.statement,
+			setStatementError: (newStatementError: string) => state.setErrors({ ...state.errors, statement: newStatementError }),
+			deleteStatementError: () => state.deleteError('statement')
+	})));
+
 	React.useEffect(() => {
-		const contentBlock = htmlToDraft(question.statement);
+		const contentBlock = htmlToDraft(statement);
 		const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
 		setEditorState(EditorState.createWithContent(contentState));
-	}, []);
+	}, [statement]);
 
 	const onEditorStateChange = (editorState: EditorState) => {
 		setEditorState(editorState);
 		const newContentState = editorState.getCurrentContent();
 		const newStatement = HTMLSanitize(draftToHtml(convertToRaw(newContentState)));
-		setQuestion({ ...question, statement: newStatement });
-		const newErrors = {...errors};
+		setStatement(newStatement);
 		if (newContentState.getPlainText() === '') {
-			setErrors({...newErrors, statement: 'Statement cannot be empty'});
+			setStatementError('Statement cannot be empty');
 		} else {
-			deleteError('statement');
+			deleteStatementError();
 		}
 	};
 
 	return (
-		<>
+		<div className="px-4">
 			<TextEditor
 				wrapperClassName="border-2 border-gray-300 rounded-md p-2"
 				editorClassName="border-2 border-gray-300 rounded-md px-2 min-h-[100px]"
@@ -49,9 +57,8 @@ const StatementInput = () => {
 					}
 				}}
 			/>
-			{errors.statement && <p className="text-red-500">{errors.statement}</p>}
-		</>
-    
+			{statementError && <p className="text-red-500">{statementError}</p>}
+		</div>
 	);
 };
 
