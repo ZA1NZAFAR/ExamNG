@@ -7,6 +7,7 @@ import CodeEditor from '../codeEditor';
 import { CodeQuestion, MCQuestion } from '@/types';
 
 const AnswerForm: React.FC = () => {
+	const [ render, setRender ] = React.useState<boolean>(false);
 	const {
 		type,
 		defaultLanguage,
@@ -28,13 +29,20 @@ const AnswerForm: React.FC = () => {
 			} as CodeQuestion);
 		},
 		options: (state.question as MCQuestion).options,
-		addNewOption: () => state.setQuestion({
-			...state.question,
-			options: [...(state.question as MCQuestion).options, {
-				statement: '',
-				isCorrectOption: false,
-			}]
-		} as MCQuestion),
+		addNewOption: () => {
+			const currentMCQuestion = state.question as MCQuestion;
+			state.setQuestion({
+				...state.question,
+				options: [...currentMCQuestion.options, {
+					statement: '',
+					isCorrectOption: false,
+				}]
+			} as MCQuestion);
+			state.setErrors({
+				...state.errors,
+				[`option${currentMCQuestion.options.length}-statement`]: 'Option statement cannot be empty'
+			});
+		},
 		optionsErrors: Object.keys(state.errors)
 			.filter((key) => key.startsWith('options-'))
 			.reduce((obj, key) => {
@@ -47,6 +55,7 @@ const AnswerForm: React.FC = () => {
 		}),
 		deleteOptionsError: (errorType: string) => state.deleteError(`options-${errorType}`)
 	})));
+
 	const optionsQuantityValidator = () => {
 		const hasAtLeastTwoOptions = () => options.length >= 2;
 		if (!hasAtLeastTwoOptions()) {
@@ -66,7 +75,7 @@ const AnswerForm: React.FC = () => {
 		} else {
 			deleteOptionsError('atLeastOneIncorrect');
 		}
-	}
+	};
 
 	const duplicateOptionStatementValidator = () => {
 		const optionStatements = options.map(option => option.statement);
@@ -76,25 +85,31 @@ const AnswerForm: React.FC = () => {
 		} else {
 			deleteOptionsError('duplicateOptionStatement');
 		}
-	}
+	};
 
 	const validateOptions = () => {
 		optionsQuantityValidator();
-		duplicateOptionStatementValidator()
+		duplicateOptionStatementValidator();
+	};
+	
+	function reloadComponent() {
+		setRender(!render);
 	}
+
 	React.useEffect(() => {
 		if (type === 'mcq') {
 			validateOptions();
 		}
+		// F**k you React
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [render]);
 
 	if (type === 'mcq') {
 		return (
 			<div className="p-4">
 				<div className="flex flex-col gap-4 py-4">
 					{ options.map((_, index) => (
-						<MCOptionInput key={index} index={index} />
+						<MCOptionInput key={index} index={index} onInputChange={reloadComponent} />
 					))}
 					{ Object.keys(optionsErrors).map((errorType, index) => (
 						<span className="text-red-500" key={index}>{optionsErrors[errorType]}</span>

@@ -8,10 +8,12 @@ import { useShallow } from 'zustand/react/shallow';
 
 type MCOptionInputProps = {
 	index: number;
+	onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const MCOptionInput: React.FC<MCOptionInputProps> = ({
 	index,
+	onInputChange = (_) => { }
 }) => {
 	const {
 		option,
@@ -38,7 +40,7 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({
 				options: newOptions,
 			} as MCQuestion);
 		},
-		optionErrors: Object.keys(state.errors).filter((key) => key.startsWith(`option${index}`)).reduce((obj, key) => {
+		optionErrors: Object.keys(state.errors).filter((key) => key.startsWith(`option${index}-`)).reduce((obj, key) => {
 			obj[key] = state.errors[key];
 			return obj;
 		}, {} as Record<string, string>),
@@ -46,11 +48,6 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({
 		deleteOptionError: (key:string) => state.deleteError(`option${index}-${key}`)
 	})));
 
-	React.useEffect(() => {
-		if (option.statement === '')
-			setOptionError('statement', 'Option statement cannot be empty');
-	}, []);
-    
 	const updateOptions = (key: keyof MCOption, value: unknown) => {
 		setOption({
 			...option,
@@ -81,15 +78,17 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({
 				value={option.statement}
 				onChange={(event) => {
 					updateOptions('statement', event.target.value);
+					onInputChange(event);
 				}}
 				isRequired
-				isInvalid={!!optionErrors[`statement`]}
-				errorMessage={optionErrors[`statement`]}
+				isInvalid={!!optionErrors[`option${index}-statement`]}
+				errorMessage={optionErrors[`option${index}-statement`]}
 			/>
 			<Checkbox
 				isSelected={option.isCorrectOption}
 				onChange={(event) => {
 					updateOptions('isCorrectOption', event.target.checked);
+					onInputChange(event);
 				}}
 			>
 				Correct

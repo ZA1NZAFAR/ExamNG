@@ -66,8 +66,6 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 	function validateForm() {
 		return Object.keys(errors).length <= 0;
 	}
-	console.log(errors);
-
   
 	return (
 		<Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl'>
