@@ -24,41 +24,43 @@ const QuestionTypeInput: React.FC<QuestionTypeInputProps> = ({
 		type: state.question.type,
 		setType: (newType: string) => {
 			switch (newType) {
-				case 'mcq':
-					state.setQuestion({
-						...state.question,
-						type: newType,
-						options: [] as MCOption[],
-					} as MCQuestion);
-					onTypeChange(newType);
-					break;
-				case 'code':
-					state.setQuestion({
-						...state.question,
-						type: newType,
-						initialCode: '',
-						defaultLanguage: null,
-					} as CodeQuestion);
-					onTypeChange(newType);
-					break;
-				case 'text':
-					state.setQuestion({
-						...state.question,
-						type: newType
-					} as TextQuestion);
-					onTypeChange(newType);
-					break;
-				default:
-					throw new Error(`Invalid question type: ${newType}`);
+			case 'mcq':
+				state.setQuestion({
+					...state.question,
+					type: newType,
+					options: [] as MCOption[],
+				} as MCQuestion);
+				break;
+			case 'code':
+				state.setQuestion({
+					...state.question,
+					type: newType,
+					initialCode: '',
+					defaultLanguage: null,
+				} as CodeQuestion);
+				break;
+			case 'text':
+				state.setQuestion({
+					...state.question,
+					type: newType
+				} as TextQuestion);
+				break;
+			default:
+				throw new Error(`Invalid question type: ${newType}`);
 			}
 		}
 	})));
+
+	const handleTypeChange = (newType: string) => {
+		setType(newType);
+		onTypeChange(newType as QuestionType);
+	};
 
 	return (
 		<RadioGroup
 			label="Question Type"
 			value={type}
-			onValueChange={(newType) => setType(newType)}
+			onValueChange={handleTypeChange}
 		>
 			{
 				Array.from(questionTypeNames.entries()).map(([key, value]) => (
