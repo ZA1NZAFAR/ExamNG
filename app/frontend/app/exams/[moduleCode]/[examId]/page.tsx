@@ -58,16 +58,16 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 	} = useQuestionFormStore(useShallow((state) => ({
 		setQuestion: state.setQuestion,
 		initializeQuestion: state.initializeQuestion,
-		handleAddQuestion: () => {
-			examService.createExamQuestion(moduleCode, examId, state.question);
+		handleAddQuestion: async () => {
+			await examService.createExamQuestion(moduleCode, examId, state.question);
 			reloadExamQuestions();
 		},
-		handleEditQuestion: () => {
-			examService.updateExamQuestion(moduleCode, examId, state.question.id, state.question);
+		handleEditQuestion: async () => {
+			await examService.updateExamQuestion(moduleCode, examId, state.question.id, state.question);
 			reloadExamQuestions();
 		},
-		handleDeleteQuestion: () => {
-			examService.deleteExamQuestion(moduleCode, examId, state.question.id);
+		handleDeleteQuestion: async () => {
+			await examService.deleteExamQuestion(moduleCode, examId, state.question.id);
 			reloadExamQuestions();
 		}
 	})));
