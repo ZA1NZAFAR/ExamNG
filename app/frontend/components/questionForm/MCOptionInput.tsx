@@ -6,8 +6,15 @@ import { Checkbox } from '@nextui-org/react';
 import { useQuestionFormStore } from './questionFormStore';
 import { useShallow } from 'zustand/react/shallow';
 
+/**
+ * The props for the MCOptionInput component
+ * @property {number} index - The index of the option in the options array
+ * @property {function} [onInputChange] - The function to call when the input changes
+ * */
 type MCOptionInputProps = {
+	/** The index of the option in the options array */
 	index: number;
+	/** The function to call when the input changes */
 	onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -20,46 +27,41 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({
 		setOption,
 		deleteOption,
 		optionErrors,
-		setOptionError,
 		deleteOptionError
-	} = useQuestionFormStore(useShallow((state) => ({
-		option: (state.question as MCQuestion).options[index],
-		setOption: (newOption: MCOption) => {
-			const newOptions = [...(state.question as MCQuestion).options];
-			newOptions[index] = newOption;
-			state.setQuestion({
-				...state.question,
-				options: newOptions,
-			} as MCQuestion);
-		},
-		deleteOption: () => {
-			const newOptions = [...(state.question as MCQuestion).options];
-			newOptions.splice(index, 1);
-			state.setQuestion({
-				...state.question,
-				options: newOptions,
-			} as MCQuestion);
-		},
-		optionErrors: Object.keys(state.errors).filter((key) => key.startsWith(`option${index}-`)).reduce((obj, key) => {
-			obj[key] = state.errors[key];
-			return obj;
-		}, {} as Record<string, string>),
-		setOptionError: (key: string, newOptionError: string) => state.setErrors({ ...state.errors, [`option${index}-${key}`]: newOptionError }),
-		deleteOptionError: (key:string) => state.deleteError(`option${index}-${key}`)
-	})));
+	} = useQuestionFormStore(useShallow((state) => {
+		const currentMCQOptions = (state.question as MCQuestion).options;
+		const currentErrors = state.errors;
+		return {
+			option: currentMCQOptions[index],
+			setOption: (newOption: MCOption) => {
+				const newOptions = [...currentMCQOptions];
+				newOptions[index] = newOption;
+				state.setQuestion({
+					...state.question,
+					options: newOptions,
+				} as MCQuestion);
+			},
+			deleteOption: () => {
+				const newOptions = [...currentMCQOptions];
+				newOptions.splice(index, 1);
+				state.setQuestion({
+					...state.question,
+					options: newOptions,
+				} as MCQuestion);
+			},
+			optionErrors: Object.keys(currentErrors).filter((key) => key.startsWith(`option${index}-`)).reduce((obj, key) => {
+				obj[key] = currentErrors[key];
+				return obj;
+			}, {} as Record<string, string>),
+			deleteOptionError: (key:string) => state.deleteError(`option${index}-${key}`)
+		};
+	}));
 
 	const updateOptions = (key: keyof MCOption, value: unknown) => {
 		setOption({
 			...option,
 			[key]: value,
 		});
-		if (key === 'statement') {
-			if (value === '') {
-				setOptionError('statement', 'Option statement cannot be empty');
-			} else {
-				deleteOptionError('statement');
-			}
-		}
 	};
 
 	const handleDeleteOption = () => {

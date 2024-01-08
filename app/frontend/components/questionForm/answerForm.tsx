@@ -13,7 +13,8 @@ const MCQOptionList: React.FC = () => {
 		addNewOption,
 		optionsErrors,
 		setOptionsError,
-		deleteOptionsError
+		deleteOptionsError,
+		setOptionErrors,
 	} = useQuestionFormStore(useShallow((state) => {
 		const currentMCQOptions = (state.question as MCQuestion).options;
 		const currentErrors = state.errors;
@@ -38,11 +39,20 @@ const MCQOptionList: React.FC = () => {
 					obj[key] = currentErrors[key];
 					return obj;
 				}, {} as Record<string, string>),
-			setOptionsError: (errorType: string, newOptionError: string) => state.setErrors({
+			setOptionsError: (errorType: string, newOptionsError: string) => state.setErrors({
 				...currentErrors,
-				[`options-${errorType}`]: newOptionError
+				[`options-${errorType}`]: newOptionsError
 			}),
-			deleteOptionsError: (errorType: string) => state.deleteError(`options-${errorType}`)
+			deleteOptionsError: (errorType: string) => state.deleteError(`options-${errorType}`),
+			setOptionErrors: (...args: { key: string, indices: number[], errorMessage?: string }[]) => {
+				const newErrors = {...currentErrors};
+				args.forEach(({ key, indices, errorMessage }) => {
+					indices.forEach((index) => {
+						newErrors[`option${index}-${key}`] = errorMessage;
+					});
+				});
+				state.setErrors(newErrors);
+			}
 		};
 	}));
 
@@ -67,19 +77,30 @@ const MCQOptionList: React.FC = () => {
 		}
 	};
 
-	const duplicateOptionStatementValidator = () => {
-		const optionStatements = options.map(option => option.statement);
-		const uniqueOptionStatements = new Set(optionStatements);
-		if (optionStatements.length !== uniqueOptionStatements.size) {
-			setOptionsError('duplicateOptionStatement', 'Please remove duplicate options.');
-		} else {
-			deleteOptionsError('duplicateOptionStatement');
-		}
+	const optionStatementValidator = () => {
+		const optionStatementToIndices = new Map<string, number[]>();
+		options.forEach((option, index) => {
+			if (optionStatementToIndices.has(option.statement)) {
+				optionStatementToIndices.get(option.statement).push(index);
+			} else {
+				optionStatementToIndices.set(option.statement, [index]);
+			}
+		});
+		console.log(optionStatementToIndices);
+		const duplicateEntryIndices = Array.from(optionStatementToIndices.values()).filter((indices) => indices.length > 1).flat();
+		const singleEntryIndices = Array.from(optionStatementToIndices.values()).filter((indices) => indices.length === 1).flat();
+		const emptyEntryIndices = optionStatementToIndices.has('') ? optionStatementToIndices.get('').flat() : [];
+		const nonEmptyEntryIndices = singleEntryIndices.filter((index) => options[index].statement !== '');
+		setOptionErrors(
+			{ key: 'statement', indices: duplicateEntryIndices, errorMessage: 'Duplicate option statement' },
+			{ key: 'statement', indices: emptyEntryIndices, errorMessage: 'Option statement cannot be empty' },
+			{ key: 'statement', indices: nonEmptyEntryIndices, errorMessage: undefined  },
+		);
 	};
 
 	const validateOptions = () => {
 		optionsQuantityValidator();
-		duplicateOptionStatementValidator();
+		optionStatementValidator();
 	};
 	
 	function reloadComponent() {
