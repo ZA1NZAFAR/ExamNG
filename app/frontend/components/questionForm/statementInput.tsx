@@ -9,7 +9,6 @@ import { useQuestionFormStore } from './questionFormStore';
 import { useShallow } from 'zustand/react/shallow';
 
 const StatementInput = () => {
-	const [ editorState, setEditorState ] = React.useState(EditorState.createEmpty());
 	const { statement, setStatement, statementError, setStatementError, deleteStatementError } = useQuestionFormStore(
 		useShallow((state) => ({
 			statement: state.question.statement,
@@ -17,13 +16,11 @@ const StatementInput = () => {
 			statementError: state.errors.statement,
 			setStatementError: (newStatementError: string) => state.setErrors({ ...state.errors, statement: newStatementError }),
 			deleteStatementError: () => state.deleteError('statement')
-	})));
+		})));
 
-	React.useEffect(() => {
-		const contentBlock = htmlToDraft(statement);
-		const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-		setEditorState(EditorState.createWithContent(contentState));
-	}, [statement]);
+	const contentBlock = htmlToDraft(statement);
+	const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+	const [ editorState, setEditorState ] = React.useState(EditorState.createWithContent(contentState));
 
 	const onEditorStateChange = (editorState: EditorState) => {
 		setEditorState(editorState);
