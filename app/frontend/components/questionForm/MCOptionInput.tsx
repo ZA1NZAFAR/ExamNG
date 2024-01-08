@@ -83,6 +83,7 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({
 				isRequired
 				isInvalid={!!optionErrors[`option${index}-statement`]}
 				errorMessage={optionErrors[`option${index}-statement`]}
+				autoFocus
 			/>
 			<Checkbox
 				isSelected={option.isCorrectOption}
