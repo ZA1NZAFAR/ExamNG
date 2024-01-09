@@ -14,7 +14,6 @@ import { Button } from '@nextui-org/button';
 import { Accordion, AccordionItem } from '@nextui-org/accordion';
 import '@/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import CoefficientInput from './coefficientInput';
-import StatementInput from './statementInput';
 import { isCodeQuestion, isMCQuestion } from '../question/question.util';
 import { defaultQuestionData, useQuestionFormStore } from './questionFormStore';
 import AttachmentForm from './attachmentForm';
@@ -22,6 +21,11 @@ import QuestionTypeInput from './questionTypeInput';
 import AnswerForm from './answerForm';
 import { useShallow } from 'zustand/react/shallow';
 import { useService } from '@/hooks/useService';
+import dynamic from 'next/dynamic';
+
+// weird bug with react-draft-wysiwyg with window not being defined
+// dynamic import fixes it
+const StatementInput = dynamic(() => import('./statementInput'), { ssr: false });
 
 /**
  * The props for the QuestionForm component

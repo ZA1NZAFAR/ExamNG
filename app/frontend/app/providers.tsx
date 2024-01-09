@@ -16,10 +16,15 @@ export interface ProvidersProps {
 export function Providers({ children, themeProps }: ProvidersProps) {
 	const [ windowInstance, setWindowInstance ] = React.useState<Window | undefined>(undefined);
 	const router = useRouter();
+	const windowIsDefined = typeof window !== 'undefined';
 
 	React.useEffect(() => {
-		setWindowInstance(window);
-	}, [window]);
+		if (typeof window !== 'undefined') {
+			setWindowInstance(window);
+		} else {
+			setWindowInstance(undefined);
+		}
+	}, [ windowIsDefined ]);
 	
 
 	return (

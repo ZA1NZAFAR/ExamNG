@@ -1,4 +1,5 @@
-import { Editor as TextEditor } from 'react-draft-wysiwyg';
+import { EditorProps } from 'react-draft-wysiwyg';
+import dynamic from 'next/dynamic';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import '@/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import React from 'react';
@@ -7,6 +8,10 @@ import htmlToDraft from 'html-to-draftjs';
 import HTMLSanitize from '@/utils/htmlSanitizer';
 import { useQuestionFormStore } from './questionFormStore';
 import { useShallow } from 'zustand/react/shallow';
+
+// weird bug with react-draft-wysiwyg with window not being defined
+// dynamic import fixes it
+const TextEditor = dynamic<EditorProps>(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), { ssr: false });
 
 const StatementInput = () => {
 	const { statement, setStatement, statementError, setStatementError, deleteStatementError } = useQuestionFormStore(
