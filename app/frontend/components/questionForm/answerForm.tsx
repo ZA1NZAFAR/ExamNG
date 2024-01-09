@@ -48,7 +48,11 @@ const MCQOptionList: React.FC = () => {
 				const newErrors = {...currentErrors};
 				args.forEach(({ key, indices, errorMessage }) => {
 					indices.forEach((index) => {
-						newErrors[`option${index}-${key}`] = errorMessage;
+						if (errorMessage) {
+							newErrors[`option${index}-${key}`] = errorMessage;
+						} else {
+							delete newErrors[`option${index}-${key}`];
+						}
 					});
 				});
 				state.setErrors(newErrors);
@@ -81,7 +85,7 @@ const MCQOptionList: React.FC = () => {
 		const optionStatementToIndices = new Map<string, number[]>();
 		options.forEach((option, index) => {
 			if (optionStatementToIndices.has(option.statement)) {
-				optionStatementToIndices.get(option.statement).push(index);
+				optionStatementToIndices.get(option.statement)!.push(index);
 			} else {
 				optionStatementToIndices.set(option.statement, [index]);
 			}
@@ -89,7 +93,7 @@ const MCQOptionList: React.FC = () => {
 		console.log(optionStatementToIndices);
 		const duplicateEntryIndices = Array.from(optionStatementToIndices.values()).filter((indices) => indices.length > 1).flat();
 		const singleEntryIndices = Array.from(optionStatementToIndices.values()).filter((indices) => indices.length === 1).flat();
-		const emptyEntryIndices = optionStatementToIndices.has('') ? optionStatementToIndices.get('').flat() : [];
+		const emptyEntryIndices = optionStatementToIndices.has('') ? optionStatementToIndices.get('')!.flat() : [];
 		const nonEmptyEntryIndices = singleEntryIndices.filter((index) => options[index].statement !== '');
 		setOptionErrors(
 			{ key: 'statement', indices: duplicateEntryIndices, errorMessage: 'Duplicate option statement' },
