@@ -70,11 +70,11 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 	const isInEditMode = question.id !== defaultQuestionData.id;
 	console.log('rendering question form');
 	async function handleAddQuestion() {
-		await examService.createExamQuestion(moduleCode, examId, questionData);
+		await examService.createExamQuestion(moduleCode, examId, question);
 		onSubmit();
 	}
 	async function handleEditQuestion() {
-		await examService.updateExamQuestion(moduleCode, examId, question.id, questionData);
+		await examService.updateExamQuestion(moduleCode, examId, question.id, question);
 		onSubmit();
 	}
   
