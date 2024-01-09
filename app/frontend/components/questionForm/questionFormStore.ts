@@ -12,24 +12,41 @@ export const defaultQuestionData: Question = {
 };
 
 interface QuestionState {
+	/** The question object. */
 	question: Question;
-	initializeQuestion: () => void;
+	/**
+	 * Sets the question object.
+	 * @param {Question} question - The data to be set.
+	 * */
 	setQuestion: (question: Question) => void;
 }
 interface ErrorState {
+	/** The error messages. */
 	errors: ErrorMessages;
+	/**
+	 * Sets the error messages.
+	 * @param {ErrorMessages} errors - The error messages to be set.
+	 * */
 	setErrors: (errors: ErrorMessages) => void;
+	/**
+	 * Deletes an error message.
+	 * @param {string} key - The key of the error message to be deleted.
+	 * */
 	deleteError: (key: string) => void;
 }
 interface FileState {
+	/** The files to be uploaded. */
 	files: Record<string, File>;
+	/**
+	 * Sets the files to be uploaded.
+	 * @param {Record<string, File>} files - The files to be uploaded.
+	 * */
 	setFiles: (files: Record<string, File>) => void;
 }
-interface QuestionFormState extends QuestionState, ErrorState, FileState {};
+interface QuestionFormState extends QuestionState, ErrorState, FileState {}
 
 const useQuestionStore: StateCreator<QuestionFormState, [], [], QuestionState> = (set) => ({
 	question: defaultQuestionData,
-	initializeQuestion: () => set({ question: defaultQuestionData }),
 	setQuestion: (question) => set({ question })
 });
 const useErrorStore: StateCreator<QuestionFormState, [], [], ErrorState> = (set) => ({
@@ -45,6 +62,15 @@ const useFileStore: StateCreator<QuestionFormState, [], [], FileState> = (set) =
 	setFiles: (files) => set({ files })
 });
 
+/**
+ * This is a custom hook that contains all the states and actions related to the question form.
+ * @property {Question} question - The question object.
+ * @property {ErrorMessages} errors - The error messages.
+ * @property {Record<string, File>} files - The files to be uploaded.
+ * @method {function} setQuestion - Sets the question object.
+ * @method {function} setErrors - Sets the error messages.
+ * @method {function} deleteError - Deletes an error message.
+ * */
 export const useQuestionFormStore = create<QuestionFormState>((...args) => ({
 	...useQuestionStore(...args),
 	...useErrorStore(...args),

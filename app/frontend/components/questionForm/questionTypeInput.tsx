@@ -10,7 +10,12 @@ const questionTypeNames: Map<QuestionType, string> = new Map([
 	['code', 'Code Answer'],
 ]);
 
+/**
+ * The props for the QuestionTypeInput component
+ * @property {function} [onTypeChange] - The function to call when the question type changes
+ * */
 type QuestionTypeInputProps = {
+	/** The function to call when the question type changes */
 	onTypeChange?: (newType?: QuestionType) => void;
 };
 
