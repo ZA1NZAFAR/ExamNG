@@ -9,10 +9,10 @@ import { useService } from '@/hooks/useService';
 import QuestionSkeleton from '@/components/question/questionSkeleton';
 import { useDisclosure } from '@nextui-org/use-disclosure';
 import { Button } from '@nextui-org/button';
+import { Modal } from '@nextui-org/modal';
 import QuestionForm from '@/components/questionForm/questionForm';
 import { useSearchParams } from 'next/navigation';
-import { useQuestionFormStore } from '@/components/questionForm/questionFormStore';
-import { useShallow } from 'zustand/react/shallow';
+
 
 /**
  * Represents the parameters for an exam page.
@@ -32,6 +32,7 @@ type SingleExamPageParams = {
 
 export default function SingleExamPage({ params }: { params: SingleExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
+	const [ question, setQuestion ] = React.useState<Question | undefined>(undefined);
 	const { examService, authService } = useService();
 	const [ questions, setQuestions ] = React.useState<Question[]>([]);
 	// TODO: add pagination
@@ -49,33 +50,11 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 		setRender(!render);
 	}
 
-	const {
-		setQuestion,
-		initializeQuestion,
-		handleAddQuestion,
-		handleEditQuestion,
-		handleDeleteQuestion
-	} = useQuestionFormStore(useShallow((state) => ({
-		setQuestion: state.setQuestion,
-		initializeQuestion: state.initializeQuestion,
-		handleAddQuestion: async () => {
-			await examService.createExamQuestion(moduleCode, examId, state.question);
-			reloadExamQuestions();
-		},
-		handleEditQuestion: async () => {
-			await examService.updateExamQuestion(moduleCode, examId, state.question.id, state.question);
-			reloadExamQuestions();
-		},
-		handleDeleteQuestion: async () => {
-			await examService.deleteExamQuestion(moduleCode, examId, state.question.id);
-			reloadExamQuestions();
-		}
-	})));
 	console.log('rendering exam page');	
 
 	function openEditModal(editIndex: number) {
 		if (editIndex === -1) {
-			initializeQuestion();
+			setQuestion(undefined);
 		} else {
 			setQuestion(questions[editIndex]);
 		}
@@ -100,6 +79,10 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 			</>
 		);
 	}
+	async function handleDeleteQuestion (questionId: string) {
+		await examService.deleteExamQuestion(moduleCode, examId, questionId);
+		reloadExamQuestions();
+	}
 
 	const totalScore = questions.reduce((total, question) => total + question.coefficient, 0);
 
@@ -114,12 +97,14 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 			>
 				Add Question
 			</Button>
-			<QuestionForm
-				isOpen={isOpen}
-				onOpenChange={onOpenChange}
-				onAddQuestion={handleAddQuestion}
-				onEditQuestion={handleEditQuestion}
-			/>
+			<Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl'>
+				<QuestionForm
+					moduleCode={moduleCode}
+					examId={examId}
+					questionData={question}
+					onSubmit={reloadExamQuestions}
+				/>
+			</Modal>
 			{questions.map((question, index) => (
 				<div
 					key={index}
@@ -141,7 +126,7 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 							isIconOnly
 							color={canEdit ? 'danger' : 'default'}
 							disabled={!canEdit}
-							onPress={() => handleDeleteQuestion()}>
+							onPress={() => handleDeleteQuestion(question.id)}>
 							<span className="material-icons">delete</span>
 						</Button>
 					</div>
