@@ -52,18 +52,18 @@ Use ``pnpm front`` prefix to launch npm commands in frontend project
 
 #### Run the development server for frontend
 ```bash
-pnpm front dev // Instead of using cd frontend && npm run dev
+pnpm front dev # Instead of using cd frontend && npm run dev
 ```
 
 #### Add a new dependency for frontend:
 ```bash
-pnpm front add <pkg-name>    // add prod dependency
-pnpm front add -D <pkg-name> // add dev dependency
+pnpm front add <pkg-name>    # add prod dependency
+pnpm front add -D <pkg-name> # add dev dependency
 ```
 
 #### Other commands for frontend
 ```bash
-pnpm front <command> // check the respective package.json for all npm commands available
+pnpm front <command> # check the respective package.json for all npm commands available
 ```
 
 ### Run linter regularly to fix issues (lint will also run at every commit!)
