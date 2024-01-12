@@ -2,6 +2,7 @@
 import React from 'react';
 import {Card, CardHeader, CardBody, Button} from '@nextui-org/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function App() {
 
@@ -27,7 +28,7 @@ export default function App() {
 					<Image src="\largeIcon.svg" alt="Sheets" width={36} height={36}/>
 				</div>
 				<div>
-					<Button className="button">Create the exam</Button>
+					<Link href="/exams"><Button className="button">Create the exam</Button></Link>
 				</div>
 			</CardBody>
 		</Card>
