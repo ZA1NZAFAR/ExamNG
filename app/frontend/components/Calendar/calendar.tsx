@@ -13,18 +13,18 @@ const localizer = momentLocalizer(moment);
 
 const events = [
 	{
-		start: moment('2023-10-10T10:00:00').toDate(),
-		end: moment('2023-10-10T12:00:00').toDate(),
+		start: moment('2024-10-10T10:00:00').toDate(),
+		end: moment('2024-10-10T12:00:00').toDate(),
 		title: 'English exam',
 	},
 	{
-		start: moment('2023-01-10T10:00:00').toDate(),
-		end: moment('2023-01-10T11:00:00').toDate(),
+		start: moment('2024-01-10T10:00:00').toDate(),
+		end: moment('2024-01-10T11:00:00').toDate(),
 		title: 'Algorithm exam',
 	},
 	{
-		start: moment('2023-06-10T10:00:00').toDate(),
-		end: moment('2023-06-10T11:00:00').toDate(),
+		start: moment('2024-06-10T10:00:00').toDate(),
+		end: moment('2024-06-10T11:00:00').toDate(),
 		title: 'Maths exam',
 	},
 ];
@@ -36,6 +36,7 @@ export default function Calendar() {
 
 
 	return (
+		// @ts-expect-error: year views is not in the type definition
 		<BigCalendar
 			localizer={localizer}
 			defaultView={Views.WEEK}

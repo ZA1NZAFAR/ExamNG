@@ -1,9 +1,14 @@
-import { title } from '@/components/primitives';
+'use client';
+import * as React from 'react';
+import FaqTop from '@/components/Faq/faq_top';
+import FaqCards from '@/components/Faq/faq_cards';
 
-export default function FAQPage() {
+export default function App() {
 	return (
-		<div>
-			<h1 className={title()}>FAQ</h1>
-		</div>
+		<>
+			<FaqTop />
+			<br/>
+			<FaqCards />
+		</>
 	);
 }

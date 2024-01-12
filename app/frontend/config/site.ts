@@ -21,12 +21,12 @@ export const siteConfig = {
 			href: '/faq',
 		},
 		{
-			label: 'Calendar',
-			href: '/calendar',
-		},
-		{
 			label: 'About us',
 			href: '/about',
+		},
+		{
+			label: 'Pricing',
+			href: '/pricing',
 		}
 
 	],

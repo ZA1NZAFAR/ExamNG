@@ -1,0 +1,207 @@
+.pricing{
+    width: 50%;
+    height: 90%;
+    flex-shrink: 0;
+    margin-top: 10%;
+    margin-left: 24%;
+    margin-bottom: 25%;
+}
+
+.Title {
+    font-size: 37.3pt;
+    color: #444444;
+    margin-top: 2%;
+    margin-left: 5%;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: SF Pro, sans-serif;
+    font-style: normal;
+    font-weight: 510;
+    letter-spacing: -0.746px;
+}
+.subTitle {
+    color: #53686A;
+    margin-left: 5%;
+    font-family: SF Pro, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+}
+
+.customSwitchLg {
+    margin-left: 71%;
+    margin-top: -5%;
+    position: absolute;
+}
+
+.cardBodyContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    color: #4f4b4b;
+    font-family: Poppins, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 8%;
+
+}
+
+.lastTitle{
+    color: #FFFFFF;
+    font-family: Poppins, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 8%;
+}
+
+.price {
+    color: #4f4b4b;
+    font-family: Poppins, sans-serif;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    display: inline;
+
+}
+
+.time {
+    color: #848199;
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: inline;
+
+
+}
+
+.lastTime {
+    color: #FFFFFF;
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 5%;
+    display: inline;
+}
+
+.lastPrice {
+    color: #FFFFFF;
+    font-family: Poppins, sans-serif;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 5%;
+    display: inline;
+
+}
+.subtext{
+    margin-top: 9%;
+    margin-bottom: 9%;
+    width: 232px;
+    color: #848199;
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+
+.lastSubText{
+    margin-top: 9%;
+    margin-bottom: 9%;
+    width: 232px;
+    color: #FFFFFF;
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.bulletPointItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.lastBulletPointItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #FFFFFF ;
+}
+
+.checkCircle {
+    margin-right: 8px;
+}
+
+.button {
+    margin-left: 10%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    position: relative;
+    border-radius: 24px;
+    opacity: 0.5;
+    background: #231D4F;
+    width: 207px;
+    height: 45px;
+    flex-shrink: 0;
+    color: #FFFFFF;
+    display: block;
+    z-index: 2;
+}
+
+.lastButton {
+        margin-left: 15%;
+        margin-top: 10%;
+        margin-bottom: 10%;
+        position: relative;
+        border-radius: 24px;
+        opacity: 1;
+        background: rgb(247, 183, 49, 0.9);
+        width: 207px;
+        height: 45px;
+        color: #FFFFFF;
+        z-index: 2;
+}
+.globalCards{
+    position: relative;
+}
+.ladyImage{
+    position: absolute;
+    margin-top: 17%;
+    margin-left: 66%;
+}
+
+.blobText{
+    position: absolute;
+    margin-top: 4%;
+    margin-left: 72%;
+    margin-bottom: 6%;
+}
+.MostPopularImage{
+    margin-top: 4%;
+    margin-left: 52%;
+    margin-bottom: 6%;
+}
+
+.lastCard {
+    flex-shrink: 0;
+    border-radius: 26px;
+    background: rgba(16, 172, 132, 0.74);
+    box-shadow: 0 5px 120px 0 rgba(82, 67, 194, 0.30);
+    z-index: 1;
+}

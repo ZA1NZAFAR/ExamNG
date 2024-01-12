@@ -1,13 +1,21 @@
 import { DateLocalizer, Navigate, ViewProps, Views } from 'react-big-calendar';
 import Calendar from 'react-calendar';
-import { Grid, GridItem } from '@chakra-ui/react';
 import 'react-calendar/dist/Calendar.css';
 import './index.css';
 import moment from 'moment';
 import 'moment/locale/en-gb';
+import App from '@/components/YearView/notification';
+import {useEffect, useState} from 'react';
 
 // Set the locale globally to English
 moment.locale('en');
+interface YearViewProps extends ViewProps {
+	events: {
+		start: Date;
+		end: Date;
+		title: string;
+	}[];
+}
 
 export default function YearView({
 	date,
@@ -15,36 +23,72 @@ export default function YearView({
 	onView,
 	onNavigate,
 	events,
-}: ViewProps) {
+}: YearViewProps) {
+	const [isClickedDateMarch, setIsClickedDateMarch] = useState(false);
+	const [isClickedDateApril, setIsClickedDateApril] = useState(false);
+	const [isClickedDateMay, setIsClickedDateMay] = useState(false);
+	const [showApp, setShowApp] = useState(false);
+
+	const handleDayClick = (day: Date) => {
+		const isMarch = moment(day).isSame(moment('2024-03-22'), 'day');
+		const isApril = moment(day).isSame(moment('2024-04-18'), 'day');
+		const isMay = moment(day).isSame(moment('2024-05-16'), 'day');
+
+		if (isMarch) {
+			setIsClickedDateMarch(!isClickedDateMarch);
+		} else if (isApril) {
+			setIsClickedDateApril(!isClickedDateApril);
+		} else if (isMay) {
+			setIsClickedDateMay(!isClickedDateMay);
+		} else {
+			// Naviguer vers le mois pour les autres jours
+			onView && onView(Views.DAY);
+			onNavigate && onNavigate(day);
+		}
+	};
+
+	useEffect(() => {
+		if (isClickedDateMarch || isClickedDateApril || isClickedDateMay) {
+			setShowApp(true);
+		} else {
+			setShowApp(false);
+		}
+	}, [isClickedDateMarch, isClickedDateApril, isClickedDateMay]);
+
 	const currRange = YearView.range(new Date(date), { localizer });
 
 	return (
-		<Grid templateColumns={'repeat(4, 1fr)'} gap={12}>
+		<div className='grid gap-12 grid-cols-4'>
 			{currRange.map((month, index) => {
 				return (
-					<GridItem w="100%" key={index}>
+					<div key={index}>
 						<Calendar
 							activeStartDate={month}
-							locale="en-US"
+							locale="en-UK"
 							tileClassName={({ date, view }) => {
 								if (
 									view === 'month' &&
-                  events?.find((event) => moment(event.start).isSame(moment(date), 'day'))
+									events?.find((event) =>
+										moment(event.start).isSame(moment(date), 'day')
+									)
 								)
 									return 'event-day';
 								return null;
 							}}
 							onClickDay={(day) => {
-								onView && onView(Views.DAY);
-								onNavigate(day);
+								handleDayClick(day);
 							}}
 						/>
-					</GridItem>
+					</div>
 				);
 			})}
-		</Grid>
+			{showApp && <App />}
+		</div>
 	);
 }
+
+
+
 
 YearView.range = (date: Date, { localizer }: { localizer: DateLocalizer }) => {
 	const start = localizer.startOf(date, 'year');

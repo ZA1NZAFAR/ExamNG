@@ -1,0 +1,113 @@
+.heading {
+    font-size: 37.3pt;
+    color: #9B59B6;
+    text-align: center;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: SF Pro, sans-serif;
+    font-style: normal;
+    font-weight: 510;
+    letter-spacing: -0.746px;
+}
+.footer_heading {
+    font-size: 37.3pt;
+    color: #444444;
+    text-align: center;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: SF Pro, sans-serif;
+    font-style: normal;
+    font-weight: 510;
+    letter-spacing: -0.746px;
+}
+
+.global{
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+}
+.question_title {
+    padding-top: 2%;
+    padding-bottom: 1%;
+    color: #9B59B6;
+    font-family: SF Pro, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 5;
+    line-height: 22px;
+    align-self: stretch;
+}
+.text {
+    color: #53686A;
+    text-align: center;
+    font-family: SF Pro, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+}
+
+.text_reserved {
+    color: #53686A;
+    text-align: center;
+    font-family: SF Pro, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+    margin-right: 15.5%;
+}
+
+.logo {
+    font-size: 15pt;
+    margin-left: 22%;
+    color: #444444;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: SF Pro, sans-serif;
+    font-style: normal;
+    font-weight: 510;
+    letter-spacing: -0.746px;
+    margin-right: 17%;
+}
+
+.text_faq {
+    color: #53686A;
+    text-align: left;
+    font-family: SF Pro, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+}
+.text_footer {
+    color: #53686A;
+    text-align: center;
+    font-family: SF Pro, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+    margin-top: 2%;
+}
+.button {
+    display: block;
+    margin: 4% auto;
+    border-radius: 20px;
+    background: #F7F9FB;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.white-container{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 17px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.textContainer {
+    display: flex;
+}
