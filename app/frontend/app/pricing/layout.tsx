@@ -1,11 +1,11 @@
 export default function PricingLayout({
-                                      children,
-                                  }: {
+	children,
+}: {
     children: React.ReactNode;
 }) {
-    return (
-        <section className="pricing">
-            {children}
-        </section>
-    );
+	return (
+		<section className="pricing">
+			{children}
+		</section>
+	);
 }

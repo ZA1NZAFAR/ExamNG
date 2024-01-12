@@ -27,6 +27,7 @@ function AttachmentComponent ({ attachment }: AttachmentProps) {
 	}
 	return (
 		<CodeAttachmentComponent
+			title={attachment.title || ''}
 			language={attachment.language}
 			code={attachment.code || ''}
 		/>
