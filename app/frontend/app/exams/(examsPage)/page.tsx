@@ -1,7 +1,7 @@
 'use client';
 
 import '@/styles/globals.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Exam } from '@/types';
 import { ExamCard } from '@/components/examCard';
 import { useService } from '@/hooks/useService';
@@ -10,6 +10,8 @@ export default function ExamPage() {
 	// TODO: verify if we still need isSidebarCollapsed
 	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const dateFormatter = useRef<Intl.DateTimeFormat>(new Intl.DateTimeFormat('default', { month: 'long' }));
 	/*
 	TODO: might be useful
 	const toggleSidebarCollapseHandler = () => {
@@ -17,7 +19,7 @@ export default function ExamPage() {
 	};
 	*/
 
-	const [exams, setExams] = useState<Exam[]>([]);
+	const [ exams, setExams ] = useState<Exam[]>([]);
 	const { examService } = useService();
 
 	// Fetch exams when the Exam page loads
