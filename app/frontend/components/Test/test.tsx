@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip, Button } from '@nextui-org/react';
 import { Card, CardBody } from '@nextui-org/react';
+
 const FullScreenComponent = () => {
 	const [isFullScreen, setIsFullScreen] = useState(false);
-	const [attemptCount, setAttemptCount] = useState(0);
+	const [fullScreenAttemptCount, setFullScreenAttemptCount] = useState(0);
+	const [visibleAttemptCount, setVisibleAttemptCount] = useState(0);
 
 	useEffect(() => {
 		const checkFullScreen = () => {
@@ -17,22 +19,31 @@ const FullScreenComponent = () => {
 
 		const handleResize = () => {
 			if (!isFullScreen) {
-				setAttemptCount((prevCount) => prevCount + 1);
+				setFullScreenAttemptCount((prevCount) => prevCount + 1);
 			}
-
-
 			checkFullScreen();
+		};
+
+		const handleVisibilityChange = () => {
+			if (!document.hidden) {
+				// Window is visible, increment visibility attempt count
+				setVisibleAttemptCount((prevCount) => prevCount + 1);
+			}
 		};
 
 		// Attach the resize handler
 		window.addEventListener('resize', handleResize);
 
+		// Attach the visibility change handler
+		document.addEventListener('visibilitychange', handleVisibilityChange);
+
 		// Check on initial mount
 		checkFullScreen();
 
-		// Cleanup the event listener when the component is unmounted
+		// Cleanup the event listeners when the component is unmounted
 		return () => {
 			window.removeEventListener('resize', handleResize);
+			document.removeEventListener('visibilitychange', handleVisibilityChange);
 		};
 	}, [isFullScreen]);
 
@@ -62,11 +73,12 @@ const FullScreenComponent = () => {
 							>
 								<Button>More info</Button>
 							</Tooltip>
-							<p>Number of attempts to reduce window size: {attemptCount}</p>
+							<p>Number of attempts to reduce window size: {fullScreenAttemptCount}</p>
 						</CardBody>
 					</Card>
 				</div>
 			)}
+			<p>Number of attempts to change window visibility: {visibleAttemptCount}</p>
 		</div>
 	);
 };
