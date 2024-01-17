@@ -10,7 +10,6 @@ export default function ExamPage() {
 	// TODO: verify if we still need isSidebarCollapsed
 	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const dateFormatter = useRef<Intl.DateTimeFormat>(new Intl.DateTimeFormat('default', { month: 'long' }));
 	/*
 	TODO: might be useful
@@ -21,6 +20,13 @@ export default function ExamPage() {
 
 	const [ exams, setExams ] = useState<Exam[]>([]);
 	const { examService } = useService();
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const extractDateMonth = (date: Date | number): string => {
+		// Check if the passed parameter has a Date type or is formatted in UNIX timestamp manner
+		const month = dateFormatter.current.format(date instanceof Date ? date : new Date(date));
+		return month;
+	};
 
 	// Fetch exams when the Exam page loads
 	useEffect(() => {
