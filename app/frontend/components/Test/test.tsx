@@ -33,8 +33,38 @@ const FullScreenComponent = () => {
 
 		const handleCopyPaste = (event: { preventDefault: () => void; }) => {
 			event.preventDefault();
-			alert('Copying and pasting is not allowed in this component.');
+
+			// Replace the alert with a new card displaying the message
+			const newCard = document.createElement('div');
+			newCard.style.position = 'fixed';
+			newCard.style.top = String(0);
+			newCard.style.left = String(0);
+			newCard.style.width = '100%';
+			newCard.style.height = '100%';
+			newCard.style.background = 'rgba(255, 255, 255, 0.8)';
+			newCard.style.display = 'flex';
+			newCard.style.justifyContent = 'center';
+			newCard.style.alignItems = 'center';
+			newCard.style.zIndex = String(999);
+
+			const newCardBody = document.createElement('div');
+			newCardBody.className = 'text-center mt-4 mb-4';
+
+			const message = document.createElement('p');
+			message.textContent = 'Oupss.. Sorry no copy-pasting allowed on this page 🚫';
+
+			newCardBody.appendChild(message);
+			newCard.appendChild(newCardBody);
+
+			document.body.appendChild(newCard);
+
+			// Remove the new card after a certain delay (e.g., 3 seconds)
+			setTimeout(() => {
+				document.body.removeChild(newCard);
+			}, 2000);
 		};
+
+
 
 		// Attach the resize handler
 		window.addEventListener('resize', handleResize);
