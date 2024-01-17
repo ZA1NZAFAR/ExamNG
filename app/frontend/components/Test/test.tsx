@@ -31,11 +31,23 @@ const FullScreenComponent = () => {
 			}
 		};
 
+		const handleCopyPaste = (event: { preventDefault: () => void; }) => {
+			event.preventDefault();
+			alert('Copying and pasting is not allowed in this component.');
+		};
+
 		// Attach the resize handler
 		window.addEventListener('resize', handleResize);
 
 		// Attach the visibility change handler
 		document.addEventListener('visibilitychange', handleVisibilityChange);
+
+		// Attach the copy and paste event handlers to the component's root element
+		const componentRootElement = document.getElementById('fullScreenComponentRoot');
+		if (componentRootElement) {
+			componentRootElement.addEventListener('copy', handleCopyPaste);
+			componentRootElement.addEventListener('paste', handleCopyPaste);
+		}
 
 		// Check on initial mount
 		checkFullScreen();
@@ -44,11 +56,15 @@ const FullScreenComponent = () => {
 		return () => {
 			window.removeEventListener('resize', handleResize);
 			document.removeEventListener('visibilitychange', handleVisibilityChange);
+			if (componentRootElement) {
+				componentRootElement.removeEventListener('copy', handleCopyPaste);
+				componentRootElement.removeEventListener('paste', handleCopyPaste);
+			}
 		};
 	}, [isFullScreen]);
 
 	return (
-		<div>
+		<div id="fullScreenComponentRoot">
 			{!isFullScreen && (
 				<div
 					style={{
