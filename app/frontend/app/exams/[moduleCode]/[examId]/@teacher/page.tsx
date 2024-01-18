@@ -19,7 +19,7 @@ import { useSearchParams } from 'next/navigation';
  * @property {string} moduleCode - The module code of the exam.
  * @property {string} examId - The unique identifier of the exam.
  */
-type SingleExamPageParams = {
+type TeacherExamPageParams = {
 	/**
 	 * The module code of the exam.
 	 */
@@ -30,7 +30,7 @@ type SingleExamPageParams = {
 	examId: string;
 }
 
-export default function SingleExamPage({ params }: { params: SingleExamPageParams}) {
+export default function TeacherExamPage({ params }: { params: TeacherExamPageParams}) {
 	const [exam, setExam] = React.useState<Exam>();
 	const [ question, setQuestion ] = React.useState<Question | undefined>(undefined);
 	const { examService, authService } = useService();
