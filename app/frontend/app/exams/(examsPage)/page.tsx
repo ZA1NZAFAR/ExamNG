@@ -28,6 +28,22 @@ export default function ExamPage() {
 		return monthYear;
 	};
 
+	// Function to group exams by month and year
+	const groupExamsByMonthAndYear = (exams: Exam[]) => {
+		return exams.reduce((result: {[monthYear: string]: Exam[]}, exam) => {
+			const monthYear = getMonthYear(exam.startTimestamp);
+
+			if (!result[monthYear]) {
+				result[monthYear] = [];
+			}
+
+			result[monthYear].push(exam);
+			return result;
+		}, {});
+	};
+
+	console.log(groupExamsByMonthAndYear(exams));
+
 	// Fetch exams when the Exam page loads
 	useEffect(() => {
 		(async () => {
