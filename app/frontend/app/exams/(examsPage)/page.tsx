@@ -10,7 +10,7 @@ export default function ExamPage() {
 	// TODO: verify if we still need isSidebarCollapsed
 	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true);
-	const dateFormatter = useRef<Intl.DateTimeFormat>(new Intl.DateTimeFormat('default', { month: 'long' }));
+	const dateFormatter = useRef<Intl.DateTimeFormat>(new Intl.DateTimeFormat('default', { month: 'long', year: 'numeric' }));
 	/*
 	TODO: might be useful
 	const toggleSidebarCollapseHandler = () => {
@@ -20,12 +20,12 @@ export default function ExamPage() {
 
 	const [ exams, setExams ] = useState<Exam[]>([]);
 	const { examService } = useService();
-
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const extractDateMonth = (date: Date | number): string => {
+	
+	// Helper function to get month and year from date or timestamp
+	const getMonthYear = (date: Date | number): string => {
 		// Check if the passed parameter has a Date type or is formatted in UNIX timestamp manner
-		const month = dateFormatter.current.format(date instanceof Date ? date : new Date(date));
-		return month;
+		const monthYear = dateFormatter.current.format(date instanceof Date ? date : new Date(date));
+		return monthYear;
 	};
 
 	// Fetch exams when the Exam page loads
@@ -50,7 +50,7 @@ export default function ExamPage() {
 		<div>
 			{ exams.map ((exam) => (
 				<div key={ exam.id }>
-					<h3 className='text-large font-semibold text-foreground/90'>{ extractDateMonth(exam.startTimestamp) }</h3>
+					<h3 className='text-large font-semibold text-foreground/90'>{ getMonthYear(exam.startTimestamp) }</h3>
 					<div className='flex flex-row flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
 						<ExamCard
 							key={ exam.id }
