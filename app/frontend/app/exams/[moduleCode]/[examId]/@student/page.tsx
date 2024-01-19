@@ -11,6 +11,7 @@ import QuestionSkeleton from '@/components/question/questionSkeleton';
 import { Button } from '@nextui-org/button';
 import { redirect, useSearchParams } from 'next/navigation';
 import { SingleExamParams } from '../../params';
+import Timer from '@/components/Timer';
 
 // TODO: temporary for now, will remove eslint disable later
 export default function StudentExamPage ({ params }: { params: SingleExamParams }) {
@@ -57,6 +58,7 @@ export default function StudentExamPage ({ params }: { params: SingleExamParams 
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
 			<h2>{examId}</h2>
+			<Timer deadlineTimestamp={exam.endTimestamp} onTimerEnd={() => redirect('/exams')} />
 			{questions.map((question, index) => (
 				<div
 					key={index}

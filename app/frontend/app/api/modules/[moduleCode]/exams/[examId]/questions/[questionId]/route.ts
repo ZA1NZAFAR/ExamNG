@@ -2,12 +2,7 @@ import { mockModules } from '@/mockData/module';
 import { mockQuestions } from '@/mockData/question';
 import { CodeQuestion, MCQuestion, Question } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
-
-type QuestionParams = {
-  moduleCode: string;
-  examId: string;
-  questionId: string;
-};
+import { QuestionParams } from './param';
 
 export async function PUT(request: NextRequest, { params } : { params: QuestionParams }) {
 	const { moduleCode, examId, questionId } = params;

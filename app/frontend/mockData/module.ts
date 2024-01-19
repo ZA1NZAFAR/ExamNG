@@ -20,10 +20,13 @@ const cyberDE = {
 	isSubmitted: true,
 	questions: [ '2', '3', '4' ]
 };
+
+console.log(Date.now());
+console.log(new Date(Date.now() + 2 * (60 * 60 * 1000) ).getTime());
 const socioDE = {
 	id: '3',
-	startTimestamp: new Date('2024-03-15T09:00:00').getTime(),
-	endTimestamp: new Date('2024-03-15T11:00:00').getTime(),
+	startTimestamp: 1705660130381,
+	endTimestamp:   1705662530382,
 	description: 'Sociology DE',
 	isValidated: true,
 	isSubmitted: true,
