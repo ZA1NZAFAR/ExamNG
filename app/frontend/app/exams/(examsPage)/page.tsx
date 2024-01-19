@@ -42,8 +42,6 @@ export default function ExamPage() {
 		}, {});
 	};
 
-	console.log(groupExamsByMonthAndYear(exams));
-
 	// Fetch exams when the Exam page loads
 	useEffect(() => {
 		(async () => {
@@ -64,17 +62,19 @@ export default function ExamPage() {
 
 	return (
 		<div>
-			{ exams.map ((exam) => (
-				<div key={ exam.id }>
-					<h3 className='text-large font-semibold text-foreground/90'>{ getMonthYear(exam.startTimestamp) }</h3>
+			{ Object.entries(groupExamsByMonthAndYear(exams)).map(([monthYear, exams]) => (
+				<div key={monthYear}>
+					<h3 className='text-large font-semibold text-foreground/90'>{ monthYear }</h3>
 					<div className='flex flex-row flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
-						<ExamCard
-							key={ exam.id }
-							exam={ exam }
-						/>
+						{exams.map((exam) => (
+							<ExamCard
+								key={ exam.id }
+								exam={ exam }
+							/>
+						))}
 					</div>
 				</div>
-			)) }
+			))}
 		</div>
 	);
 }
