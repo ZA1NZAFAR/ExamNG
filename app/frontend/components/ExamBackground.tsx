@@ -17,7 +17,7 @@ const ExamBackground: React.FC<ExamBackgroundProps> = ({
 
 	React.useEffect(() => {
 		const getColor = setInterval(async () => {
-			if (new Date().getSeconds() % 30 === 0) {
+			if (new Date().getSeconds() % 30 === 0 && color === '') {
 				setColor(await examService.getExamColorCode(moduleCode, examId));
 			}
 		}, 1000);
@@ -25,7 +25,7 @@ const ExamBackground: React.FC<ExamBackgroundProps> = ({
 	}, [examService, setColor]);
 	return (
 		<div
-			className="fixed inset-x-0 top-0 h-16 z-0"
+			className="fixed inset-x-0 top-0 h-16 z-10"
 			style={{ backgroundColor: color }}
 		></div>
 	);

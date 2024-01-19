@@ -35,8 +35,6 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 		setRender(!render);
 	}
 
-	console.log('rendering exam page');	
-
 	function openEditModal(editIndex: number) {
 		if (editIndex === -1) {
 			setQuestion(undefined);
