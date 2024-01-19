@@ -1,6 +1,6 @@
 import { useService } from '@/hooks/useService';
 
-export default function SingleExamLayout({
+export default function IndividualExamLayout({
 	student, teacher
 }: {
 	student: React.ReactNode;

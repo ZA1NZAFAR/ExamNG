@@ -12,25 +12,10 @@ import { Button } from '@nextui-org/button';
 import { Modal } from '@nextui-org/modal';
 import QuestionForm from '@/components/questionForm/questionForm';
 import { useSearchParams } from 'next/navigation';
+import { SingleExamParams } from '../../params';
 
 
-/**
- * Represents the parameters for an exam page.
- * @property {string} moduleCode - The module code of the exam.
- * @property {string} examId - The unique identifier of the exam.
- */
-type TeacherExamPageParams = {
-	/**
-	 * The module code of the exam.
-	 */
-	moduleCode: string;
-	/**
-	 * The unique identifier of the exam.
-	 */
-	examId: string;
-}
-
-export default function TeacherExamPage({ params }: { params: TeacherExamPageParams}) {
+export default function TeacherExamPage({ params }: { params: SingleExamParams }) {
 	const [exam, setExam] = React.useState<Exam>();
 	const [ question, setQuestion ] = React.useState<Question | undefined>(undefined);
 	const { examService, authService } = useService();
