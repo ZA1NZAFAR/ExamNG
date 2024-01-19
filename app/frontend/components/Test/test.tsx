@@ -12,8 +12,7 @@ const FullScreenComponent = () => {
 		const checkFullScreen = () => {
 			setIsFullScreen(
 				window.innerHeight >= 1080 &&
-				window.innerWidth >= 1720 &&
-				!document.fullscreenElement
+				window.innerWidth >= 1720
 			);
 		};
 
