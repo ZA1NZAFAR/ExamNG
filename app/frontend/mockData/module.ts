@@ -1,5 +1,8 @@
 import javaEE from '@/resources/img/java_ee.png';
 import cybersecurity from '@/resources/img/cybersecurity.jpg';
+import cSharp from '@/resources/img/C_Sharp_Logo.svg';
+import cPlusPlus from '@/resources/img/C++_Logo.svg';
+import politicalSciences from '@/resources/img/political_science.png';
 
 const javaDE = {
 	id: '1',
@@ -88,7 +91,7 @@ const module2 = {
 const module3 = { 
 	code: 'AFN113',
 	description: 'C#',
-	imageURL: '',
+	imageURL: cSharp.src,
 	exams: new Map<string, ExamData>(
 		[
 			[cSharpDE.id, cSharpDE]
@@ -99,7 +102,7 @@ const module3 = {
 const module4 = { 
 	code: 'AFN114',
 	description: 'C++',
-	imageURL: '',
+	imageURL: cPlusPlus.src,
 	exams: new Map<string, ExamData>(
 		[
 			[cPlusPlusDE.id, cPlusPlusDE]
@@ -121,7 +124,7 @@ const module5 = {
 const module6 = {
 	code: 'AFN116',
 	description: 'Political Sciences',
-	imageURL: '',
+	imageURL: politicalSciences.src,
 	exams: new Map<string, ExamData>(
 		[
 			[politicalSciencesDE.id, politicalSciencesDE]
