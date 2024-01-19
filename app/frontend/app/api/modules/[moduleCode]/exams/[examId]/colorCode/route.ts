@@ -4,7 +4,7 @@ const colorCodes = [ '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF
 let colorIndex = 0;
 
 setInterval(() => {
-	colorIndex = Math.floor(Math.random() * (colorCodes.length - 1));
+	colorIndex = Math.floor(new Date().getUTCMinutes() / 10);
 }, 30000);
 
 export async function GET() {

@@ -12,6 +12,7 @@ import { Button } from '@nextui-org/button';
 import { redirect, useSearchParams } from 'next/navigation';
 import { SingleExamParams } from '../../params';
 import Timer from '@/components/Timer';
+import ExamBackground from '@/components/ExamBackground';
 
 // TODO: temporary for now, will remove eslint disable later
 export default function StudentExamPage ({ params }: { params: SingleExamParams }) {
@@ -56,6 +57,7 @@ export default function StudentExamPage ({ params }: { params: SingleExamParams 
 
 	return (
 		<ExamContext.Provider value={{ exam, totalScore }}>
+			<ExamBackground moduleCode={moduleCode} examId={examId} />
 			<h1 className={title()}>Exam: {moduleCode}</h1>
 			<h2>{examId}</h2>
 			<Timer deadlineTimestamp={exam.endTimestamp} onTimerEnd={() => redirect('/exams')} />
