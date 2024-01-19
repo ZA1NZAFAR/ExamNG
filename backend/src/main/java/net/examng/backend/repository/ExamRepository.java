@@ -20,4 +20,5 @@ public interface ExamRepository extends MongoRepository<Exam, String> {
     @Query("SELECT q FROM Question q")
     List<Question> findAllQuestions();
 
+    List<Exam> findAllByModuleCode(String moduleCode);
 }

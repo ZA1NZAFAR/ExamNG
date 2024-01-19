@@ -1,25 +1,22 @@
-package net.examng.backend.model;
+package net.examng.backend.model.dto;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
+import net.examng.backend.model.Question;
 
 import java.util.List;
 
+@Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Document(collection = "exams")
-public class Exam {
+public class ExamDTO {
     private String id;
     private long startTimestamp;
     private long endTimestamp;
     private String description;
     private boolean isValidated;
     private boolean isSubmitted;
-    private List<String> questions;
+    private List<Question> questions;
     private String moduleCode;
 }

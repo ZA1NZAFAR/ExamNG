@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class HelloWorldController {
 
     @GetMapping("/hello-world")
     public String helloWorld() {
-        return "Hello World!";
+        return "Hi there! This is the ExamNG backend. Version 0.0.1";
     }
 }

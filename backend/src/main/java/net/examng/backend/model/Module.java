@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Map;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,8 +14,13 @@ import java.util.Map;
 @AllArgsConstructor
 @Document(collection = "modules")
 public class Module {
-
+    private String id;
     private String code;
     private String description;
     private String imageURL;
+    private List<String> exams;
+
+    public void addExam(String examId) {
+        exams.add(examId);
+    }
 }

@@ -1,10 +1,11 @@
 package net.examng.backend.service;
 
 import net.examng.backend.model.Exam;
-import net.examng.backend.model.Module; // Make sure this is your own Module class
-import net.examng.backend.repository.ExamRepository;
+import net.examng.backend.model.Module;
+import net.examng.backend.model.dto.ExamDTO;
 import net.examng.backend.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class ModuleService {
     private ModuleRepository moduleRepo;
 
     @Autowired
-    private ExamRepository examRepo;
+    private ExamService examService;
+
 
     public Module getModule(String code) {
         return moduleRepo.findByCode(code);
@@ -34,22 +36,23 @@ public class ModuleService {
         moduleRepo.deleteByCode(code);
     }
 
-    public Exam getExam(String moduleCode, String examId) {
-        return examRepo.findByIdAndModuleCode(examId, moduleCode);
+
+    public ResponseEntity<Exam> addExam(String moduleCode, ExamDTO exam) {
+        Exam ex = examService.addExam(moduleCode, exam);
+        moduleRepo.addExam(moduleCode, ex.getId());
+
+        return ResponseEntity.ok(ex);
     }
 
-    public List<Exam> getExamsForModule(String moduleCode) {
-        return examRepo.findByModuleCode(moduleCode);
+    public Module updateModule(String moduleCode, Module updatedModule) {
+        Module module = moduleRepo.findByCode(moduleCode);
+        module.setCode(updatedModule.getCode());
+        module.setDescription(updatedModule.getDescription());
+        module.setImageURL(updatedModule.getImageURL());
+        return moduleRepo.save(module);
     }
 
-    public Exam addExam(String moduleCode, Exam exam) {
-        exam.setModuleCode(moduleCode);
-        return examRepo.save(exam);
+    public List<Exam> getExams(String moduleCode) {
+        return examService.getExamsForModule(moduleCode);
     }
-
-    public void deleteExam(String moduleCode, String examId) {
-        Exam exam = examRepo.findByIdAndModuleCode(examId, moduleCode);
-        examRepo.delete(exam);
-    }
-
 }
