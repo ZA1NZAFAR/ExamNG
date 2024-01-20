@@ -64,8 +64,8 @@ export default function ExamPage() {
 		<div>
 			{ Object.entries(groupExamsByMonthAndYear(exams)).map(([monthYear, exams]) => (
 				<div key={monthYear} className='my-12'>
-					<h3 className='text-large font-semibold text-foreground/90 mb-6'>{ monthYear }</h3>
-					<div className='flex flex-row flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
+					<h3 className='text-start text-large font-semibold text-foreground/90 mb-6'>{ monthYear }</h3>
+					<div className='flex flex-row justify-start flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
 						{exams.map((exam) => (
 							<ExamCard
 								key={ exam.id }
