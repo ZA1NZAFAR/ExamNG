@@ -5,6 +5,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Exam } from '@/types';
 import { ExamCard } from '@/components/examCard';
 import { useService } from '@/hooks/useService';
+import { Button } from '@nextui-org/react';
+import { ChevronLeftCircle, ChevronRightCircle } from 'lucide-react';
 
 export default function ExamPage() {
 	// TODO: verify if we still need isSidebarCollapsed
@@ -48,7 +50,6 @@ export default function ExamPage() {
 	// Group exams by month and year
 	const groupedExams: {[monthYear: string]: Exam[]} = groupExamsByMonthAndYear(exams);
 	// Calculate total number of pages
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const totalPages: number = Math.ceil(Object.keys(groupedExams).length / EXAMS_PER_PAGE);
 
 	// Filter exams based on pagination
@@ -57,9 +58,21 @@ export default function ExamPage() {
 		.map((monthYear) => [monthYear, groupedExams[monthYear]]);
 
 	// Function to handle page change
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const handlePageChange = (newPage: number) => {
 		setCurrentPage(newPage);
+	};
+
+	// Heper functions to switch pages
+	const prevPage = () => {
+		if (currentPage > 1) {
+			handlePageChange(currentPage - 1);
+		}
+	};
+
+	const nextPage = () => {
+		if (currentPage < totalPages) {
+			handlePageChange(currentPage + 1);
+		}
 	};
 
 	// Fetch exams when the Exam page loads
@@ -95,6 +108,16 @@ export default function ExamPage() {
 					</div>
 				</div>
 			))}
+			<div>
+				<Button className="mx-5" radius="full" isIconOnly variant="ghost" aria-label="Prev" onClick={() => prevPage()} 
+					disabled={currentPage === 1}>
+					<ChevronLeftCircle />
+				</Button>
+				<Button className="mx-5" radius="full" isIconOnly variant="ghost" aria-label="Next" onClick={() => nextPage()} 
+					disabled={currentPage === totalPages}>
+					<ChevronRightCircle />
+				</Button>
+			</div>
 		</div>
 	);
 }
