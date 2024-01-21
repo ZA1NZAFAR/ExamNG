@@ -43,15 +43,24 @@ export default function ExamPage() {
 	};
 
 	// Pagination
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [currentPage, setCurrentPage] = useState(1);
-	const EXAMS_PER_PAGE = 25;
+	const EXAMS_PER_PAGE = 3;
 	// Group exams by month and year
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const groupedExams: {[monthYear: string]: Exam[]} = groupExamsByMonthAndYear(exams);
 	// Calculate total number of pages
-	const totalPages = Math.ceil(Object.keys(exams).length / EXAMS_PER_PAGE);
-	console.log(totalPages);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const totalPages: number = Math.ceil(Object.keys(groupedExams).length / EXAMS_PER_PAGE);
+
+	// Filter exams based on pagination
+	const paginatedExams: Array<[string, Exam[]]> = Object.keys(groupedExams)
+		.slice((currentPage - 1) * EXAMS_PER_PAGE, currentPage * EXAMS_PER_PAGE)
+		.map((monthYear) => [monthYear, groupedExams[monthYear]]);
+
+	// Function to handle page change
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const handlePageChange = (newPage: number) => {
+		setCurrentPage(newPage);
+	};
 
 	// Fetch exams when the Exam page loads
 	useEffect(() => {
@@ -73,7 +82,7 @@ export default function ExamPage() {
 
 	return (
 		<div>
-			{ Object.entries(groupExamsByMonthAndYear(exams)).map(([monthYear, exams]) => (
+			{ paginatedExams.map( ([monthYear, exams]) => (
 				<div key={monthYear} className='my-12'>
 					<h3 className='text-start text-large font-semibold text-foreground/90 mb-6'>{ monthYear }</h3>
 					<div className='flex flex-row justify-start flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
