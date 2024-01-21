@@ -42,6 +42,17 @@ export default function ExamPage() {
 		}, {});
 	};
 
+	// Pagination
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [currentPage, setCurrentPage] = useState(1);
+	const EXAMS_PER_PAGE = 25;
+	// Group exams by month and year
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const groupedExams: {[monthYear: string]: Exam[]} = groupExamsByMonthAndYear(exams);
+	// Calculate total number of pages
+	const totalPages = Math.ceil(Object.keys(exams).length / EXAMS_PER_PAGE);
+	console.log(totalPages);
+
 	// Fetch exams when the Exam page loads
 	useEffect(() => {
 		(async () => {
