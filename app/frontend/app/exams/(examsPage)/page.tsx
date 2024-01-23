@@ -86,6 +86,8 @@ export default function ExamPage() {
 					fetchedExams.push(...response.results);
 				}
 				
+				// Sorts exams by start datetime
+				fetchedExams.sort((exam1, exam2) => exam1.startTimestamp - exam2.startTimestamp);
 				setExams(fetchedExams);
 			} catch (error) {
 				console.error('Error fetching exams:', error);
