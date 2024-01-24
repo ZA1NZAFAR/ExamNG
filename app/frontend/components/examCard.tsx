@@ -116,7 +116,8 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 			className="border-none bg-background/60 dark:bg-default-100/50 py-4 grow-0 shrink-0"
 			shadow="sm"
 			as={Link}
-			href={(examProgress > 0 && examProgress < 100) ? `/exams/${module.code}/${exam.id}` : 'javascript:;'}
+			href={examProgress === 100 ? 'https://www.myefrei.fr/portal/student/exams-sheets' 
+				: (examProgress > 0 && examProgress < 100) ? `/exams/${module.code}/${exam.id}` : 'javascript:;'}
 			isPressable
 		>
 			<CardBody>
