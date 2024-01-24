@@ -25,8 +25,8 @@ console.log(Date.now());
 console.log(new Date(Date.now() + 2 * (60 * 60 * 1000) ).getTime());
 const socioDE = {
 	id: '3',
-	startTimestamp: 1705696202731,
-	endTimestamp:   1705703402731,
+	startTimestamp: 1706137917704,
+	endTimestamp:   1706145117704,
 	description: 'Sociology DE',
 	isValidated: true,
 	isSubmitted: true,

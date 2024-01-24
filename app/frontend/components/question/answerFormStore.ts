@@ -11,7 +11,7 @@ interface AnswerSheetState {
 	 * @param {string} examId - The id of the exam.
 	 * @param {Question[]} questions - The list of questions of the exam.
 	 * */
-	initializeAnswerSheet: (examId: string, questions: Question[]) => void;
+	initializeAnswerSheet: (examId: string, questions: Question[], answers: Map<string, Answer>) => void;
 	/**
 	 * Sets the answer of a question.
 	 * @param {string} questionId - The id of the question.
@@ -45,12 +45,11 @@ const defaultAnswerSheet: AnswerSheet = {
 
 const useAnswerSheetStore: StateCreator<AnswerFormState, [], [], AnswerSheetState> = (set) => ({
 	answerSheet: defaultAnswerSheet,
-	initializeAnswerSheet: (examId: string, questions: Question[]) => {
-		const answers = new Map<string, Answer>();
+	initializeAnswerSheet: (examId: string, questions: Question[], answers: Map<string, Answer>) => {
 		questions.forEach((question) => {
-			answers.set(question.id, {
-				answer: ''
-			});
+			if (!answers.has(question.id)) {
+				answers.set(question.id, { answer: '' });
+			}
 		});
 		set((state) => ({
 			answerSheet: {
