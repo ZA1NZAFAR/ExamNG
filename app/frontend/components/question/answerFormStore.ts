@@ -1,9 +1,7 @@
 import { Answer, AnswerSheet, Question } from '@/types';
-import { create, StateCreator } from 'zustand';
+import { create } from 'zustand';
 
-type ErrorMessages = Record<string, string>;
-
-interface AnswerSheetState {
+interface AnswerFormState {
 	/** The answer sheet that contains the answers of the student. */
 	answerSheet: AnswerSheet;
 	/**
@@ -17,25 +15,8 @@ interface AnswerSheetState {
 	 * @param {string} questionId - The id of the question.
 	 * @param {string} answer - The answer of the question.
 	 * */
-	setAnswer: (questionId: string, answer: string) => void;
+	setAnswer: (questionId: string, answer: string | string[]) => void;
 }
-
-interface ErrorState {
-	/** The error messages. */
-	errors: ErrorMessages;
-	/**
-	 * Sets the error messages.
-	 * @param {ErrorMessages} errorMessages - The error messages.
-	 * */
-	setErrors: (errorMessages: ErrorMessages) => void;
-	/**
-	 * Deletes an error message.
-	 * @param {string} key - The key of the error message.
-	 * */
-	deleteError: (key: string) => void;
-}
-
-interface AnswerFormState extends AnswerSheetState, ErrorState {}
 
 const defaultAnswerSheet: AnswerSheet = {
 	examId: '',
@@ -43,7 +24,13 @@ const defaultAnswerSheet: AnswerSheet = {
 	summaryFields: { totalScore: 0 }
 };
 
-const useAnswerSheetStore: StateCreator<AnswerFormState, [], [], AnswerSheetState> = (set) => ({
+/**
+ * This is a custom hooks that contains all the states and actions related to the answer form.
+ * @property {AnswerSheet} answerSheet - The answer sheet that contains the answers of the user.
+ * @property {function} initializeAnswerSheet - The function that initializes the answer sheet.
+ * @property {function} setAnswer - The function that sets the answer of a question.
+*/
+export const useAnswerFormStore = create<AnswerFormState>((set) => ({
 	answerSheet: defaultAnswerSheet,
 	initializeAnswerSheet: (examId: string, questions: Question[], answers: Map<string, Answer>) => {
 		questions.forEach((question) => {
@@ -59,7 +46,7 @@ const useAnswerSheetStore: StateCreator<AnswerFormState, [], [], AnswerSheetStat
 			}
 		}));
 	},
-	setAnswer: (questionId: string, answer: string) => set((state) => {
+	setAnswer: (questionId: string, answer: string | string[]) => set((state) => {
 		const answers = new Map(state.answerSheet.answers);
 		answers.set(questionId, { answer });
 		return {
@@ -69,28 +56,6 @@ const useAnswerSheetStore: StateCreator<AnswerFormState, [], [], AnswerSheetStat
 			}
 		};
 	}),
-});
-
-const useErrorStore: StateCreator<ErrorState, [], [], ErrorState> = (set) => ({
-	errors: {},
-	setErrors: (errors: ErrorMessages) => set({ errors }),
-	deleteError: (key: string) => set((state) => {
-		const { [key]: _, ...errors } = state.errors;
-		return { errors };
-	}),
-});
-
-/**
- * This is a custom hooks that contains all the states and actions related to the answer form.
- * @property {AnswerSheet} answerSheet - The answer sheet that contains the answers of the user.
- * @property {function} initializeAnswerSheet - The function that initializes the answer sheet.
- * @property {function} setAnswer - The function that sets the answer of a question.
- * @property {ErrorMessages} errors - The error messages.
- * @property {function} setErrors - The function that sets the error messages.
- * @property {function} deleteError - The function that deletes an error message.
-*/
-
-export const useAnswerFormStore = create<AnswerFormState>((...args) => ({
-	...useAnswerSheetStore(...args),
-	...useErrorStore(...args),
 }));
+
+
