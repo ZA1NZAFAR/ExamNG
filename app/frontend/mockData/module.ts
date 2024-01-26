@@ -23,10 +23,12 @@ const cyberDE = {
 
 console.log(Date.now());
 console.log(new Date(Date.now() + 2 * (60 * 60 * 1000) ).getTime());
+console.log('1706277833722 1706285033724');
+	
 const socioDE = {
 	id: '3',
-	startTimestamp: 1706137917704,
-	endTimestamp:   1706145117704,
+	startTimestamp: 1706277833722,
+	endTimestamp:   1706285033724,
 	description: 'Sociology DE',
 	isValidated: true,
 	isSubmitted: true,
