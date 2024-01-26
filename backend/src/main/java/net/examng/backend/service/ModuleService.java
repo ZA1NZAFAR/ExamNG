@@ -5,6 +5,8 @@ import net.examng.backend.model.Module;
 import net.examng.backend.model.dto.ExamDTO;
 import net.examng.backend.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,8 @@ public class ModuleService {
         return moduleRepo.findByCode(code);
     }
 
-    public List<Module> getAllModules() {
-        return moduleRepo.findAll();
+    public Page<Module> getAllModules(Pageable pageable) {
+        return moduleRepo.findAll(pageable);
     }
 
     public Module addModule(Module module) {

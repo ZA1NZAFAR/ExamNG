@@ -9,6 +9,8 @@ import net.examng.backend.service.ExamService;
 import net.examng.backend.service.ModuleService;
 import net.examng.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +31,12 @@ public class ModuleController {
 
 
     // Module endpoints
-    @GetMapping("/")
-    @Operation(summary = "Get all modules")
-    public List<Module> getModules() {
-        return moduleService.getAllModules();
+    @GetMapping("")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @Operation(summary = "Get all modules with pagination")
+    public Page<Module> getModules(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
+        return moduleService.getAllModules(PageRequest.of(page - 1, pageSize));
     }
-
     @GetMapping("/{moduleCode}")
     @Operation(summary = "Get a module by its code")
     public Module getModule(@PathVariable String moduleCode) {
