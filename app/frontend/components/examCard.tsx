@@ -119,7 +119,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 			shadow="sm"
 			as={Link}
 			href={examProgress === 100 ? 'https://www.myefrei.fr/portal/student/exams-sheets' 
-				: (examProgress > 0 && examProgress < 100) ? `/exams/${module.code}/${exam.id}` : 'javascript:;'}
+				: (examProgress > 0 && examProgress < 100) ? `/exams/${module.code}/${exam.id}` : '#'}
 			isPressable
 			isDisabled={linkDisabled}
 		>
