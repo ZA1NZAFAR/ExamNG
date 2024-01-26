@@ -78,6 +78,70 @@ class ExamService {
 					},
 					{
 						id: '3',
+						description: 'C#',
+						duration: 2.30,
+						startDate: new Date('2023-12-20T10:00:00'),
+						endDate: new Date('2023-12-20T12:30:00'),
+						groups: [
+							{
+								code: 'M1APPLSI1',
+								name: 'M1-APP-LSI-1',
+								size: 35
+							},
+							{
+								code: 'M1APPLSI2',
+								name: 'M1-APP-LSI-2',
+								size: 37
+							}
+						],
+						course: {
+							code: 'C#',
+							name: 'C#',
+							instructor: {
+								firstName: 'Robert',
+								lastName: 'Clay',
+								dateOfBirth: new Date('1975-12-02T08:12:15'),
+								city: 'Denver',
+								country: 'Michigan',
+								id: 4,
+								occupation: 'Professor of Computer Science'
+							}
+						}
+					},
+					{
+						id: '4',
+						description: 'C++',
+						duration: 3,
+						startDate: new Date('2023-12-22T08:00:00'),
+						endDate: new Date('2023-12-22T11:00:00'),
+						groups: [
+							{
+								code: 'M1APPLSI1',
+								name: 'M1-APP-LSI-1',
+								size: 35
+							},
+							{
+								code: 'M1APPLSI2',
+								name: 'M1-APP-LSI-2',
+								size: 37
+							}
+						],
+						course: {
+							code: 'C++',
+							name: 'C++',
+							instructor: {
+								firstName: 'Robert',
+								lastName: 'Clay',
+								dateOfBirth: new Date('1975-12-02T08:12:15'),
+								city: 'Denver',
+								country: 'Michigan',
+								id: 4,
+								occupation: 'Professor of Computer Science'
+							}
+						}
+					},
+					{
+						id: '5',
 						description: 'Sociology',
 						duration: 2,
 						startDate: new Date('2024-03-15T09:00:00'),
@@ -100,6 +164,33 @@ class ExamService {
 								country: 'USA',
 								id: 3,
 								occupation: 'Professor of Social Sciences, Emeritus'
+							}
+						}
+					},
+					{
+						id: '6',
+						description: 'Political Sciences',
+						duration: 2,
+						startDate: new Date('2024-03-10T08:00:00'),
+						endDate: new Date('2024-03-20T10:00:00'),
+						groups: [
+							{
+								code: 'L3LSI1',
+								name: 'L3-LSI-1',
+								size: 40
+							}
+						],
+						course: {
+							code: 'Political Sciences',
+							name: 'Political Sciences',
+							instructor: {
+								firstName: 'Jake',
+								lastName: 'Done',
+								dateOfBirth: new Date('1980-01-24T08:00:00'),
+								city: 'New York',
+								country: 'USA',
+								id: 5,
+								occupation: 'Professor of Political Sciences, Emeritus'
 							}
 						}
 					}

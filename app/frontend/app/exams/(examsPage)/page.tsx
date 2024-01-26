@@ -1,15 +1,18 @@
 'use client';
 
 import '@/styles/globals.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Exam } from '@/types';
 import { ExamCard } from '@/components/examCard';
 import { useService } from '@/hooks/useService';
+import { Button } from '@nextui-org/react';
+import { ChevronLeftCircle, ChevronRightCircle } from 'lucide-react';
 
 export default function ExamPage() {
 	// TODO: verify if we still need isSidebarCollapsed
 	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true);
+	const dateFormatter = useRef<Intl.DateTimeFormat>(new Intl.DateTimeFormat('default', { month: 'long', year: 'numeric' }));
 	/*
 	TODO: might be useful
 	const toggleSidebarCollapseHandler = () => {
@@ -17,8 +20,60 @@ export default function ExamPage() {
 	};
 	*/
 
-	const [exams, setExams] = useState<Exam[]>([]);
+	const [ exams, setExams ] = useState<Exam[]>([]);
 	const { examService } = useService();
+	
+	// Helper function to get month and year from date or timestamp
+	const getMonthYear = (date: Date | number): string => {
+		// Check if the passed parameter has a Date type or is formatted in UNIX timestamp manner
+		const monthYear = dateFormatter.current.format(date instanceof Date ? date : new Date(date));
+		return monthYear;
+	};
+
+	// Function to group exams by month and year
+	const groupExamsByMonthAndYear = (exams: Exam[]) => {
+		return exams.reduce((result: {[monthYear: string]: Exam[]}, exam) => {
+			const monthYear = getMonthYear(exam.startTimestamp);
+
+			if (!result[monthYear]) {
+				result[monthYear] = [];
+			}
+
+			result[monthYear].push(exam);
+			return result;
+		}, {});
+	};
+
+	// Pagination
+	const [currentPage, setCurrentPage] = useState(1);
+	const EXAMS_PER_PAGE = 3;
+	// Group exams by month and year
+	const groupedExams: {[monthYear: string]: Exam[]} = groupExamsByMonthAndYear(exams);
+	// Calculate total number of pages
+	const totalPages: number = Math.ceil(Object.keys(groupedExams).length / EXAMS_PER_PAGE);
+
+	// Filter exams based on pagination
+	const paginatedExams: Array<[string, Exam[]]> = Object.keys(groupedExams)
+		.slice((currentPage - 1) * EXAMS_PER_PAGE, currentPage * EXAMS_PER_PAGE)
+		.map((monthYear) => [monthYear, groupedExams[monthYear]]);
+
+	// Function to handle page change
+	const handlePageChange = (newPage: number) => {
+		setCurrentPage(newPage);
+	};
+
+	// Heper functions to switch pages
+	const prevPage = () => {
+		if (currentPage > 1) {
+			handlePageChange(currentPage - 1);
+		}
+	};
+
+	const nextPage = () => {
+		if (currentPage < totalPages) {
+			handlePageChange(currentPage + 1);
+		}
+	};
 
 	// Fetch exams when the Exam page loads
 	useEffect(() => {
@@ -31,6 +86,8 @@ export default function ExamPage() {
 					fetchedExams.push(...response.results);
 				}
 				
+				// Sorts exams by start datetime
+				fetchedExams.sort((exam1, exam2) => exam1.startTimestamp - exam2.startTimestamp);
 				setExams(fetchedExams);
 			} catch (error) {
 				console.error('Error fetching exams:', error);
@@ -40,13 +97,28 @@ export default function ExamPage() {
 
 	return (
 		<div>
-			<div className='flex flex-row flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
-				{ exams.map ((exam) => (
-					<ExamCard
-						key={ exam.id }
-						exam={ exam }
-					/>
-				)) }
+			{ paginatedExams.map( ([monthYear, exams]) => (
+				<div key={monthYear} className='my-12'>
+					<h3 className='text-start text-large font-semibold text-foreground/90 mb-6'>{ monthYear }</h3>
+					<div className='flex flex-row justify-start flex-wrap gap-4 lg:gap-8 place-content-center w-full'>
+						{exams.map((exam) => (
+							<ExamCard
+								key={ exam.id }
+								exam={ exam }
+							/>
+						))}
+					</div>
+				</div>
+			))}
+			<div>
+				<Button className="mx-5" radius="full" isIconOnly variant="ghost" aria-label="Prev" onClick={() => prevPage()} 
+					disabled={currentPage === 1}>
+					<ChevronLeftCircle />
+				</Button>
+				<Button className="mx-5" radius="full" isIconOnly variant="ghost" aria-label="Next" onClick={() => nextPage()} 
+					disabled={currentPage === totalPages}>
+					<ChevronRightCircle />
+				</Button>
 			</div>
 		</div>
 	);
