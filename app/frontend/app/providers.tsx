@@ -14,22 +14,11 @@ export interface ProvidersProps {
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
-	const [ windowInstance, setWindowInstance ] = React.useState<Window | undefined>(undefined);
 	const router = useRouter();
-	const windowIsDefined = typeof window !== 'undefined';
-
-	React.useEffect(() => {
-		if (typeof window !== 'undefined') {
-			setWindowInstance(window);
-		} else {
-			setWindowInstance(undefined);
-		}
-	}, [ windowIsDefined ]);
-	
 
 	return (
 		<NextUIProvider navigate={router.push}>
-			<ServiceRegistryContext.Provider value={new ServiceRegistry(windowInstance)}>
+			<ServiceRegistryContext.Provider value={new ServiceRegistry()}>
 				<NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
 			</ServiceRegistryContext.Provider>
 		</NextUIProvider>

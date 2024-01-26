@@ -18,10 +18,10 @@ export class ServiceRegistry {
 	authService: AuthService;
 	userService: UserService;
 
-	constructor(windowParam?: Window) {
+	constructor() {
 		this.examService = new ExamService(),
 		this.authService = new AuthService(),
-		this.userService = new UserService(windowParam);
+		this.userService = new UserService();
 	}
 }
 

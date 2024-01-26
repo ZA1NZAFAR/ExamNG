@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';
 import { Select, SelectItem } from '@nextui-org/select';
 import { useService } from '@/hooks/useService';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 /**
  * Represents the props for the CodeAnswer component.
@@ -59,17 +60,19 @@ function CodeEditor ({
 	language,
 	code = '',
 	isDisabled = false,
-  isLanguageLocked = false,
+	isLanguageLocked = false,
 	onCodeChange = () => {},
-  onLanguageChange = (_) => {}
+	onLanguageChange = (_) => {}
 }: CodeEditorProps) {
 	const { theme } = useTheme();
-  const { userService } = useService();
-
-  const [isWordWrapEnabled, setIsWordWrapEnabled] = React.useState(userService.isWordwrapByDefault);
+	const { userService } = useService();
 	
-  const defaultLanguage = language || 'javascript';
-  const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
+	const defaultWordWrap = useLiveQuery(async () => await userService.getUserConfig('isWordwrapByDefault'), [], false);
+
+	const [isWordWrapEnabled, setIsWordWrapEnabled] = React.useState(defaultWordWrap);
+	
+	const defaultLanguage = language || 'javascript';
+	const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
 	const height = (isDisabled ? minimumLines : MAX_LINES) * LINE_HEIGHT;
 
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
