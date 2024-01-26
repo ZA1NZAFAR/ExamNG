@@ -13,7 +13,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
  * @property {boolean} isLanguageLocked - Whether the language can be changed.
  * @property {string} code - The initial code to display.
  * @property {boolean} isDisabled - Whether the answer can be submitted.
- * @property {OnChange} onCodeChange - The callback function to be called when the code changes.
+ * @property {(value: string) => void} onCodeChange - The callback function to be called when the code changes.
  * @property {(language: Language) => void} onLanguageChange - The callback function to be called when the language changes.
  */
 type CodeEditorProps = {
@@ -39,9 +39,8 @@ type CodeEditorProps = {
    * The callback function to be called when the code changes.
    * @default () => {}
    * @param {string} value - The new code.
-   * @param {Monaco} event - The Monaco event.
    */
-  onCodeChange?: OnChange;
+  onCodeChange: (value: string) => void;
   /**
    * The callback function to be called when the language changes.
    * @default () => {}
@@ -78,6 +77,12 @@ function CodeEditor ({
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		onLanguageChange(e.target.value as Language);
 	};
+
+	const handleCodeChange: OnChange = (value) => {
+		if (value) {
+			onCodeChange(value);
+		}
+	};
 	return (
 		<>
 			<div className="flex justify-between gap-2 items-center text-center">
@@ -107,7 +112,7 @@ function CodeEditor ({
 				language={defaultLanguage}
 				theme={theme === 'dark' ? 'vs-dark' : 'light'}
 				value={code}
-				onChange={onCodeChange}
+				onChange={handleCodeChange}
 				options={{
 					readOnly: isDisabled,
 					readOnlyMessage: { value: 'You cannot submit your answer' },

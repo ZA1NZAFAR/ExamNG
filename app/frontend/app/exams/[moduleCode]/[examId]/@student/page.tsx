@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import { title } from '@/components/primitives';
-import { Exam, Question } from '@/types';
+import { Answer, Exam, Question } from '@/types';
 import QuestionComponent from '@/components/question/question';
 import { ExamContext } from '@/components/question/examContext';
 import { useService } from '@/hooks/useService';
@@ -13,11 +13,16 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { SingleExamParams } from '../../params';
 import Timer from '@/components/Timer';
 import ExamBackground from '@/components/ExamBackground';
+import { useAnswerFormStore } from '@/components/question/answerFormStore';
+import { useShallow } from 'zustand/react/shallow';
 
 // TODO: temporary for now, will remove eslint disable later
 export default function StudentExamPage ({ params }: { params: SingleExamParams }) {
-	const { examService } = useService();
+	const { examService, localAnswerService } = useService();
 	const router = useRouter();
+	const { initializeAnswerSheet } = useAnswerFormStore(useShallow(state => ({
+		initializeAnswerSheet: state.initializeAnswerSheet
+	})));
 	
 	const { moduleCode, examId } = params;
 	const searchParams = useSearchParams();
@@ -34,8 +39,26 @@ export default function StudentExamPage ({ params }: { params: SingleExamParams 
 			setExam(fetchedExam);
 			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId, { page, pageSize });
 			setQuestions(fetchedQuestions.results);
+			while (localAnswerService.examId === undefined) {
+				await Promise.resolve( new Promise(resolve => setTimeout(resolve, 1000)));
+			}
+			const isNewExam = localAnswerService.examId !== examId;
+			if (isNewExam) {
+				await localAnswerService.initializeAnswerSheet(examId);
+				initializeAnswerSheet(examId, fetchedQuestions.results, new Map<string, Answer>());
+			} else {
+				const answers = await localAnswerService.getAllAnswers();
+				const answerMap = answers.reduce((map, answer) => {
+					map.set(answer.questionId, answer);
+					return map;
+				}, new Map<string, Answer>());
+				
+				initializeAnswerSheet(examId, fetchedQuestions.results, answerMap);
+
+				//TODO: add fetching from remote database
+			}
 		})();
-	}, [examService, moduleCode, examId, page, pageSize]);
+	}, [examService, localAnswerService, moduleCode, examId, page, pageSize, initializeAnswerSheet]);
 	if (!exam || questions.length === 0) {
 		return (
 			<>
