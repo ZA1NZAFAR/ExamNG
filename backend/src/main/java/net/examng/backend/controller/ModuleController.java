@@ -32,7 +32,7 @@ public class ModuleController {
 
     // Module endpoints
     @GetMapping("")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @Operation(summary = "Get all modules with pagination")
     public Page<Module> getModules(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
         return moduleService.getAllModules(PageRequest.of(page - 1, pageSize));
