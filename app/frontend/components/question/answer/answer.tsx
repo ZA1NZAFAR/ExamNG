@@ -1,9 +1,9 @@
 import React from 'react';
-import { Textarea } from '@nextui-org/input';
 import { Question } from '@/types';
-import CodeAnswerComponent from './codeAnswerComponent';
+import CodeAnswerComponent from './codeAnswer';
 import MCQAnswerComponent from './mcqAnswer';
 import { isCodeQuestion, isMCQuestion, isTextQuestion } from '../question.util';
+import TextAnswerComponent from './textAnswer';
 
 /**
  * Props for the Answer component.
@@ -34,17 +34,16 @@ const AnswerComponent: React.FC<AnswerProps> = ({ question, isDisabled = false }
 	}
 	if (isTextQuestion(question)) {
 		return (
-			<Textarea
+			<TextAnswerComponent
+				question={question}
 				isDisabled={isDisabled}
-				placeholder={ isDisabled ? 'You cannot submit your answer' : 'Enter your answer here'}
 			/>
 		);
 	}
 	if (isCodeQuestion(question)) {
 		return (
 			<CodeAnswerComponent
-				initialCode={question.initialCode}
-				defaultLanguage={question.defaultLanguage}
+				question={question}
 				isDisabled={isDisabled}
 			/>
 		);

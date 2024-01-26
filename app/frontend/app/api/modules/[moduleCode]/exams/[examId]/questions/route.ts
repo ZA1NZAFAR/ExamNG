@@ -2,11 +2,7 @@ import { mockModules } from '@/mockData/module';
 import { mockQuestions } from '@/mockData/question';
 import { Attachment, CodeQuestion, MCQuestion, PageResult, Question, QuestionType } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
-
-type ExamParams = {
-  moduleCode: string;
-  examId: string;
-};
+import { ExamParams } from '../param';
 
 export async function GET(request: NextRequest, { params } : { params: ExamParams }) {
 	const searchParams = request.nextUrl.searchParams;

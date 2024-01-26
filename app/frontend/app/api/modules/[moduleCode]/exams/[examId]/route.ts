@@ -1,13 +1,9 @@
 import { mockModules } from '@/mockData/module';
 import { Exam } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
+import { ExamParams } from './param';
 
-type ExamParams = {
-  moduleCode: string;
-  examId: string;
-};
-
-export async function GET(request: NextRequest, { params } : { params: ExamParams }) {
+export async function GET(_request: NextRequest, { params } : { params: ExamParams }) {
 	const { moduleCode, examId } = params;
 
 	const moduleSearch = mockModules.get(moduleCode);

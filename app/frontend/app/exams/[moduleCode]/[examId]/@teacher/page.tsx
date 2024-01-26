@@ -12,25 +12,10 @@ import { Button } from '@nextui-org/button';
 import { Modal } from '@nextui-org/modal';
 import QuestionForm from '@/components/questionForm/questionForm';
 import { useSearchParams } from 'next/navigation';
+import { SingleExamParams } from '../../params';
 
 
-/**
- * Represents the parameters for an exam page.
- * @property {string} moduleCode - The module code of the exam.
- * @property {string} examId - The unique identifier of the exam.
- */
-type SingleExamPageParams = {
-	/**
-	 * The module code of the exam.
-	 */
-	moduleCode: string;
-	/**
-	 * The unique identifier of the exam.
-	 */
-	examId: string;
-}
-
-export default function SingleExamPage({ params }: { params: SingleExamPageParams}) {
+export default function TeacherExamPage({ params }: { params: SingleExamParams }) {
 	const [exam, setExam] = React.useState<Exam>();
 	const [ question, setQuestion ] = React.useState<Question | undefined>(undefined);
 	const { examService, authService } = useService();
@@ -49,8 +34,6 @@ export default function SingleExamPage({ params }: { params: SingleExamPageParam
 	function reloadExamQuestions() {
 		setRender(!render);
 	}
-
-	console.log('rendering exam page');	
 
 	function openEditModal(editIndex: number) {
 		if (editIndex === -1) {
