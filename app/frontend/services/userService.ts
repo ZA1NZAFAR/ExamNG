@@ -18,9 +18,6 @@ export class UserService extends DexieService {
 	
 	constructor() {
 		super();
-		this.version(1).stores({
-			userConfig: '++id'
-		});
 		this._userConfig = this.table('userConfig');
 		this._userConfig.get(1).then((config) => {
 			if (!config) {
