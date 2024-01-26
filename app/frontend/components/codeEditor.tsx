@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';
 import { Select, SelectItem } from '@nextui-org/select';
 import { useService } from '@/hooks/useService';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 /**
  * Represents the props for the CodeAnswer component.
@@ -12,7 +13,7 @@ import { useService } from '@/hooks/useService';
  * @property {boolean} isLanguageLocked - Whether the language can be changed.
  * @property {string} code - The initial code to display.
  * @property {boolean} isDisabled - Whether the answer can be submitted.
- * @property {OnChange} onCodeChange - The callback function to be called when the code changes.
+ * @property {(value: string) => void} onCodeChange - The callback function to be called when the code changes.
  * @property {(language: Language) => void} onLanguageChange - The callback function to be called when the language changes.
  */
 type CodeEditorProps = {
@@ -38,9 +39,8 @@ type CodeEditorProps = {
    * The callback function to be called when the code changes.
    * @default () => {}
    * @param {string} value - The new code.
-   * @param {Monaco} event - The Monaco event.
    */
-  onCodeChange?: OnChange;
+  onCodeChange: (value: string) => void;
   /**
    * The callback function to be called when the language changes.
    * @default () => {}
@@ -59,21 +59,29 @@ function CodeEditor ({
 	language,
 	code = '',
 	isDisabled = false,
-  isLanguageLocked = false,
+	isLanguageLocked = false,
 	onCodeChange = () => {},
-  onLanguageChange = (_) => {}
+	onLanguageChange = (_) => {}
 }: CodeEditorProps) {
 	const { theme } = useTheme();
-  const { userService } = useService();
-
-  const [isWordWrapEnabled, setIsWordWrapEnabled] = React.useState(userService.isWordwrapByDefault);
+	const { userService } = useService();
 	
-  const defaultLanguage = language || 'javascript';
-  const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
+	const defaultWordWrap = useLiveQuery(async () => await userService.getUserConfig('isWordwrapByDefault'), [], false);
+
+	const [isWordWrapEnabled, setIsWordWrapEnabled] = React.useState(defaultWordWrap);
+	
+	const defaultLanguage = language || 'javascript';
+	const minimumLines = Math.min(MAX_LINES, Math.max(MIN_LINES, code.split('\n').length + 1));
 	const height = (isDisabled ? minimumLines : MAX_LINES) * LINE_HEIGHT;
 
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		onLanguageChange(e.target.value as Language);
+	};
+
+	const handleCodeChange: OnChange = (value) => {
+		if (value) {
+			onCodeChange(value);
+		}
 	};
 	return (
 		<>
@@ -104,7 +112,7 @@ function CodeEditor ({
 				language={defaultLanguage}
 				theme={theme === 'dark' ? 'vs-dark' : 'light'}
 				value={code}
-				onChange={onCodeChange}
+				onChange={handleCodeChange}
 				options={{
 					readOnly: isDisabled,
 					readOnlyMessage: { value: 'You cannot submit your answer' },

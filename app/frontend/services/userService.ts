@@ -1,36 +1,44 @@
+import { Table } from 'dexie';
+import { DexieService } from './dexieService';
+
 type UserConfig = {
-	isWordwrapByDefault: boolean
+	id: number;
+	isWordwrapByDefault: boolean;
 }
 
-export class UserService {
-	private _window: Window | undefined;
+const defaultUserConfig: UserConfig = {
+	id: 1,
+	isWordwrapByDefault: false
+} as const;
+
+type UserConfigKey = keyof UserConfig;
+
+export class UserService extends DexieService {
+	private _userConfig!: Table<UserConfig, number>;
 	
-	private _userConfig: UserConfig = {
-		isWordwrapByDefault: false
-	};
-	
-	private _setLocalStorage(key: string, value: string) {
-		if (this._window !== undefined) {
-			this._window.localStorage.setItem(key, value);
-			return;
-		}
-		console.log('[WARNING] window is undefined');
-	}
-	constructor(windowParam?: Window) {
-		if (windowParam !== undefined) {
-			this._window = windowParam;
-			this._userConfig.isWordwrapByDefault = this._window.localStorage.getItem('isWordwrapByDefault') === 'true';
-		} else {
-			console.log('[WARNING] window is undefined');
-		}
+	constructor() {
+		super();
+		this._userConfig = this.table('userConfig');
+		this._userConfig.get(1).then((config) => {
+			if (!config) {
+				this._userConfig.add(defaultUserConfig);
+			}
+		});
 	}
 
-	get isWordwrapByDefault() {
-		return this._userConfig.isWordwrapByDefault;
+	async getUserConfig<T extends UserConfigKey> (key: T) {
+		const configs = await this._userConfig.get(1);
+		if (configs) {
+			return configs[key];
+		}
+		return defaultUserConfig[key];
 	}
 
-	set isWordwrapByDefault(value: boolean) {
-		this._userConfig.isWordwrapByDefault = value;
-		this._setLocalStorage('iseWordwrapByDefault', value.toString());
+	async setUserConfig<T extends UserConfigKey> (key: T, value: UserConfig[T]) {
+		await this._userConfig.where('id').equals(1).modify({ [key]: value });
+	}
+
+	async resetConfig() {
+		await this._userConfig.put(defaultUserConfig);
 	}
 }
