@@ -31,6 +31,10 @@ export const siteConfig = {
 		{
 			label: 'Test',
 			href: '/test',
+		},
+		{
+			label: 'Home',
+			href: '/home',
 		}
 
 	],
