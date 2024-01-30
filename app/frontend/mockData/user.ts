@@ -5,5 +5,5 @@ export const testUser: User = {
 	firstName: 'John',
 	lastName: 'Doe',
 	email: 'abc@xyz.com',
-	type: 'teacher'
+	type: 'student',
 };

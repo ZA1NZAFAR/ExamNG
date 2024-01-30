@@ -1,6 +1,6 @@
 'use client';
 
 import React from 'react';
-import { serviceRegistry } from './serviceRegistry';
+import { ServiceRegistry } from './serviceRegistry';
 
-export const ServiceRegistryContext = React.createContext(serviceRegistry);
+export const ServiceRegistryContext = React.createContext(new ServiceRegistry());

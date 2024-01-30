@@ -1,13 +1,28 @@
 'use client';
 import React from 'react';
-import {Card, CardHeader, CardBody, Button} from '@nextui-org/react';
+import {Button, Card, CardBody, CardHeader} from '@nextui-org/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function App() {
+interface NotificationProps {
+	id: string;
+	code: string;
+	formattedDate: string;
+}
+
+export default function Notification({id, code, formattedDate}: NotificationProps) {
+
+	let styles = {};
+	if (formattedDate === '2023-06-12') {
+		styles = {bottom: '5vh', right: '50%'};
+	} else if (formattedDate === '2023-12-05') {
+		styles = {bottom: '-30%', right: '20px'};
+	} else if (formattedDate === '2024-03-15') {
+		styles = {top: '29vh', right:'12%'};
+	}
 
 	return (
-		<Card className="notification_title">
+		<Card className="notification_title" style={styles}>
 			<CardHeader className="justify-between">
 				<div className="flex gap-5">
 					<div className="absolute top-6,5">
@@ -28,7 +43,7 @@ export default function App() {
 					<Image src="\largeIcon.svg" alt="Sheets" width={36} height={36}/>
 				</div>
 				<div>
-					<Link href="/exams"><Button className="button">Create the exam</Button></Link>
+					<Link href={`/exams/${code}/${id}`}><Button className="button">Create the exam</Button></Link>
 				</div>
 			</CardBody>
 		</Card>

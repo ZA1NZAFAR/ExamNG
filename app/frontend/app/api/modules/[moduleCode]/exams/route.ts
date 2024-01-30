@@ -2,12 +2,9 @@ import { mockAverage } from '@/mockData/average';
 import { mockModules } from '@/mockData/module';
 import { Exam, PageResult } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
+import { ModuleParams } from '../param';
 
-type ExamsParams = {
-  moduleCode: string;
-};
-
-export async function GET(request: NextRequest, { params } : { params: ExamsParams }) {
+export async function GET(request: NextRequest, { params } : { params: ModuleParams }) {
 	const searchParams = request.nextUrl.searchParams;
 	const page = parseInt(searchParams.get('page') || '') ?? 1;
 	const pageSize = parseInt(searchParams.get('pageSize') || '') ?? 10;

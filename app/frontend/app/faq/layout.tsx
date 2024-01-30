@@ -5,7 +5,7 @@ export default function FAQLayout({
 }) {
 	return (
 		<section className="faq">
-				{children}
+			{children}
 		</section>
 	);
 }

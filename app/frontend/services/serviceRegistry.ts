@@ -11,10 +11,22 @@
  */
 import { ExamService } from './examService';
 import { AuthService } from './authService';
+import { UserService } from './userService';
+import { LocalAnswerService } from './answerService';
 
-export const serviceRegistry = {
-	examService: new ExamService(),
-	authService: new AuthService(),
-};
-export type ServiceRegistryKey = keyof typeof serviceRegistry;
+export class ServiceRegistry {
+	examService: ExamService;
+	authService: AuthService;
+	userService: UserService;
+	localAnswerService: LocalAnswerService;
+
+	constructor() {
+		this.examService = new ExamService(),
+		this.authService = new AuthService(),
+		this.userService = new UserService();
+		this.localAnswerService = new LocalAnswerService();
+	}
+}
+
+export type ServiceRegistryKey = keyof ServiceRegistry;
 

@@ -110,14 +110,18 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 		return () => clearInterval(intervalIDRef.current!);
 	}, [exam.startTimestamp, exam.endTimestamp]);
 
+	const linkDisabled = exam.startTimestamp > Date.now() || exam.endTimestamp < Date.now();
+
 	return (
 		<Card
 			isBlurred
 			className="border-none bg-background/60 dark:bg-default-100/50 py-4 grow-0 shrink-0"
 			shadow="sm"
 			as={Link}
-			href={`/exams/${module.code}/${exam.id}`}
+			href={examProgress === 100 ? 'https://www.myefrei.fr/portal/student/exams-sheets' 
+				: (examProgress > 0 && examProgress < 100) ? `/exams/${module.code}/${exam.id}` : '#'}
 			isPressable
+			isDisabled={linkDisabled}
 		>
 			<CardBody>
 				<div className="relative overflow-hidden w-52 h-52 xl:w-80 xl:h-80">

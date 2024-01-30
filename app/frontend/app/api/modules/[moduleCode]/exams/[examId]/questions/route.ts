@@ -1,12 +1,8 @@
 import { mockModules } from '@/mockData/module';
 import { mockQuestions } from '@/mockData/question';
-import { Attachment, PageResult, Question, QuestionType } from '@/types';
+import { Attachment, CodeQuestion, MCQuestion, PageResult, Question, QuestionType } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
-
-type ExamParams = {
-  moduleCode: string;
-  examId: string;
-};
+import { ExamParams } from '../param';
 
 export async function GET(request: NextRequest, { params } : { params: ExamParams }) {
 	const searchParams = request.nextUrl.searchParams;
@@ -49,7 +45,6 @@ export async function GET(request: NextRequest, { params } : { params: ExamParam
 			questionSearch.push(question);
 		}
 	});
-	console.log(questionSearch);
 	const response: PageResult<Question> = {
 		count: questionSearch.length,
 		currentPage: page,
@@ -57,4 +52,43 @@ export async function GET(request: NextRequest, { params } : { params: ExamParam
 		results: questionSearch.slice((page - 1) * pageSize, page * pageSize)
 	};
 	return NextResponse.json(response);
+}
+
+export async function POST(request: NextRequest, { params } : { params: ExamParams }) {
+	const { moduleCode, examId } = params;
+	const moduleSearch = mockModules.get(moduleCode);
+
+	if (moduleSearch === undefined) {
+		return NextResponse.json({ message: `Module with code ${moduleCode} not found` }, { status: 404 }); 
+	}
+
+	const examSearch = moduleSearch.exams.get(examId);
+
+	if (examSearch === undefined) {
+		return NextResponse.json({ message: `Exam with id ${examId} not found` }, { status: 404 });
+	}
+
+	const body = await request.json();
+
+	const questionId = crypto.randomUUID();
+	const question: Question = {
+		id: questionId,
+		statement: body.statement,
+		type: body.type,
+		attachments: body.attachments,
+		coefficient: body.coefficient
+	};
+	if (question.type === 'mcq') {
+		(question as MCQuestion).options = body.options;
+	}
+	if (question.type === 'code') {
+		(question as CodeQuestion).defaultLanguage = body.defaultLanguage;
+		(question as CodeQuestion).initialCode = body.initialCode;
+	}
+	examSearch.questions.push(questionId);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	mockQuestions.set(questionId, question as any);
+	console.log(body);
+
+	return NextResponse.json(question);
 }
