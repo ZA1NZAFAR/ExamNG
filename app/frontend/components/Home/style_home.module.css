@@ -1,0 +1,143 @@
+.text {
+    color: #666680;
+    font-family: "SF Pro", serif;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 110;
+    line-height: 190%;
+    text-align: left;
+    margin-right: 70%;
+    margin-left: 5%;
+
+}
+
+.title_green {
+    color: #10AC84;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "SF Pro", serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 510;
+    line-height: 126%;
+    text-align: left;
+
+}
+
+.title_black {
+    color: #444;
+    font-family: "SF Pro", serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 510;
+    line-height: 126%;
+    text-align: left;
+    margin: 10% 70% 1% 5%;
+
+}
+
+.image {
+    margin-left: 45%;
+    width: 60%;
+    height: 60%;
+    margin-top: -10%;
+}
+
+.image_prof {
+    margin-left: 47%;
+    width: 30%;
+    height: 30%;
+    margin-top: -25%;
+}
+
+.image_girl {
+    margin-left: 32%;
+    width: 30%;
+    height: 30%;
+    margin-top: -53%;
+}
+
+.image_stroke {
+    width: 7%;
+    height: 7%;
+    margin-left: 13%;
+    margin-top: -1%;
+}
+
+.image_lines {
+    width: 3%;
+    height: 3%;
+    margin-left: 11%;
+}
+.buttonFooter {
+    display: block;
+    margin: 4% auto;
+    border-radius: 20px;
+    background: #F7F9FB;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.button {
+    background: #10AC84;
+    border-radius: 25px;
+    margin-right: 84%;
+    margin-top: -10%;
+    width: 110px;
+    height: 55px;
+    font-family: "SF Pro", serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 510;
+    line-height: 126%;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.textContainer {
+    display: flex;
+}
+
+.logo {
+    font-size: 15pt;
+    margin-left: 22%;
+    color: #444444;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "SF Pro", serif;
+    font-style: normal;
+    font-weight: 510;
+    letter-spacing: -0.746px;
+    margin-right: 17%;
+}
+
+.text_reserved {
+    color: #53686A;
+    text-align: center;
+    font-family: "SF Pro", serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+    margin-right: 15.5%;
+}
+
+.footer_heading {
+    font-size: 37.3pt;
+    color: #444444;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "SF Pro", serif;
+    font-style: normal;
+    font-weight: 510;
+    letter-spacing: -0.746px;
+    margin-top: 20%;
+}
+
+.text_footer {
+    color: #53686A;
+    text-align: center;
+    font-family: "SF Pro", serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: 170;
+    line-height: 22.063pt;
+    margin-top: 2%;
+}
