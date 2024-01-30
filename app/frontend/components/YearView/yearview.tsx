@@ -1,14 +1,16 @@
-import { DateLocalizer, Navigate, ViewProps, Views } from 'react-big-calendar';
+import {DateLocalizer, Navigate, ViewProps, Views} from 'react-big-calendar';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './index.css';
 import moment from 'moment';
 import 'moment/locale/en-gb';
-import App from '@/components/YearView/notification';
+import Notification from '@/components/YearView/notification';
 import {useEffect, useState} from 'react';
 
+import {useService} from '@/hooks/useService';
 // Set the locale globally to English
 moment.locale('en');
+
 interface YearViewProps extends ViewProps {
 	events: {
 		start: Date;
@@ -24,55 +26,113 @@ export default function YearView({
 	onNavigate,
 	events,
 }: YearViewProps) {
-	const [isClickedDateMarch, setIsClickedDateMarch] = useState(false);
-	const [isClickedDateApril, setIsClickedDateApril] = useState(false);
-	const [isClickedDateMay, setIsClickedDateMay] = useState(false);
+	const [isClickedDateJune, setIsClickedDateMarch] = useState(false);
+	const [isClickedDateDecember, setIsClickedDateApril] = useState(false);
+	const [isClickedDateMarch, setIsClickedDateMay] = useState(false);
 	const [showApp, setShowApp] = useState(false);
+	const [notificationInfo, setNotificationInfo] = useState<{ id: string; code: string; formattedDate:string  } | null>(null);
 
-	const handleDayClick = (day: Date) => {
-		const isMarch = moment(day).isSame(moment('2024-03-22'), 'day');
-		const isApril = moment(day).isSame(moment('2024-04-18'), 'day');
-		const isMay = moment(day).isSame(moment('2024-05-16'), 'day');
+	const {examService} = useService();
 
-		if (isMarch) {
-			setIsClickedDateMarch(!isClickedDateMarch);
-		} else if (isApril) {
-			setIsClickedDateApril(!isClickedDateApril);
-		} else if (isMay) {
-			setIsClickedDateMay(!isClickedDateMay);
-		} else {
-			// Naviguer vers le mois pour les autres jours
-			onView && onView(Views.DAY);
-			onNavigate && onNavigate(day);
+	const fetchExams = async () => {
+		try {
+			const fetchedModules = await examService.getModules();
+			const examDetailsList: { id: string; code: string; formattedDate: string }[] = [];
+
+			for (const fetchedModule of fetchedModules.results) {
+				const response = await examService.getExams(fetchedModule.code);
+				for (const exam of response.results) {
+					const {startTimestamp, id} = exam;
+					const code = fetchedModule.code;
+
+					const startDate = new Date(startTimestamp);
+					const formattedDate = startDate.toISOString().split('T')[0];
+
+					examDetailsList.push({id, code, formattedDate});
+				}
+			}
+			return examDetailsList;
+		} catch (error) {
+			console.error('Error fetching exams:', error);
+			return null;
 		}
 	};
 
+	const handleDayClick = async (day: Date) => {
+		try {
+			const exams = await fetchExams();
+
+			// Mise à jour de l'état notificationInfo même si aucune date n'est cliquée
+			setNotificationInfo(null);
+
+			if (exams) {
+				const isClickedDate = exams.some((exam) =>
+					moment(day).isSame(moment(exam.formattedDate), 'day')
+				);
+
+				if (isClickedDate) {
+					const clickedDateDetails = exams.find((exam) =>
+						moment(day).isSame(moment(exam.formattedDate), 'day')
+					);
+
+					if (clickedDateDetails) {
+						const { id, code, formattedDate } = clickedDateDetails;
+						setNotificationInfo({ id, code, formattedDate });
+						switch (code) {
+						case 'AFN111':
+							setIsClickedDateMarch(!isClickedDateJune);
+							break;
+						case 'AFN112':
+							setIsClickedDateApril(!isClickedDateDecember);
+							break;
+						case 'AFN113':
+							setIsClickedDateMay(!isClickedDateMarch);
+							break;
+						default:
+							break;
+						}
+					}
+				} else {
+					onView && onView(Views.DAY);
+					onNavigate && onNavigate(day);
+				}
+			} else {
+				console.error('Formatted dates is null.');
+			}
+		} catch (error) {
+			console.error('Error handling day click:', error);
+		}
+	};
+
+
+
 	useEffect(() => {
-		if (isClickedDateMarch || isClickedDateApril || isClickedDateMay) {
+		if (isClickedDateJune || isClickedDateDecember || isClickedDateMarch) {
 			setShowApp(true);
 		} else {
 			setShowApp(false);
 		}
-	}, [isClickedDateMarch, isClickedDateApril, isClickedDateMay]);
+	}, [isClickedDateJune, isClickedDateDecember, isClickedDateMarch]);
 
-	const currRange = YearView.range(new Date(date), { localizer });
+
+	const currRange = YearView.range(new Date(date), {localizer});
 
 	return (
-		<div className='grid gap-12 grid-cols-4'>
+		<div className="grid gap-12 grid-cols-4">
 			{currRange.map((month, index) => {
 				return (
 					<div key={index}>
 						<Calendar
 							activeStartDate={month}
 							locale="en-UK"
-							tileClassName={({ date, view }) => {
+							tileClassName={({date, view}) => {
 								if (
 									view === 'month' &&
 									events?.find((event) =>
 										moment(event.start).isSame(moment(date), 'day')
 									)
 								)
-									return 'event-day';
+									return 'event-day relative';
 								return null;
 							}}
 							onClickDay={(day) => {
@@ -82,15 +142,13 @@ export default function YearView({
 					</div>
 				);
 			})}
-			{showApp && <App />}
+			{showApp && notificationInfo && <Notification id={notificationInfo.id} code={notificationInfo.code} formattedDate={notificationInfo.formattedDate}/>}
 		</div>
 	);
 }
 
 
-
-
-YearView.range = (date: Date, { localizer }: { localizer: DateLocalizer }) => {
+YearView.range = (date: Date, {localizer}: { localizer: DateLocalizer }) => {
 	const start = localizer.startOf(date, 'year');
 	const end = localizer.endOf(date, 'year');
 
@@ -110,7 +168,7 @@ YearView.navigate = (
 	// TODO: check action type
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	action: any,
-	{ localizer }: { localizer: DateLocalizer }
+	{localizer}: { localizer: DateLocalizer }
 ) => {
 	if (action instanceof Date) return action;
 
@@ -124,6 +182,6 @@ YearView.navigate = (
 	}
 };
 
-YearView.title = (date: Date, { localizer }: { localizer: DateLocalizer }) => {
+YearView.title = (date: Date, {localizer}: { localizer: DateLocalizer }) => {
 	return localizer.format(date, 'YYYY');
 };
