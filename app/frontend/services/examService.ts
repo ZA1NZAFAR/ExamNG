@@ -33,6 +33,11 @@ export class ExamService {
 		return response.data;
 	}
 
+	async getExamColorCode(moduleCode: string, examId: string): Promise<string> {
+		const response = await httpClient.get<{ color: string }>(`/modules/${moduleCode}/exams/${examId}/colorCode`);
+		return response.data.color;
+	}
+
 	async updateExam(moduleCode: string, examId: string, exam: Exam): Promise<Exam> {
 		const response = await httpClient.put<Exam>(`/modules/${moduleCode}/exams/${examId}`, exam);
 		return response.data;

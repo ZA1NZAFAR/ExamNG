@@ -38,12 +38,11 @@ export const Navbar = () => {
 	const router = useRouter();
 	const { authService } = useService();
 	function handleLogin() {
-		if (authService.user) {
-			authService.logout();
-			router.refresh();
-			return;
+		if (authService.user && authService.user.type === 'teacher') {
+			authService.user.type = 'student';
+		} else if (authService.user && authService.user.type === 'student') {
+			authService.user.type = 'teacher';
 		}
-		authService.login();
 		router.refresh();
 	}
 	const searchInput = (
