@@ -3,6 +3,7 @@ package net.examng.backend.model.dto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import net.examng.backend.model.Module;
 import net.examng.backend.model.Question;
 
 import java.util.List;
@@ -18,5 +19,14 @@ public class ExamDTO {
     private boolean isValidated;
     private boolean isSubmitted;
     private List<Question> questions;
-    private String moduleCode;
+    private SummaryFields summaryFields;
+    @Data
+    @Getter
+    @Setter
+    public static
+    class SummaryFields {
+        private Module module;
+        private int average;
+
+    }
 }

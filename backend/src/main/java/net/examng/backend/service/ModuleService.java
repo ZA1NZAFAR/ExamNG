@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ModuleService {
 
@@ -54,7 +52,8 @@ public class ModuleService {
         return moduleRepo.save(module);
     }
 
-    public List<Exam> getExams(String moduleCode) {
-        return examService.getExamsForModule(moduleCode);
+    public Page<ExamDTO> getExams(String moduleCode, Pageable pageable) {
+        return examService.getExamsForModule(moduleCode, pageable);
     }
+
 }

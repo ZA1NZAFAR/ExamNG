@@ -8,6 +8,8 @@ import net.examng.backend.repository.ModuleRepository;
 import net.examng.backend.repository.QuestionRepository;
 import net.examng.backend.utilis.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,31 +26,65 @@ public class ExamService {
 
     @Autowired
     private ExamRepository examRepo;
+    @Autowired
+    private ModuleRepository moduleRepo;
 
-
-    public List<Exam> getExamsForModule(String moduleCode) {
-        return examRepo.findAllByModuleCode(moduleCode);
+    public List<ExamDTO> getExamsForModule(String moduleCode) {
+        var exams = examRepo.findAllByModuleCode(moduleCode);
+        List<ExamDTO> examDTOS = new ArrayList<>();
+        exams.forEach(exam -> {
+            var module = moduleRepo.findByCode(moduleCode);
+            // TODO: calculate average
+            var average = 0;
+            var questions = new ArrayList<Question>();
+            exam.getQuestions().forEach(questionId -> {
+                questions.add(questionRepo.findById(questionId).orElse(null));
+            });
+            var examDTO = Mapper.mapToDTO(exam, module, average);
+            examDTO.setQuestions(questions);
+            examDTOS.add(examDTO);
+        });
+        return examDTOS;
     }
 
-    public Exam getExam(String moduleCode, String examId) {
+    public Page<ExamDTO> getExamsForModule(String moduleCode, Pageable pageable) {
+        var exams = examRepo.findAllByModuleCode(moduleCode, pageable);
+        List<ExamDTO> examDTOS = new ArrayList<>();
+        exams.forEach(exam -> {
+            var module = moduleRepo.findByCode(moduleCode);
+            // TODO: calculate average
+            var average = 0;
+            var questions = new ArrayList<Question>();
+            exam.getQuestions().forEach(questionId -> {
+                questions.add(questionRepo.findById(questionId).orElse(null));
+            });
+            var examDTO = Mapper.mapToDTO(exam, module, average);
+            examDTO.setQuestions(questions);
+            examDTOS.add(examDTO);
+        });
+        return Mapper.mapToPage(examDTOS, exams.getPageable());
+    }
+
+    public ExamDTO getExam(String moduleCode, String examId) {
         return getExamsForModule(moduleCode).stream().filter(e -> e.getId().equals(examId)).findFirst().orElse(null);
     }
 
-    public Exam addExam(String moduleCode, ExamDTO exam) {
+    public Exam addExam(String moduleCode, ExamDTO examDTO) {
+        Exam exam = Mapper.mapToExam(examDTO);
         exam.setModuleCode(moduleCode);
-        List<Question> ids = questionRepo.saveAll(exam.getQuestions());
+        List<Question> ids = questionRepo.saveAll(examDTO.getQuestions());
         List<String> questionIds = new ArrayList<>();
         ids.forEach(question -> questionIds.add(question.getId()));
-        Exam toSave = Mapper.mapToExam(exam);
-        toSave.setQuestions(questionIds);
-        return examRepo.save(toSave);
+        exam.setQuestions(questionIds);
+        return examRepo.save(exam);
     }
 
     public ResponseEntity<?> addQuestion(String moduleCode, String examId, Question question) {
-        Exam exam = getExam(moduleCode, examId);
-        if (Objects.isNull(exam)) {
+        ExamDTO examDTO = getExam(moduleCode, examId);
+        if (Objects.isNull(examDTO)) {
             return ResponseEntity.notFound().build();
         }
+        Exam exam = Mapper.mapToExam(examDTO);
         exam.getQuestions().add(questionRepo.save(question).getId());
         examRepo.save(exam);
 
@@ -56,7 +92,8 @@ public class ExamService {
     }
 
     public List<Question> getQuestions(String moduleCode, String examId) {
-        Exam exam = getExam(moduleCode, examId);
+        ExamDTO examDTO = getExam(moduleCode, examId);
+        Exam exam = Mapper.mapToExam(examDTO);
         List<Question> questions = new ArrayList<>();
         exam.getQuestions().forEach(questionId -> {
             questions.add(questionRepo.findById(questionId).orElse(null));
@@ -65,7 +102,8 @@ public class ExamService {
     }
 
     public void deleteExam(String moduleCode, String examId) {
-        Exam exam = getExam(moduleCode, examId);
+        ExamDTO examDTO = getExam(moduleCode, examId);
+        Exam exam = Mapper.mapToExam(examDTO);
         examRepo.delete(exam);
     }
 }

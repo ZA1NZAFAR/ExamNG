@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/modules")
 public class ModuleController {
 
@@ -32,7 +33,7 @@ public class ModuleController {
 
     // Module endpoints
     @GetMapping("")
-    @CrossOrigin(origins = "*")
+
     @Operation(summary = "Get all modules with pagination")
     public Page<Module> getModules(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
         return moduleService.getAllModules(PageRequest.of(page - 1, pageSize));
@@ -70,20 +71,20 @@ public class ModuleController {
     }
 
     @GetMapping("/{moduleCode}/exams")
-    @Operation(summary = "Get all exams of a module")
-    public List<Exam> getExams(@PathVariable String moduleCode) {
-        return moduleService.getExams(moduleCode);
+    @Operation(summary = "Get all exam with pagination")
+    public Page<ExamDTO> getExams(@PathVariable String moduleCode, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
+        return moduleService.getExams(moduleCode, PageRequest.of(page - 1, pageSize));
     }
 
     @GetMapping("/{moduleCode}/exams/{examId}")
     @Operation(summary = "Get an exam by its id")
-    public Exam getExam(@PathVariable String moduleCode, @PathVariable String examId) {
+    public ExamDTO getExam(@PathVariable String moduleCode, @PathVariable String examId) {
         return examService.getExam(moduleCode, examId);
     }
 
     @PutMapping("/{moduleCode}/exams/{examId}")
     @Operation(summary = "Update an exam")
-    public Exam updateExam(@PathVariable String moduleCode, @PathVariable String examId, @RequestBody ExamDTO updatedExam) {
+    public ExamDTO updateExam(@PathVariable String moduleCode, @PathVariable String examId, @RequestBody ExamDTO updatedExam) {
         throw new UnsupportedOperationException("This feature is not yet implemented");
     }
 
