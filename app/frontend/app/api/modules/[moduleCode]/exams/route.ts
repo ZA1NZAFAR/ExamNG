@@ -44,9 +44,9 @@ export async function GET(request: NextRequest, { params } : { params: ModulePar
 	});
 
 	const response: PageResult<Exam> = {
-		count: moduleSearch.exams.size,
-		currentPage: page,
-		pageSize,
+		totalElements: moduleSearch.exams.size,
+		number: page,
+		size: pageSize,
 		results: examResults.slice((page - 1) * pageSize, page * pageSize)
 	};
 

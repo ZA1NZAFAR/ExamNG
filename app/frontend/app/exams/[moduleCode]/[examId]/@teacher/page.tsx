@@ -50,7 +50,7 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 			const fetchedExam = await examService.getExamById(moduleCode, examId);
 			setExam(fetchedExam);
 			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId, { page, pageSize });
-			setQuestions(fetchedQuestions.results);
+			setQuestions(fetchedQuestions.content);
 		})();
 	}, [render, examService, moduleCode, examId, page, pageSize]);
 	if (!exam || questions.length === 0) {

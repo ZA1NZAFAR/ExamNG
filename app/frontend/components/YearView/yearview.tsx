@@ -39,9 +39,9 @@ export default function YearView({
 			const fetchedModules = await examService.getModules();
 			const examDetailsList: { id: string; code: string; formattedDate: string }[] = [];
 
-			for (const fetchedModule of fetchedModules.results) {
+			for (const fetchedModule of fetchedModules.content) {
 				const response = await examService.getExams(fetchedModule.code);
-				for (const exam of response.results) {
+				for (const exam of response.content) {
 					const {startTimestamp, id} = exam;
 					const code = fetchedModule.code;
 

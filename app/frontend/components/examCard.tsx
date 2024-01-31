@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
-import Image from 'next/image';
-import { Card, CardBody, Progress, Switch } from '@nextui-org/react';
+import { Card, CardBody, Progress, Switch, Image } from '@nextui-org/react';
 import { Link } from '@nextui-org/link';
 import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-react';
 import { Exam  } from '@/types';
@@ -93,7 +92,8 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
 	const intervalIDRef = useRef<NodeJS.Timeout | null>(null);
 
-	const { module, groups, average } = exam.summaryFields;
+	const { module, average } = exam.summaryFields;
+	const groups = exam.summaryFields.groups ?? [];
   
 	const calculateExamProgress = (startTimestamp: number, endTimestamp: number) => doExamProgressCalculation(startTimestamp, endTimestamp, intervalIDRef, setExamProgress); 
 
@@ -127,7 +127,6 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 						alt="Exam cover"
 						className="object-cover rounded-xl shadow-md"
 						src={ module.imageURL.length>0 ? module.imageURL : logo.src }
-						fill
 					/>
 				</div>
 
@@ -160,7 +159,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 							<div className='flex flex-row justify-end items-center text-xs xl:text-small text-foreground/80'>
 								<Book className='mr-2' />
 								<div className='w-14 h-14 block overflow-hidden text-end text-ellipsis white-space:nowrap hover:overflow-visible xl:w-24 xl:h-auto'>
-									<p className='inline-block'>{ module.description }</p>
+									<p className='inline-block'>{ exam.description }</p>
 								</div>
 							</div>
 						</div>

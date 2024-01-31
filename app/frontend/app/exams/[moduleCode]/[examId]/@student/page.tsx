@@ -38,14 +38,14 @@ export default function StudentExamPage ({ params }: { params: SingleExamParams 
 			const fetchedExam = await examService.getExamById(moduleCode, examId);
 			setExam(fetchedExam);
 			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId, { page, pageSize });
-			setQuestions(fetchedQuestions.results);
+			setQuestions(fetchedQuestions.content);
 			while (localAnswerService.examId === undefined) {
 				await Promise.resolve( new Promise(resolve => setTimeout(resolve, 1000)));
 			}
 			const isNewExam = localAnswerService.examId !== examId;
 			if (isNewExam) {
 				await localAnswerService.initializeAnswerSheet(examId);
-				initializeAnswerSheet(examId, fetchedQuestions.results, new Map<string, Answer>());
+				initializeAnswerSheet(examId, fetchedQuestions.content, new Map<string, Answer>());
 			} else {
 				const answers = await localAnswerService.getAllAnswers();
 				const answerMap = answers.reduce((map, answer) => {
@@ -53,7 +53,7 @@ export default function StudentExamPage ({ params }: { params: SingleExamParams 
 					return map;
 				}, new Map<string, Answer>());
 				
-				initializeAnswerSheet(examId, fetchedQuestions.results, answerMap);
+				initializeAnswerSheet(examId, fetchedQuestions.content, answerMap);
 
 				//TODO: add fetching from remote database
 			}

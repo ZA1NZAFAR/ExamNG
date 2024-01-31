@@ -17,9 +17,9 @@ export async function GET(request: NextRequest) {
 		});
 	}
 	const results: PageResult<Module> = {
-		count: mockModules.size,
-		pageSize,
-		currentPage: page,
+		totalElements: mockModules.size,
+		size: pageSize,
+		number: page,
 		results: modules.slice((page - 1) * pageSize, page * pageSize)
 	};
 

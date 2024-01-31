@@ -48,9 +48,9 @@ const FaqCards: React.FC = () => {
 				text: 'Of course, we actually offer what we believe is one of the most personalized experiences in the market* with the ability to create various types of questions and customize each one of them.',
 			},
 			{
-				title: 'Are the results promptly accessible after completing the exam? Are detailed feedback provided?',
+				title: 'Are the content promptly accessible after completing the exam? Are detailed feedback provided?',
 				img: '/icon_conversation.svg',
-				text: 'It depends on your professor\'s preference; we provide the options for displaying results and/or feedbacks. It\'s up to their choice!',
+				text: 'It depends on your professor\'s preference; we provide the options for displaying content and/or feedbacks. It\'s up to their choice!',
 			},
 			{
 				title: 'Is it possible to include a link from the login platform to your website?',
