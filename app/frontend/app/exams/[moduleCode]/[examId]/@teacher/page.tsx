@@ -53,7 +53,7 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 			setQuestions(fetchedQuestions.content);
 		})();
 	}, [render, examService, moduleCode, examId, page, pageSize]);
-	if (!exam || questions.length === 0) {
+	if (!exam) {
 		return (
 			<>
 				<h1 className={title()}>Exam: {moduleCode}</h1>
@@ -72,7 +72,7 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 	return (	
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
-			<h2>{examId}</h2>
+			<h2>{exam.description}</h2>
 			<Button
 				color={canEdit ? 'primary' : 'default'}
 				disabled={!canEdit}
