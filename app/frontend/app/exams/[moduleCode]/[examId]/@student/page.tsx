@@ -15,6 +15,7 @@ import Timer from '@/components/Timer';
 import ExamBackground from '@/components/ExamBackground';
 import { useAnswerFormStore } from '@/components/question/answerFormStore';
 import { useShallow } from 'zustand/react/shallow';
+import Blocker from '@/components/Blocker';
 
 // TODO: temporary for now, will remove eslint disable later
 export default function StudentExamPage ({ params }: { params: SingleExamParams }) {
@@ -91,6 +92,7 @@ export default function StudentExamPage ({ params }: { params: SingleExamParams 
 				<Timer deadlineTimestamp={exam.endTimestamp} onTimerEnd={() => {
 					router.push('/exams');
 				}} />
+				<Blocker />
 				{questions.map((question, index) => (
 					<div
 						key={index}
