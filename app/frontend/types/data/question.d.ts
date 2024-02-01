@@ -77,7 +77,7 @@ export type CodeQuestion = Question & {
 /**
  * Represents a multiple-choice option.
  * @property {string} statement The statement or text of the option.
- * @property {boolean} isCorrectOption Indicates whether the option is the correct answer.
+ * @property {boolean} correctOption Indicates whether the option is the correct answer.
  */
 export type MCOption = {
   /**
@@ -87,7 +87,7 @@ export type MCOption = {
   /**
    * Indicates whether the option is the correct answer.
    */
-  isCorrectOption: boolean;
+  correctOption: boolean;
 }
 
 
