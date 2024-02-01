@@ -51,6 +51,8 @@ export default function CalendarPage() {
             <h1 className={title()}>Create Exam</h1>
             <br/>
 
+            {/*TODO : Retrieve the list of codes from database*/}
+
             {/* Dropdown List */}
             <label htmlFor="dropdown">Select an Option: </label>
             <select id="dropdown" value={dropdownValue} onChange={e => setDropdownValue(e.target.value)}>
