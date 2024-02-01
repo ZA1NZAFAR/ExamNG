@@ -29,24 +29,6 @@ public class ExamService {
     @Autowired
     private ModuleRepository moduleRepo;
 
-    public List<ExamDTO> getExamsForModule(String moduleCode) {
-        var exams = examRepo.findAllByModuleCode(moduleCode);
-        List<ExamDTO> examDTOS = new ArrayList<>();
-        exams.forEach(exam -> {
-            var module = moduleRepo.findByCode(moduleCode);
-            // TODO: calculate average
-            var average = 0;
-            var questions = new ArrayList<Question>();
-            exam.getQuestions().forEach(questionId -> {
-                questions.add(questionRepo.findById(questionId).orElse(null));
-            });
-            var examDTO = Mapper.mapToDTO(exam, module, average);
-            examDTO.setQuestions(questions);
-            examDTOS.add(examDTO);
-        });
-        return examDTOS;
-    }
-
     public Page<ExamDTO> getExamsForModule(String moduleCode, Pageable pageable) {
         var exams = examRepo.findAllByModuleCode(moduleCode, pageable);
         List<ExamDTO> examDTOS = new ArrayList<>();
@@ -66,7 +48,14 @@ public class ExamService {
     }
 
     public ExamDTO getExam(String moduleCode, String examId) {
-        return getExamsForModule(moduleCode).stream().filter(e -> e.getId().equals(examId)).findFirst().orElse(null);
+        var exam = examRepo.findById(examId).orElse(null);
+        if (Objects.isNull(exam) || !exam.getModuleCode().equals(moduleCode)) {
+            return null;
+        }
+        // TODO: calculate average
+        var average = 0;
+        var module = moduleRepo.findByCode(moduleCode);
+        return Mapper.mapToDTO(exam, module, average);
     }
 
     public Exam addExam(String moduleCode, ExamDTO examDTO) {
