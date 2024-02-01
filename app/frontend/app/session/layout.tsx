@@ -1,3 +1,4 @@
+import { AuthGuard } from '@/components/authGuard';
 import React from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
@@ -8,9 +9,9 @@ export default function TestLayout({
 }) {
 	return (
 		<section className= "full-calendar-page" >
-			<div>
+			<AuthGuard requireRole="teacher">
 				{children}
-			</div>
+			</AuthGuard>
 		</section>
 	);
 }
