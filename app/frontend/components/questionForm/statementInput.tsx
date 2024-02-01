@@ -43,7 +43,7 @@ const StatementInput = () => {
 		<div className="px-4">
 			<TextEditor
 				wrapperClassName="border-2 border-gray-300 rounded-md p-2"
-				editorClassName="border-2 border-gray-300 rounded-md px-2 min-h-[100px]"
+				editorClassName="border-2 border-gray-300 rounded-md px-2 min-h-[100px] text-default-900"
 				editorState={editorState}
 				onEditorStateChange={onEditorStateChange}
 				toolbar={{
