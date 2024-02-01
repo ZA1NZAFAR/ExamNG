@@ -1,4 +1,6 @@
-import { testUser } from '@/mockData/user';
+'use client';
+
+import { testUser, testUser2 } from '@/mockData/user';
 import { User } from '@/types';
 
 export class AuthService {
@@ -7,7 +9,7 @@ export class AuthService {
 		useWordwrapByDefault: false,
 	};
 	constructor() {
-		this.user = testUser;
+		this.user = JSON.parse(window.localStorage.getItem('user') || 'null');
 	}
 
 	get isTeacher() {
@@ -21,9 +23,15 @@ export class AuthService {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	login = async (email: string = '', password: string = '') => {
 		// temporary login
-		this.user = testUser;
+		if (email === 'abc@xyz.com') {
+			this.user = testUser;
+		} else {
+			this.user = testUser2;
+		}
+		window.localStorage.setItem('user', JSON.stringify(this.user));
 	};
 	logout = async () => {
 		this.user = null;
+		window.localStorage.removeItem('user');
 	};
 }
