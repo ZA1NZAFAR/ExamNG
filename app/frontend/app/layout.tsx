@@ -53,7 +53,6 @@ export default function RootLayout({
                         </div>
                     </section>
                 </main>
-                <Footer></Footer>
             </div>
         </Providers>
         </body>

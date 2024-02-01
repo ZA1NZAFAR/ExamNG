@@ -1,6 +1,7 @@
 import {Button} from "@nextui-org/react";
 import React from "react";
 import style from './style_home.module.css';
+import Footer from "@/components/footer";
 
 export default function Home() {
     return (
@@ -22,7 +23,9 @@ export default function Home() {
             <img className={style.image_prof} src={'./prof.svg'} alt={'prof'}/>
             <img className={style.image} src={'./desk_region.svg'} alt={'desk region'}/>
             <img className={style.image_girl} src={'./home_girl.svg'} alt={'home girl'}/>
-
+            <Footer></Footer>
         </div>
+
     );
+
 }
