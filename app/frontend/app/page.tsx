@@ -1,51 +1,28 @@
-import { Link } from '@nextui-org/link';
-import { Snippet } from '@nextui-org/snippet';
-import { Code } from '@nextui-org/code';
-import { button as buttonStyles } from '@nextui-org/theme';
-import { siteConfig } from '@/config/site';
-import { title, subtitle } from '@/components/primitives';
-import { GithubIcon } from '@/components/icons';
+import {Button} from "@nextui-org/react";
+import React from "react";
+import style from './style_home.module.css';
 
 export default function Home() {
-	return (
-		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-			<div className="inline-block max-w-lg text-center justify-center">
-				<h1 className={title()}>Make&nbsp;</h1>
-				<h1 className={title({ color: 'violet' })}>beautiful&nbsp;</h1>
-				<br />
-				<h1 className={title()}>
-					websites regardless of your design experience.
-				</h1>
-				<h2 className={subtitle({ class: 'mt-4' })}>
-					Beautiful, fast and modern React UI library.
-				</h2>
-			</div>
+    return (
+        <div>
+            <h1 className={style.title_black}>
+                Online Exams Made Easy, Success Breezy !
+            </h1>
+            <img className={style.image_stroke} src={'./stroke_line.svg'} alt={'stroke line'}/>
 
-			<div className="flex gap-3">
-				<Link
-					isExternal
-					href={siteConfig.links.docs}
-					className={buttonStyles({ color: 'primary', radius: 'full', variant: 'shadow' })}
-				>
-					Documentation
-				</Link>
-				<Link
-					isExternal
-					className={buttonStyles({ variant: 'bordered', radius: 'full' })}
-					href={siteConfig.links.github}
-				>
-					<GithubIcon size={20} />
-					GitHub
-				</Link>
-			</div>
+            <p className={style.text}>
+                Experience the future of exams: Take your assessments online, free from the constraints of physical
+                testing centers.
+            </p>
+            <p className={style.text}>
+                Ready ?
+            </p>
+            <img className={style.image_lines} src={'./3_lines.svg'} alt={'three line'}/>
+            <Button className={style.button}>Join us !</Button>
+            <img className={style.image_prof} src={'./prof.svg'} alt={'prof'}/>
+            <img className={style.image} src={'./desk_region.svg'} alt={'desk region'}/>
+            <img className={style.image_girl} src={'./home_girl.svg'} alt={'home girl'}/>
 
-			<div className="mt-8">
-				<Snippet hideSymbol hideCopyButton variant="flat">
-					<span>
-						Get started by editing <Code color="primary">app/page.tsx</Code>
-					</span>
-				</Snippet>
-			</div>
-		</section>
-	);
+        </div>
+    );
 }

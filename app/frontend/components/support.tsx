@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { Card, CardBody, Input, CheckboxGroup, Checkbox, Textarea, Button } from '@nextui-org/react';
-import { Phone, Home } from 'lucide-react';
+import React, {useRef, useState} from 'react';
+import {Button, Card, CardBody, Checkbox, CheckboxGroup, Input, Textarea} from '@nextui-org/react';
+import {Home, Phone} from 'lucide-react';
 // import { envConfig } from '@/config/envConfig';
-import nodemailer from 'nodemailer';
-import axios from 'axios';
 import httpClient from "@/utils/httpClient";
 import {Exam} from "@/types";
+
 export const Support = () => {
 	const [firstName, setFirstName] = useState<string>('John');
 	const [lastName, setLastName] = useState<string>('Doe');

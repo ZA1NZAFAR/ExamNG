@@ -14,7 +14,7 @@ class ExamService {
 		// const response = await axios.get<Array<Exam>>(`${this.apiUrl}/exams`);
 		// return response.data;
 
-		// Mock data to test used on initial stages
+		// Mock data to session used on initial stages
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				const exams = [
