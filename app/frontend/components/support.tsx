@@ -4,6 +4,8 @@ import { Phone, Home } from 'lucide-react';
 // import { envConfig } from '@/config/envConfig';
 import nodemailer from 'nodemailer';
 import axios from 'axios';
+import httpClient from "@/utils/httpClient";
+import {Exam} from "@/types";
 export const Support = () => {
 	const [firstName, setFirstName] = useState<string>('John');
 	const [lastName, setLastName] = useState<string>('Doe');
@@ -31,14 +33,14 @@ export const Support = () => {
 
 	const sendEmail = async () => {
 		try {
-			const response = await axios.post('/api/sendEmail', {
-				firstName,
-				lastName,
-				email,
-				phoneNumber,
-				selected,
-				message,
-			});
+			//prepare a json with "to", "subject" and "text" fields
+			const email = {
+				to: 'examng0@gmail.com',
+				subject: selected.join(', '),
+				body: message,
+			}
+			const response = await httpClient.post<Exam>(`/email/send`, email);
+
 
 			if (response.data.success) {
 				console.log('Email sent successfully');
