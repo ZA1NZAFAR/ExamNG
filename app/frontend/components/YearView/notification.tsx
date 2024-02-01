@@ -19,6 +19,8 @@ export default function Notification({id, code, formattedDate}: NotificationProp
 		styles = {bottom: '-30%', right: '20px'};
 	} else if (formattedDate === '2024-03-15') {
 		styles = {top: '29vh', right:'12%'};
+	} else {
+		styles = {bottom: '-30%', right: '20px'};
 	}
 
 	return (

@@ -30,7 +30,11 @@ export default function YearView({
 	const [isClickedDateDecember, setIsClickedDateApril] = useState(false);
 	const [isClickedDateMarch, setIsClickedDateMay] = useState(false);
 	const [showApp, setShowApp] = useState(false);
-	const [notificationInfo, setNotificationInfo] = useState<{ id: string; code: string; formattedDate:string  } | null>(null);
+	const [notificationInfo, setNotificationInfo] = useState<{
+		id: string;
+		code: string;
+		formattedDate: string
+	} | null>(null);
 
 	const {examService} = useService();
 
@@ -41,6 +45,7 @@ export default function YearView({
 
 			for (const fetchedModule of fetchedModules.content) {
 				const response = await examService.getExams(fetchedModule.code);
+
 				for (const exam of response.content) {
 					const {startTimestamp, id} = exam;
 					const code = fetchedModule.code;
@@ -51,6 +56,7 @@ export default function YearView({
 					examDetailsList.push({id, code, formattedDate});
 				}
 			}
+
 			return examDetailsList;
 		} catch (error) {
 			console.error('Error fetching exams:', error);
@@ -62,7 +68,6 @@ export default function YearView({
 		try {
 			const exams = await fetchExams();
 
-			// Mise à jour de l'état notificationInfo même si aucune date n'est cliquée
 			setNotificationInfo(null);
 
 			if (exams) {
@@ -76,8 +81,8 @@ export default function YearView({
 					);
 
 					if (clickedDateDetails) {
-						const { id, code, formattedDate } = clickedDateDetails;
-						setNotificationInfo({ id, code, formattedDate });
+						const {id, code, formattedDate} = clickedDateDetails;
+						setNotificationInfo({id, code, formattedDate});
 						switch (code) {
 						case 'AFN111':
 							setIsClickedDateMarch(!isClickedDateJune);
@@ -103,7 +108,6 @@ export default function YearView({
 			console.error('Error handling day click:', error);
 		}
 	};
-
 
 
 	useEffect(() => {

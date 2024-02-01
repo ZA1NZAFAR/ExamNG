@@ -85,7 +85,6 @@ export default function ExamPage() {
 					const response = await examService.getExams(fetchedModule.code);
 					console.log(response);
 					fetchedExams.push(...response.content);
-
 				}
 				
 				// Sorts exams by start datetime
