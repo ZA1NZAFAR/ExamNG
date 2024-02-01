@@ -54,8 +54,12 @@ export default function CalendarPage() {
             {/* Dropdown List */}
             <label htmlFor="dropdown">Select an Option: </label>
             <select id="dropdown" value={dropdownValue} onChange={e => setDropdownValue(e.target.value)}>
-                <option value="AFN111">AFN111</option>
-                <option value="AFN116">AFN116</option>
+                <option value="AFN111">AFN111 - Computer Science</option>
+                <option value="AFN112">AFN112 - Economy</option>
+                <option value="AFN113">AFN113 - Statistics</option>
+                <option value="AFN114">AFN114 - Communication</option>
+                <option value="AFN115">AFN115 - Biology</option>
+                <option value="AFN116">AFN116 - Sociology</option>
             </select>
 
             <br/>
