@@ -1,9 +1,10 @@
 package net.examng.backend.repository;
 
 import net.examng.backend.model.Question;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface QuestionRepository extends MongoRepository<Question, String> {
@@ -12,5 +13,5 @@ public interface QuestionRepository extends MongoRepository<Question, String> {
         return question.orElse(null);
     }
 
-    public List<Question> findAllById(Iterable<String> ids);
+    Page<Question> findAllById(Iterable<String> ids, Pageable pageable);
 }

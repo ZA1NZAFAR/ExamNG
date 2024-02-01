@@ -4,9 +4,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.examng.backend.model.Module;
-import net.examng.backend.model.Question;
-
-import java.util.List;
 
 @Data
 @Getter
@@ -18,7 +15,6 @@ public class ExamDTO {
     private String description;
     private boolean isValidated;
     private boolean isSubmitted;
-    private List<Question> questions;
     private SummaryFields summaryFields;
     @Data
     @Getter
