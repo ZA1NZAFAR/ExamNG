@@ -86,6 +86,23 @@ export const Navbar = () => {
 		);
 	}
 
+    const CreateExamButton = () => {
+        if (authService.isTeacher) {
+            return (
+                <Button
+                    className="text-sm"
+                    color="secondary"
+                    onClick={() => {
+                        router.push('/create-exam');
+                    }}
+                >
+                    Create Exam
+                </Button>
+            );
+        }
+        return null;
+    }
+
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
             <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -133,6 +150,7 @@ export const Navbar = () => {
                 <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
                 <NavbarItem className="hidden md:flex">
 					<LoginButton />
+                    <CreateExamButton/>
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
