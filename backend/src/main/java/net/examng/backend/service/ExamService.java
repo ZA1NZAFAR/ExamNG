@@ -48,6 +48,7 @@ public class ExamService {
     public Exam addExam(String moduleCode, ExamDTO examDTO) {
         Exam exam = Mapper.mapToExam(examDTO);
         exam.setModuleCode(moduleCode);
+        exam.setQuestions(new ArrayList<>());
         return examRepo.save(exam);
     }
 
