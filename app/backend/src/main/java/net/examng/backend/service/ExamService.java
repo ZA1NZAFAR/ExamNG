@@ -1,5 +1,6 @@
 package net.examng.backend.service;
 
+import net.examng.backend.model.ColorCode;
 import net.examng.backend.model.Exam;
 import net.examng.backend.model.dto.ExamDTO;
 import net.examng.backend.repository.ExamRepository;
@@ -10,12 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 @Service
 public class ExamService {
+
+    private ArrayList<String> colors = new ArrayList<String>(Arrays.asList("#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"));
     @Autowired
     private ExamRepository examRepo;
     @Autowired
@@ -56,5 +59,12 @@ public class ExamService {
         ExamDTO examDTO = getExam(moduleCode, examId);
         Exam exam = Mapper.mapToExam(examDTO);
         examRepo.delete(exam);
+    }
+
+    public ColorCode getExamColorCode() {
+        var colorIndex = LocalTime.now().getMinute() / 10;
+        var colorCode = new ColorCode();
+        colorCode.setColor(colors.get(colorIndex));
+        return colorCode;
     }
 }

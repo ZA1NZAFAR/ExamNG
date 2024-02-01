@@ -1,6 +1,7 @@
 package net.examng.backend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import net.examng.backend.model.ColorCode;
 import net.examng.backend.model.Exam;
 import net.examng.backend.model.dto.ExamDTO;
 import net.examng.backend.service.EmailService;
@@ -70,5 +71,11 @@ public class ExamController {
     @Operation(summary = "Delete an exam")
     public void deleteExam(@PathVariable String moduleCode, @PathVariable String examId) {
         examService.deleteExam(moduleCode, examId);
+    }
+
+    @GetMapping("/{examId}/colorCode")
+    @Operation(summary = "Get the color code of an exam")
+    public ColorCode getExamColorCode(@PathVariable String moduleCode, @PathVariable String examId) {
+        return examService.getExamColorCode();
     }
 }
