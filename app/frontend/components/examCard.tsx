@@ -5,6 +5,7 @@ import { Bell, BellOff, UsersRound, Book, Calendar, BarChart2 } from 'lucide-rea
 import { Exam  } from '@/types';
 import logo from '@/resources/img/logo.png';
 import { envConfig } from '@/config/envConfig';
+import { useService } from '@/hooks/useService';
 
 const dateDifferenceInDays = (date1: Date, date2: Date): number => {
 	const MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -90,6 +91,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [subscribed, setSubscribed] = useState(false);
 	const [examProgress, setExamProgress] = useState(Number.NEGATIVE_INFINITY);
+	const { authService } = useService();
 	const intervalIDRef = useRef<NodeJS.Timeout | null>(null);
 
 	const { module, average } = exam.summaryFields;
@@ -110,16 +112,28 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 		return () => clearInterval(intervalIDRef.current!);
 	}, [exam.startTimestamp, exam.endTimestamp]);
 
+	const isExamFinished = examProgress === 100;
+
+	const getLink = () => {
+		const isExamInProgress = examProgress > 0 && examProgress < 100;
+		if (authService.isTeacher || isExamInProgress) {
+			return `/exams/${module.code}/${exam.id}`;
+		}
+		if (isExamFinished) {
+			return 'https://www.myefrei.fr/portal/student/exams-sheets';
+		}
+		return '#';
+	}
+
 	return (
 		<Card
 			isBlurred
 			className="border-none bg-background/60 dark:bg-default-100/50 py-4 grow-0 shrink-0"
 			shadow="sm"
 			as={Link}
-			href={examProgress === 100 ? 'https://www.myefrei.fr/portal/student/exams-sheets' 
-				: (examProgress > 0 && examProgress < 100) ? `/exams/${module.code}/${exam.id}` : '#'}
+			href={getLink()}
 			isPressable
-			isDisabled={examProgress === 0}
+			isDisabled={isExamFinished || !authService.isTeacher}
 		>
 			<CardBody>
 				<div className="relative overflow-hidden w-52 h-52 xl:w-80 xl:h-80">
