@@ -1,20 +1,12 @@
 package net.examng.backend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import net.examng.backend.model.Exam;
 import net.examng.backend.model.Module;
-import net.examng.backend.model.Question;
-import net.examng.backend.model.dto.ExamDTO;
-import net.examng.backend.service.ExamService;
 import net.examng.backend.service.ModuleService;
-import net.examng.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -24,14 +16,6 @@ public class ModuleController {
     @Autowired
     private ModuleService moduleService;
 
-    @Autowired
-    private ExamService examService;
-
-    @Autowired
-    private QuestionService questionService;
-
-
-    // Module endpoints
     @GetMapping("")
 
     @Operation(summary = "Get all modules with pagination")
@@ -62,56 +46,4 @@ public class ModuleController {
         moduleService.deleteModule(moduleCode);
     }
 
-    // Exam endpoints
-
-    @PostMapping("/{moduleCode}/addExam")
-    @Operation(summary = "Add a new exam to a module")
-    public ResponseEntity<Exam> addExam(@PathVariable String moduleCode, @RequestBody ExamDTO newExam) {
-        return moduleService.addExam(moduleCode, newExam);
-    }
-
-    @GetMapping("/{moduleCode}/exams")
-    @Operation(summary = "Get all exam with pagination")
-    public Page<ExamDTO> getExams(@PathVariable String moduleCode, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize) {
-        return moduleService.getExams(moduleCode, PageRequest.of(page - 1, pageSize));
-    }
-
-    @GetMapping("/{moduleCode}/exams/{examId}")
-    @Operation(summary = "Get an exam by its id")
-    public ExamDTO getExam(@PathVariable String moduleCode, @PathVariable String examId) {
-        return examService.getExam(moduleCode, examId);
-    }
-
-    @PutMapping("/{moduleCode}/exams/{examId}")
-    @Operation(summary = "Update an exam")
-    public ExamDTO updateExam(@PathVariable String moduleCode, @PathVariable String examId, @RequestBody ExamDTO updatedExam) {
-        throw new UnsupportedOperationException("This feature is not yet implemented");
-    }
-
-    @DeleteMapping("/{moduleCode}/exams/{examId}")
-    @Operation(summary = "Delete an exam")
-    public void deleteExam(@PathVariable String moduleCode, @PathVariable String examId) {
-        examService.deleteExam(moduleCode, examId);
-    }
-
-
-    // Question endpoints
-
-    @PostMapping("/{moduleCode}/exams/{examId}/addQuestion")
-    @Operation(summary = "Add a new question to an exam")
-    public ResponseEntity<?> addQuestion(@PathVariable String moduleCode, @PathVariable String examId, @RequestBody Question question) {
-        return examService.addQuestion(moduleCode, examId, question);
-    }
-
-    @GetMapping("/{moduleCode}/exams/{examId}/questions")
-    @Operation(summary = "Get all questions of an exam")
-    public List<Question> getQuestions(@PathVariable String moduleCode, @PathVariable String examId) {
-        return examService.getQuestions(moduleCode, examId);
-    }
-
-    @GetMapping("/{moduleCode}/exams/{examId}/questions/{questionId}")
-    @Operation(summary = "Get a question by its id")
-    public Question getQuestion(@PathVariable String moduleCode, @PathVariable String examId, @PathVariable String questionId) {
-        return questionService.getQuestion(questionId);
-    }
 }

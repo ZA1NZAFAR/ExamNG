@@ -31,7 +31,9 @@ public class Mapper {
 
     public static Exam mapToExam(ExamDTO examDTO) {
         Exam exam = new Exam();
-        exam.setId(examDTO.getId());
+        if (examDTO.getId() != null && !examDTO.getId().isEmpty()) {
+            exam.setId(examDTO.getId());
+        }
         exam.setStartTimestamp(examDTO.getStartTimestamp());
         exam.setEndTimestamp(examDTO.getEndTimestamp());
         exam.setDescription(examDTO.getDescription());
@@ -42,20 +44,16 @@ public class Mapper {
     }
 
     public static QuestionDTO mapToDTO(Question question) {
-        QuestionDTO questionDTO;
-        if (question instanceof MCQQuestion) {
-            var mcqQuestion = (MCQQuestion) question;
-            var mcqQuestionDTO = new MCQQuestionDTO();
-            mcqQuestionDTO.setOptions(mcqQuestion.getOptions());
-            questionDTO = mcqQuestionDTO;
+        QuestionDTO questionDTO = new QuestionDTO();
+        if (question instanceof MCQQuestion mcqQuestion) {
+            questionDTO.setType(QuestionDTO.QuestionType.mcq);
+            questionDTO.setOptions(mcqQuestion.getOptions());
         } else if (question instanceof TextQuestion) {
-            questionDTO = new TextQuestionDTO();
-        } else if (question instanceof CodeQuestion) {
-            var codeQuestion = (CodeQuestion) question;
-            var codeQuestionDTO = new CodeQuestionDTO();
-            codeQuestionDTO.setInitialCode(codeQuestion.getInitialCode());
-            codeQuestionDTO.setDefaultLanguage(codeQuestion.getDefaultLanguage());
-            questionDTO = codeQuestionDTO;
+            questionDTO.setType(QuestionDTO.QuestionType.text);
+        } else if (question instanceof CodeQuestion codeQuestion) {
+            questionDTO.setType(QuestionDTO.QuestionType.code);
+            questionDTO.setInitialCode(codeQuestion.getInitialCode());
+            questionDTO.setDefaultLanguage(codeQuestion.getDefaultLanguage());
         } else {
             throw new RuntimeException("Unknown question type");
         }
@@ -68,23 +66,27 @@ public class Mapper {
 
     public static Question mapToQuestion(QuestionDTO questionDTO) {
         Question question;
-        if (questionDTO instanceof MCQQuestionDTO) {
-            var mcqQuestionDTO = (MCQQuestionDTO) questionDTO;
-            var mcqQuestion = new MCQQuestion();
-            mcqQuestion.setOptions(mcqQuestionDTO.getOptions());
-            question = mcqQuestion;
-        } else if (questionDTO instanceof TextQuestionDTO) {
-            question = new TextQuestion();
-        } else if (questionDTO instanceof CodeQuestionDTO) {
-            var codeQuestionDTO = (CodeQuestionDTO) questionDTO;
-            var codeQuestion = new CodeQuestion();
-            codeQuestion.setInitialCode(codeQuestionDTO.getInitialCode());
-            codeQuestion.setDefaultLanguage(codeQuestionDTO.getDefaultLanguage());
-            question = codeQuestion;
-        } else {
-            throw new RuntimeException("Unknown question type");
+        switch (questionDTO.getType()) {
+            case mcq:
+                var mcqQuestion = new MCQQuestion();
+                mcqQuestion.setOptions(questionDTO.getOptions());
+                question = mcqQuestion;
+                break;
+            case text:
+                question = new TextQuestion();
+                break;
+            case code:
+                var codeQuestion = new CodeQuestion();
+                codeQuestion.setInitialCode(questionDTO.getInitialCode());
+                codeQuestion.setDefaultLanguage(questionDTO.getDefaultLanguage());
+                question = codeQuestion;
+                break;
+            default:
+                throw new RuntimeException("Unknown question type");
         }
-        question.setId(questionDTO.getId());
+        if (questionDTO.getId() != null && !questionDTO.getId().isEmpty()) {
+            question.setId(questionDTO.getId());
+        }
         question.setStatement(questionDTO.getStatement());
         question.setAttachments(questionDTO.getAttachments());
         question.setCoefficient(questionDTO.getCoefficient());

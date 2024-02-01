@@ -1,13 +1,10 @@
 package net.examng.backend.service;
 
-import net.examng.backend.model.Exam;
 import net.examng.backend.model.Module;
-import net.examng.backend.model.dto.ExamDTO;
 import net.examng.backend.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,14 +33,6 @@ public class ModuleService {
         moduleRepo.deleteByCode(code);
     }
 
-
-    public ResponseEntity<Exam> addExam(String moduleCode, ExamDTO exam) {
-        Exam ex = examService.addExam(moduleCode, exam);
-        moduleRepo.addExam(moduleCode, ex.getId());
-
-        return ResponseEntity.ok(ex);
-    }
-
     public Module updateModule(String moduleCode, Module updatedModule) {
         Module module = moduleRepo.findByCode(moduleCode);
         module.setCode(updatedModule.getCode());
@@ -51,9 +40,4 @@ public class ModuleService {
         module.setImageURL(updatedModule.getImageURL());
         return moduleRepo.save(module);
     }
-
-    public Page<ExamDTO> getExams(String moduleCode, Pageable pageable) {
-        return examService.getExamsForModule(moduleCode, pageable);
-    }
-
 }
