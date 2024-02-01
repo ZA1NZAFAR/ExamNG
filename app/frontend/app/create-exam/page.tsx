@@ -3,8 +3,10 @@ import {useState} from 'react';
 import {title} from "@/components/primitives";
 import httpClient from "@/utils/httpClient";
 import {Exam} from "@/types";
+import { useRouter } from 'next/navigation'
 
 export default function CalendarPage() {
+    const router = useRouter();
     const [dropdownValue, setDropdownValue] = useState('AFN111');
     const [timestampOne, setTimestampOne] = useState(new Date());
     const [timestampTwo, setTimestampTwo] = useState(new Date());
@@ -29,15 +31,17 @@ export default function CalendarPage() {
         try {
             console.log('Sending form data:', formData);
             const response = await httpClient.post<Exam>(`/modules/${dropdownValue}/exams`, formData);
-
-            if (response.data.success) {
+            console.log('Response:', response);
+            if (response.status >= 200 && response.status < 300) {
                 console.log('Email sent successfully');
                 // You can add additional logic or UI updates here
+
+                 router.push('/exams');
+
             } else {
-                console.error('Failed to send email:', response.data.error);
+                console.error('Failed to send email:', response.data);
                 // Handle error cases
             }
-            console.log(data); // For demonstration purposes
         } catch (error) {
             console.error('Error:', error);
         }
