@@ -12,9 +12,7 @@ const MCQOptionList: React.FC = () => {
 		options,
 		addNewOption,
 		optionsErrors,
-		setOptionsError,
-		deleteOptionsError,
-		setOptionErrors,
+		setErrors
 	} = useQuestionFormStore(useShallow((state) => {
 		const currentMCQOptions = (state.question as MCQuestion).options;
 		const currentErrors = state.errors;
@@ -25,13 +23,14 @@ const MCQOptionList: React.FC = () => {
 					...state.question,
 					options: [...currentMCQOptions, {
 						statement: '',
-						isCorrectOption: false,
+						correctOption: false,
 					}]
 				} as MCQuestion);
 				state.setErrors({
 					...currentErrors,
 					[`option${currentMCQOptions.length}-statement`]: 'Option statement cannot be empty'
 				});
+				setRender(!render);
 			},
 			optionsErrors: Object.keys(currentErrors)
 				.filter((key) => key.startsWith('options-'))
@@ -39,49 +38,36 @@ const MCQOptionList: React.FC = () => {
 					obj[key] = currentErrors[key];
 					return obj;
 				}, {} as Record<string, string>),
-			setOptionsError: (errorType: string, newOptionsError: string) => state.setErrors({
-				...currentErrors,
-				[`options-${errorType}`]: newOptionsError
-			}),
-			deleteOptionsError: (errorType: string) => state.deleteError(`options-${errorType}`),
-			setOptionErrors: (...args: { key: string, indices: number[], errorMessage?: string }[]) => {
-				const newErrors = {...currentErrors};
-				args.forEach(({ key, indices, errorMessage }) => {
-					indices.forEach((index) => {
-						if (errorMessage) {
-							newErrors[`option${index}-${key}`] = errorMessage;
-						} else {
-							delete newErrors[`option${index}-${key}`];
-						}
-					});
-				});
-				state.setErrors(newErrors);
+			setErrors: (newErrors: Record<string, string | null>) => {
+				const newErrorState = {
+					...state.errors,
+				};
+				for (const key in newErrors) {
+					const value = newErrors[key];
+					if (!value) {
+						delete newErrorState[key];
+					} else {
+						newErrorState[key] = value;
+					}
+				}
+				state.setErrors(newErrorState);
 			}
 		};
 	}));
-
 	const optionsQuantityValidator = () => {
-		const hasAtLeastTwoOptions = () => options.length >= 2;
-		if (!hasAtLeastTwoOptions()) {
-			setOptionsError('atLeastTwo', 'Please add at least two options.');
-		} else {
-			deleteOptionsError('atLeastTwo');
+		const hasAtLeastTwoOptions = options.length >= 2;
+		const hasCorrectOption = options.some(option => option.correctOption);
+		const hasIncorrectOption = options.some(option => !option.correctOption);
+		return {
+			'options-atLeastTwoOptions': hasAtLeastTwoOptions ? null : 'There must be at least two options',
+			'options-hasCorrectOption': hasCorrectOption ? null : 'There must be at least one correct option',
+			'options-hasIncorrectOption': hasIncorrectOption ? null : 'There must be at least one incorrect option'
 		}
-		const hasCorrectOption = () => options.some(option => option.isCorrectOption);
-		if (!hasCorrectOption()) {
-			setOptionsError('atLeastOneCorrect', 'Please select at least one correct option.');
-		} else {
-			deleteOptionsError('atLeastOneCorrect');
-		}
-		const hasIncorrectOption = () => options.some(option => !option.isCorrectOption);
-		if (!hasIncorrectOption()) {
-			setOptionsError('atLeastOneIncorrect', 'Please select at least one incorrect option.');
-		} else {
-			deleteOptionsError('atLeastOneIncorrect');
-		}
+		
 	};
 
 	const optionStatementValidator = () => {
+		const errors: Record<string, string | null> = {};
 		const optionStatementToIndices = new Map<string, number[]>();
 		options.forEach((option, index) => {
 			if (optionStatementToIndices.has(option.statement)) {
@@ -90,21 +76,34 @@ const MCQOptionList: React.FC = () => {
 				optionStatementToIndices.set(option.statement, [index]);
 			}
 		});
-		console.log(optionStatementToIndices);
-		const duplicateEntryIndices = Array.from(optionStatementToIndices.values()).filter((indices) => indices.length > 1).flat();
+		Array.from(optionStatementToIndices.values())
+			.filter((indices) => indices.length > 1)
+			.flat()
+			.forEach((index) => {
+				errors[`option${index}-statement`] = 'Option statements must be unique';
+		});
 		const singleEntryIndices = Array.from(optionStatementToIndices.values()).filter((indices) => indices.length === 1).flat();
 		const emptyEntryIndices = optionStatementToIndices.has('') ? optionStatementToIndices.get('')!.flat() : [];
 		const nonEmptyEntryIndices = singleEntryIndices.filter((index) => options[index].statement !== '');
-		setOptionErrors(
-			{ key: 'statement', indices: duplicateEntryIndices, errorMessage: 'Duplicate option statement' },
-			{ key: 'statement', indices: emptyEntryIndices, errorMessage: 'Option statement cannot be empty' },
-			{ key: 'statement', indices: nonEmptyEntryIndices, errorMessage: undefined  },
-		);
+		emptyEntryIndices.forEach((index) => {
+			errors[`option${index}-statement`] = 'Option statements cannot be empty';
+		});
+		nonEmptyEntryIndices.forEach((index) => {
+			errors[`option${index}-statement`] = null;
+		});
+
+		return {
+			...errors
+		};
 	};
 
 	const validateOptions = () => {
-		optionsQuantityValidator();
-		optionStatementValidator();
+		const optionQuantityErrors = optionsQuantityValidator();
+		const optionStatementErrors = optionStatementValidator();
+		setErrors({
+			...optionQuantityErrors,
+			...optionStatementErrors
+		});
 	};
 	
 	function reloadComponent() {

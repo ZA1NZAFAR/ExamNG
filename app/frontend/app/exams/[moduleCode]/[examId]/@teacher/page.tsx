@@ -13,11 +13,15 @@ import { Modal } from '@nextui-org/modal';
 import QuestionForm from '@/components/questionForm/questionForm';
 import { useSearchParams } from 'next/navigation';
 import { SingleExamParams } from '../../params';
+import { defaultQuestionData, useQuestionFormStore } from '@/components/questionForm/questionFormStore';
 
 
 export default function TeacherExamPage({ params }: { params: SingleExamParams }) {
 	const [exam, setExam] = React.useState<Exam>();
-	const [ question, setQuestion ] = React.useState<Question | undefined>(undefined);
+	const {
+		question,
+		setQuestion
+	} = useQuestionFormStore();
 	const { examService, authService } = useService();
 	const [ questions, setQuestions ] = React.useState<Question[]>([]);
 	// TODO: add pagination
@@ -37,7 +41,7 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 
 	function openEditModal(editIndex: number) {
 		if (editIndex === -1) {
-			setQuestion(undefined);
+			setQuestion(defaultQuestionData);
 		} else {
 			setQuestion(questions[editIndex]);
 		}
@@ -84,7 +88,6 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 				<QuestionForm
 					moduleCode={moduleCode}
 					examId={examId}
-					questionData={question}
 					onSubmit={reloadExamQuestions}
 				/>
 			</Modal>
