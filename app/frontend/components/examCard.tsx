@@ -113,10 +113,11 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 	}, [exam.startTimestamp, exam.endTimestamp]);
 
 	const isExamFinished = examProgress === 100;
+	const isExamInProgress = examProgress > 0 && examProgress < 100;
+	const canAccessExam = authService.isTeacher || isExamInProgress;
 
 	const getLink = () => {
-		const isExamInProgress = examProgress > 0 && examProgress < 100;
-		if (authService.isTeacher || isExamInProgress) {
+		if (canAccessExam) {
 			return `/exams/${module.code}/${exam.id}`;
 		}
 		if (isExamFinished) {
@@ -133,7 +134,7 @@ export const ExamCard = ({ exam } : ExamCardProps) => {
 			as={Link}
 			href={getLink()}
 			isPressable
-			isDisabled={isExamFinished || !authService.isTeacher}
+			isDisabled={!canAccessExam}
 		>
 			<CardBody>
 				<div className="relative overflow-hidden w-52 h-52 xl:w-80 xl:h-80">

@@ -7,3 +7,11 @@ export const testUser: User = {
 	email: 'abc@xyz.com',
 	type: 'teacher',
 };
+
+export const testUser2: User = {
+	id: '2',
+	firstName: 'Jane',
+	lastName: 'Doe',
+	email: 'def@mno.fr',
+	type: 'student',
+};

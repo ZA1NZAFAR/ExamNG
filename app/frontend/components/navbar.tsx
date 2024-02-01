@@ -25,17 +25,16 @@ import {DiscordIcon, GithubIcon, HeartFilledIcon, Logo, SearchIcon, TwitterIcon,
 import React from 'react';
 import {useRouter} from 'next/navigation';
 import {useService} from '@/hooks/useService';
+import { Modal, useDisclosure } from '@nextui-org/react';
+import Login from './login';
 
 export const Navbar = () => {
     const router = useRouter();
     const {authService} = useService();
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    function handleLogin() {
-        if (authService.user && authService.user.type === 'teacher') {
-            authService.user.type = 'student';
-        } else if (authService.user && authService.user.type === 'student') {
-            authService.user.type = 'teacher';
-        }
+    function handleRefresh() {
+		console.log('login');
         router.refresh();
     }
 
@@ -60,10 +59,32 @@ export const Navbar = () => {
         />
     );
 
-    let loginIcon = ' not logged in';
-    if (authService.user != null) {
-        loginIcon = authService.user.type;
-    }
+	const LoginButton = () => {
+		if (authService.isLoggedIn) {
+			return (
+				<Button
+					className="text-sm"
+					color="secondary"
+					onClick={() => {
+						authService.logout();
+						handleRefresh();
+					}}
+					>Logout</Button>
+			);
+		}
+		return (
+			<>
+				<Button
+					className="text-sm"
+					color="secondary"
+					onClick={onOpen}
+					>Login</Button>
+				<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+					<Login onSubmit={handleRefresh}/>
+				</Modal>
+			</>
+		);
+	}
 
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
@@ -97,6 +118,7 @@ export const Navbar = () => {
                 justify="end"
             >
                 <NavbarItem className="hidden sm:flex gap-2">
+					{`Hello, ${authService.user?.firstName ?? 'Guest'}`}
                     <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
                         <TwitterIcon className="text-default-500"/>
                     </Link>
@@ -106,26 +128,13 @@ export const Navbar = () => {
                     <Link isExternal href={siteConfig.links.github} aria-label="Github">
                         <GithubIcon className="text-default-500"/>
                     </Link>
-                    <Link aria-label="Login" onClick={handleLogin}>
-                        {loginIcon}
-                    </Link>
                     <ThemeSwitch/>
                 </NavbarItem>
                 <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
                 <NavbarItem className="hidden md:flex">
-                    <Button
-                        isExternal
-                        as={Link}
-                        className="text-sm font-normal text-default-600 bg-default-100"
-                        href={siteConfig.links.sponsor}
-                        startContent={<HeartFilledIcon className="text-danger"/>}
-                        variant="flat"
-                    >
-                        Sponsor
-                    </Button>
+					<LoginButton />
                 </NavbarItem>
             </NavbarContent>
-
             <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
                 <Link isExternal href={siteConfig.links.github} aria-label="Github">
                     <GithubIcon className="text-default-500"/>
