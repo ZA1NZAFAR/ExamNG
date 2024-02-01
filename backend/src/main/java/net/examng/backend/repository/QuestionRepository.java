@@ -13,5 +13,5 @@ public interface QuestionRepository extends MongoRepository<Question, String> {
         return question.orElse(null);
     }
 
-    Page<Question> findAllById(Iterable<String> ids, Pageable pageable);
+    Page<Question> findAllByIdIn(Iterable<String> ids, Pageable pageable);
 }

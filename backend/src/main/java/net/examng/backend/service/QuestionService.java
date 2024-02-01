@@ -77,7 +77,7 @@ public class QuestionService {
             return null;
         }
         var exam = examRepo.findById(examId).orElse(null);
-        var questionPage = questionRepo.findAllById(exam.getQuestions(), pageable);
+        var questionPage = questionRepo.findAllByIdIn(exam.getQuestions(), pageable);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         questionPage.forEach(question -> questionDTOS.add(Mapper.mapToDTO(question)));
         return Mapper.mapToPage(questionDTOS, pageable);
