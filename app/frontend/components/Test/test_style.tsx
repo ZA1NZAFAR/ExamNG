@@ -306,37 +306,6 @@ const FullScreenComponent = () => {
 
     return (
         <div id="fullScreenComponentRoot">
-            {!isFullScreen && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        background: 'rgba(255, 255, 255, 0.8)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 999,
-                    }}
-                >
-                    <Card>
-                        <CardBody className="text-center mt-4 mb-4">
-                            <p>Please open the app in full screen for the best experience.</p>
-                            <br/>
-                            <Tooltip
-                                content={`The full size is ${window.innerWidth} * ${window.innerHeight}, but it needs to be 1080 * 1720`}
-                            >
-                                <Button>More info</Button>
-                            </Tooltip>
-                            <p>Number of attempts to reduce window size: {fullScreenAttemptCount}</p>
-                            <p>Number of attempts to change window visibility: {visibleAttemptCount}</p>
-                            <p>{data.users[0].informations}</p>
-                        </CardBody>
-                    </Card>
-                </div>
-            )}
             <Table
                 aria-label="Example table with custom cells, pagination and sorting"
                 isHeaderSticky
