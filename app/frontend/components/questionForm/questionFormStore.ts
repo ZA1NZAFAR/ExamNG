@@ -46,7 +46,7 @@ interface FileState {
 interface QuestionFormState extends QuestionState, ErrorState, FileState {}
 
 const useQuestionStore: StateCreator<QuestionFormState, [], [], QuestionState> = (set) => ({
-	question: defaultQuestionData,
+	question: {} as Question,
 	setQuestion: (question) => set({ question })
 });
 const useErrorStore: StateCreator<QuestionFormState, [], [], ErrorState> = (set) => ({

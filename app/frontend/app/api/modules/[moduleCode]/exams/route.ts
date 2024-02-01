@@ -1,4 +1,5 @@
 import { mockAverage } from '@/mockData/average';
+import { mockGroups } from '@/mockData/groups';
 import { mockModules } from '@/mockData/module';
 import { Exam, PageResult } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
@@ -24,6 +25,8 @@ export async function GET(request: NextRequest, { params } : { params: ModulePar
 	const examResults: Exam[] = [];
 	moduleSearch.exams.forEach((exam) => {
 		const average = mockAverage.get(exam.id);
+		const groups = mockGroups.get(exam.id);
+
 		const examResult = {
 			id: exam.id,
 			startTimestamp: exam.startTimestamp,
@@ -33,7 +36,7 @@ export async function GET(request: NextRequest, { params } : { params: ModulePar
 			isSubmitted: exam.isSubmitted,
 			summaryFields: {
 				module: moduleData,
-				groups: [],
+				groups: groups ?? [],
 				average: average ?? undefined
 			}
 		};
@@ -41,9 +44,9 @@ export async function GET(request: NextRequest, { params } : { params: ModulePar
 	});
 
 	const response: PageResult<Exam> = {
-		count: moduleSearch.exams.size,
-		currentPage: page,
-		pageSize,
+		totalElements: moduleSearch.exams.size,
+		number: page,
+		size: pageSize,
 		results: examResults.slice((page - 1) * pageSize, page * pageSize)
 	};
 

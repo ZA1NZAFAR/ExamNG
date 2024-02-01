@@ -46,9 +46,9 @@ export async function GET(request: NextRequest, { params } : { params: ExamParam
 		}
 	});
 	const response: PageResult<Question> = {
-		count: questionSearch.length,
-		currentPage: page,
-		pageSize,
+		totalElements: questionSearch.length,
+		number: page,
+		size: pageSize,
 		results: questionSearch.slice((page - 1) * pageSize, page * pageSize)
 	};
 	return NextResponse.json(response);

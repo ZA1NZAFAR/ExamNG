@@ -88,9 +88,9 @@ const MCOptionInput: React.FC<MCOptionInputProps> = ({
 				autoFocus
 			/>
 			<Checkbox
-				isSelected={option.isCorrectOption}
+				isSelected={option.correctOption}
 				onChange={(event) => {
-					updateOptions('isCorrectOption', event.target.checked);
+					updateOptions('correctOption', event.target.checked);
 					onInputChange(event);
 				}}
 			>

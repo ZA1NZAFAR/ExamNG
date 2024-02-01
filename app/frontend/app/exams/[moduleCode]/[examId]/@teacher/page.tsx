@@ -13,11 +13,15 @@ import { Modal } from '@nextui-org/modal';
 import QuestionForm from '@/components/questionForm/questionForm';
 import { useSearchParams } from 'next/navigation';
 import { SingleExamParams } from '../../params';
+import { defaultQuestionData, useQuestionFormStore } from '@/components/questionForm/questionFormStore';
 
 
 export default function TeacherExamPage({ params }: { params: SingleExamParams }) {
 	const [exam, setExam] = React.useState<Exam>();
-	const [ question, setQuestion ] = React.useState<Question | undefined>(undefined);
+	const {
+		question,
+		setQuestion
+	} = useQuestionFormStore();
 	const { examService, authService } = useService();
 	const [ questions, setQuestions ] = React.useState<Question[]>([]);
 	// TODO: add pagination
@@ -37,7 +41,7 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 
 	function openEditModal(editIndex: number) {
 		if (editIndex === -1) {
-			setQuestion(undefined);
+			setQuestion(defaultQuestionData);
 		} else {
 			setQuestion(questions[editIndex]);
 		}
@@ -50,10 +54,10 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 			const fetchedExam = await examService.getExamById(moduleCode, examId);
 			setExam(fetchedExam);
 			const fetchedQuestions = await examService.getExamQuestions(moduleCode, examId, { page, pageSize });
-			setQuestions(fetchedQuestions.results);
+			setQuestions(fetchedQuestions.content);
 		})();
 	}, [render, examService, moduleCode, examId, page, pageSize]);
-	if (!exam || questions.length === 0) {
+	if (!exam) {
 		return (
 			<>
 				<h1 className={title()}>Exam: {moduleCode}</h1>
@@ -72,7 +76,7 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 	return (	
 		<ExamContext.Provider value={{ exam, totalScore }}>
 			<h1 className={title()}>Exam: {moduleCode}</h1>
-			<h2>{examId}</h2>
+			<h2>{exam.description}</h2>
 			<Button
 				color={canEdit ? 'primary' : 'default'}
 				disabled={!canEdit}
@@ -84,7 +88,6 @@ export default function TeacherExamPage({ params }: { params: SingleExamParams }
 				<QuestionForm
 					moduleCode={moduleCode}
 					examId={examId}
-					questionData={question}
 					onSubmit={reloadExamQuestions}
 				/>
 			</Modal>

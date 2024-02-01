@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { Card, CardBody, Input, CheckboxGroup, Checkbox, Textarea, Button } from '@nextui-org/react';
-import { Phone, Home } from 'lucide-react';
+import React, {useRef, useState} from 'react';
+import {Button, Card, CardBody, Checkbox, CheckboxGroup, Input, Textarea} from '@nextui-org/react';
+import {Home, Phone} from 'lucide-react';
 // import { envConfig } from '@/config/envConfig';
+import httpClient from "@/utils/httpClient";
+import {Exam} from "@/types";
 
 export const Support = () => {
 	const [firstName, setFirstName] = useState<string>('John');
@@ -26,6 +28,30 @@ export const Support = () => {
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		return String(phoneNumber)
 			.match(phoneNumberValidationRegex.current);
+	};
+
+	const sendEmail = async () => {
+		try {
+			//prepare a json with "to", "subject" and "text" fields
+			const email = {
+				to: 'examng0@gmail.com',
+				subject: selected.join(', '),
+				body: message,
+			}
+			const response = await httpClient.post<Exam>(`/email/send`, email);
+
+
+			if (response.data.success) {
+				console.log('Email sent successfully');
+				// You can add additional logic or UI updates here
+			} else {
+				console.error('Failed to send email:', response.data.error);
+				// Handle error cases
+			}
+		} catch (error) {
+			console.error('Error sending email:', error);
+			// Handle error cases
+		}
 	};
 
 	return (
@@ -129,7 +155,7 @@ export const Support = () => {
 							<span>30-32 Av. de la République, 94800 Villejuif</span>
 						</div>
 					</div>
-					<Button color="success" variant="shadow" className='xl:w-3/12 lg:h-16 lg:text-lg text-white my-6 max-md:my-4'>
+					<Button color="success" variant="shadow" onClick={sendEmail} className='xl:w-3/12 lg:h-16 lg:text-lg text-white my-6 max-md:my-4'>
 						Send message
 					</Button>  
 				</div>
