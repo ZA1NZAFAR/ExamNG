@@ -31,7 +31,6 @@ const StatementInput = dynamic(() => import('./statementInput'), { ssr: false })
  * The props for the QuestionForm component
  * @property {string} moduleCode - The module code of the exam
  * @property {string} examId - The unique identifier of the exam
- * @property {Question} [questionData] - The question data to be used to populate the form
  * @property {() => void} [onSubmit] - The function to be called when the form is submitted
  * */
 type QuestionFormProps = {
@@ -39,11 +38,6 @@ type QuestionFormProps = {
 	moduleCode: string;
 	/** The unique identifier of the exam */
 	examId: string;
-	/**
-	 * The question data to be used to populate the form
-	 * If not provided, the form will be populated with default values and used in "add" mode
-	 * */
-	questionData?: Question;
 	/** The function to be called when the form is submitted */
 	onSubmit?: () => void;
 };
@@ -51,18 +45,15 @@ type QuestionFormProps = {
 const QuestionForm: React.FC<QuestionFormProps> = ({
 	moduleCode,
 	examId,
-	questionData = defaultQuestionData,
 	onSubmit = () => {},
 }) => {
 	const { examService } = useService();
 	const {
 		question,
-		setQuestion,
 		answerAccordionIsActive,
 		isDataValid
 	} = useQuestionFormStore(useShallow((state) => ({
 		question: state.question,
-		setQuestion: state.setQuestion,
 		answerAccordionIsActive: isMCQuestion(state.question) || isCodeQuestion(state.question),
 		isDataValid: Object.keys(state.errors).length <= 0
 	})));
@@ -91,10 +82,6 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 		}
 		return ['3'];
 	}
-
-	React.useEffect(() => {
-		setQuestion({...questionData});
-	}, [questionData, setQuestion]);
 
 	return (
 		<ModalContent>
