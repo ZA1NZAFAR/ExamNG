@@ -1,8 +1,11 @@
 package net.examng.backend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import net.examng.backend.model.Email;
 import net.examng.backend.model.Exam;
 import net.examng.backend.model.dto.ExamDTO;
+import net.examng.backend.model.enums.ENUMS;
+import net.examng.backend.service.EmailService;
 import net.examng.backend.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,9 +20,13 @@ public class ExamController {
     @Autowired
     private ExamService examService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("")
     @Operation(summary = "Add a new exam to a module")
     public ResponseEntity<Exam> addExam(@PathVariable String moduleCode, @RequestBody ExamDTO newExam) {
+        emailService.sendEmail(Email.builder().to(ENUMS.EXAMNG0.toString()).subject(ENUMS.NEW_EXAM.toString()).body("A new exam was created for " + moduleCode).build());
         return ResponseEntity.ok(examService.addExam(moduleCode, newExam));
     }
 
