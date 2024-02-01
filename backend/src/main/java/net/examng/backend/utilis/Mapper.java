@@ -39,6 +39,10 @@ public class Mapper {
         exam.setDescription(examDTO.getDescription());
         exam.setValidated(examDTO.isValidated());
         exam.setSubmitted(examDTO.isSubmitted());
+
+        if (examDTO.getSummaryFields() == null)
+            return exam;
+
         exam.setModuleCode(examDTO.getSummaryFields().getModule().getCode());
         return exam;
     }
