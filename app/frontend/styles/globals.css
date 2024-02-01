@@ -13,7 +13,7 @@
 
 body {
     font-family: 'SF Pro', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #CFD8DC;
+    background-color: #CFD8DC;
     background-image: url('/ellipse_c.svg');
     background-size: contain;
     background-repeat: repeat;
