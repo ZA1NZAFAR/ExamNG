@@ -2,7 +2,6 @@ package net.examng.backend.model.dto;
 
 import lombok.Data;
 import net.examng.backend.model.Attachment;
-import net.examng.backend.model.Option;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class QuestionDTO {
     protected QuestionType type;
     private String statement;
     private List<Attachment> attachments;
-    private List<Option> options;
+    private List<OptionDTO> options;
     private int coefficient;
     private String defaultLanguage;
     private String initialCode;

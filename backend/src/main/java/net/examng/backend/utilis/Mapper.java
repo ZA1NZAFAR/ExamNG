@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Mapper {
@@ -47,11 +48,21 @@ public class Mapper {
         return exam;
     }
 
+    public static List<OptionDTO> mapToDTO(List<Option> options) {
+        List<OptionDTO> optionDTOS = new ArrayList<>();
+        for (Option option : options) {
+            var optionDTO = new OptionDTO();
+            optionDTO.setCorrectOption(option.isCorrectOption());
+            optionDTO.setStatement(option.getStatement());
+            optionDTOS.add(optionDTO);
+        }
+        return optionDTOS;
+    }
     public static QuestionDTO mapToDTO(Question question) {
         QuestionDTO questionDTO = new QuestionDTO();
         if (question instanceof MCQQuestion mcqQuestion) {
             questionDTO.setType(QuestionDTO.QuestionType.mcq);
-            questionDTO.setOptions(mcqQuestion.getOptions());
+            questionDTO.setOptions(mapToDTO(mcqQuestion.getOptions()));
         } else if (question instanceof TextQuestion) {
             questionDTO.setType(QuestionDTO.QuestionType.text);
         } else if (question instanceof CodeQuestion codeQuestion) {
@@ -68,12 +79,23 @@ public class Mapper {
         return questionDTO;
     }
 
+    public static List<Option> mapToOptions(List<OptionDTO> optionDTOS) {
+        List<Option> options = new ArrayList<>();
+        for (OptionDTO optionDTO : optionDTOS) {
+            var option = new Option();
+            option.setCorrectOption(optionDTO.isCorrectOption());
+            option.setStatement(optionDTO.getStatement());
+            options.add(option);
+        }
+        return options;
+    }
+
     public static Question mapToQuestion(QuestionDTO questionDTO) {
         Question question;
         switch (questionDTO.getType()) {
             case mcq:
                 var mcqQuestion = new MCQQuestion();
-                mcqQuestion.setOptions(questionDTO.getOptions());
+                mcqQuestion.setOptions(mapToOptions(questionDTO.getOptions()));
                 question = mcqQuestion;
                 break;
             case text:
